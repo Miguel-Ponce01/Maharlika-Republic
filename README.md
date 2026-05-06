@@ -43,4 +43,4 @@ npm test
 - **Deployment**: Docker, Nginx
 
 ---
-*Created with care by Antigravity.*
+*Created with care by Anthon Ponce.*
