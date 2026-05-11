@@ -1,0 +1,524 @@
+# KomuniTrade Development Task List with Checklist
+
+## Project Overview
+**Project:** KomuniTrade - Hyperlocal Marketplace System  
+**Team:** Shelley A. Magdalan, Lynnard H. Panares, Anthon Miguel B. Ponce  
+**Methodology:** Agile-Scrum (8 Sprints)
+
+---
+
+# SPRINT 1: PROJECT IDEATION (Week 1)
+
+## Task Category: Initial Setup & Planning
+
+| # | Task | Status |
+|---|------|--------|
+| 1.1 | Define project vision and scope | [x] |
+| 1.2 | Identify target users (students, households, small-scale sellers) | [x] |
+| 1.3 | Conduct initial market research on existing platforms | [x] |
+| 1.4 | Identify core problems with Facebook Marketplace, Carousell, OLX | [x] |
+| 1.5 | Define unique value proposition of KomuniTrade | [x] |
+| 1.6 | Create initial project documentation folder structure | [x] |
+| 1.7 | Set up version control (Git/GitHub repository) | [x] |
+| 1.8 | Submit topic proposal for instructor approval | [ ] |
+
+---
+
+# SPRINT 2: RESEARCH AND CONTEXT (Week 1-2)
+
+## Task Category: Literature Review
+
+| # | Task | Status |
+|---|------|--------|
+| 2.1 | Research CNN architectures (EfficientNet, MobileNetV3) | [ ] |
+| 2.2 | Research OCR technologies (Tesseract, Google Vision API) | [ ] |
+| 2.3 | Research geohash spatial indexing methods | [ ] |
+| 2.4 | Research inverted index for search optimization | [ ] |
+| 2.5 | Research TTL mechanisms for data expiration | [ ] |
+| 2.6 | Research seller verification and trust mechanisms | [ ] |
+| 2.7 | Research confidence scoring for ML models | [ ] |
+| 2.8 | Research facial recognition (ArcFace/FaceNet) | [ ] |
+| 2.9 | Research dashboard analytics and monitoring | [ ] |
+| 2.10 | Compile RRL Matrix with findings | [ ] |
+| 2.11 | Identify gaps from existing studies | [ ] |
+| 2.12 | Document related systems comparison | [ ] |
+
+## Task Category: Technology Stack Evaluation
+
+| # | Task | Status |
+|---|------|--------|
+| 2.13 | Evaluate React + Vite for frontend | [ ] |
+| 2.14 | Evaluate Firebase for backend/auth/database | [ ] |
+| 2.15 | Evaluate TensorFlow vs PyTorch for CNN | [ ] |
+| 2.16 | Evaluate OCR tools (Tesseract.js vs Google Vision) | [ ] |
+| 2.17 | Evaluate facial recognition libraries | [ ] |
+| 2.18 | Finalize technology stack decisions | [ ] |
+
+---
+
+# SPRINT 3: PLANNING AND DESIGN (Week 2)
+
+## Task Category: System Design
+
+| # | Task | Status |
+|---|------|--------|
+| 3.1 | Create system architecture diagram | [ ] |
+| 3.2 | Design layered architecture (Frontend, Backend, AI, Database) | [ ] |
+| 3.3 | Define component interactions | [ ] |
+| 3.4 | Create data flow diagrams | [ ] |
+| 3.5 | Design IPO (Input-Process-Output) model | [ ] |
+| 3.6 | Create conceptual framework | [ ] |
+
+## Task Category: UI/UX Design
+
+| # | Task | Status |
+|---|------|--------|
+| 3.7 | Create low-fidelity wireframes for Landing Page | [ ] |
+| 3.8 | Create low-fidelity wireframes for Login/Registration | [ ] |
+| 3.9 | Create low-fidelity wireframes for Home Page | [ ] |
+| 3.10 | Create low-fidelity wireframes for Post Item interface | [ ] |
+| 3.11 | Create low-fidelity wireframes for Item Details page | [ ] |
+| 3.12 | Create low-fidelity wireframes for User Profile | [ ] |
+| 3.13 | Create low-fidelity wireframes for Settings | [ ] |
+| 3.14 | Create low-fidelity wireframes for Chat Interface | [ ] |
+| 3.15 | Create user flow diagrams | [ ] |
+| 3.16 | Design navigation structure | [ ] |
+
+## Task Category: Database Design
+
+| # | Task | Status |
+|---|------|--------|
+| 3.17 | Design Firestore collection schema | [ ] |
+| 3.18 | Define Users collection structure | [ ] |
+| 3.19 | Define Listings collection structure | [ ] |
+| 3.20 | Define Transactions collection structure | [ ] |
+| 3.21 | Define Messages collection structure | [ ] |
+| 3.22 | Define Ratings collection structure | [ ] |
+| 3.23 | Define database security rules | [ ] |
+
+---
+
+# SPRINT 4: REQUIREMENTS ENGINEERING (Week 3-4)
+
+## Task Category: Functional Requirements
+
+| # | Task | Status |
+|---|------|--------|
+| 4.1 | Define FR-01: User account creation | [ ] |
+| 4.2 | Define FR-02: User login authentication | [ ] |
+| 4.3 | Define FR-03: Image upload system | [ ] |
+| 4.4 | Define FR-04: CNN classification | [ ] |
+| 4.5 | Define FR-05: OCR text extraction | [ ] |
+| 4.6 | Define FR-06: Auto-generated listing details | [ ] |
+| 4.7 | Define FR-07: AI price suggestions | [ ] |
+| 4.8 | Define FR-08: Edit listing before posting | [ ] |
+| 4.9 | Define FR-09: Geohash location filtering | [ ] |
+| 4.10 | Define FR-10: Inverted index keyword search | [ ] |
+| 4.11 | Define FR-11: Anonymous chat system | [ ] |
+| 4.12 | Define FR-12: TTL auto-archiving | [ ] |
+| 4.13 | Define FR-13: ML credibility scoring | [ ] |
+| 4.14 | Define FR-14: Seller verification badges | [ ] |
+| 4.15 | Define FR-15: Rating and feedback system | [ ] |
+| 4.16 | Define FR-16: Facial verification | [ ] |
+| 4.17 | Define FR-17: Facial similarity matching | [ ] |
+| 4.18 | Define FR-18: Dashboard analytics | [ ] |
+
+## Task Category: Non-Functional Requirements
+
+| # | Task | Status |
+|---|------|--------|
+| 4.19 | Define performance requirements (5 sec classification, 3 sec page load) | [ ] |
+| 4.20 | Define security requirements | [ ] |
+| 4.21 | Define usability requirements | [ ] |
+| 4.22 | Define scalability requirements (10,000+ listings) | [ ] |
+| 4.23 | Define reliability requirements (99% availability) | [ ] |
+| 4.24 | Define maintainability requirements | [ ] |
+| 4.25 | Define accuracy requirements (≥80% classification) | [ ] |
+
+## Task Category: User Stories & Use Cases
+
+| # | Task | Status |
+|---|------|--------|
+| 4.26 | Write user stories for Must Have features | [ ] |
+| 4.27 | Write user stories for Should Have features | [ ] |
+| 4.28 | Write user stories for Could Have features | [ ] |
+| 4.29 | Create use case for Register Account | [ ] |
+| 4.30 | Create use case for Upload & Auto-Generate Listing | [ ] |
+| 4.31 | Create use case for Browse Nearby Listings | [ ] |
+| 4.32 | Create use case for Anonymous Communication | [ ] |
+| 4.33 | Create use case for Seller Verification (Facial) | [ ] |
+| 4.34 | Create use case diagram | [ ] |
+
+## Task Category: Requirements Traceability
+
+| # | Task | Status |
+|---|------|--------|
+| 4.35 | Create Requirements Traceability Matrix | [ ] |
+| 4.36 | Map each requirement to objectives | [ ] |
+| 4.37 | Define acceptance criteria for each requirement | [ ] |
+| 4.38 | Get requirements signoff from panel | [ ] |
+
+---
+
+# SPRINT 5: PROTOTYPE DEVELOPMENT (Week 5)
+
+## Task Category: Frontend - Authentication
+
+| # | Task | Status |
+|---|------|--------|
+| 5.1 | Set up React + Vite project | [ ] |
+| 5.2 | Install and configure Firebase SDK | [ ] |
+| 5.3 | Implement Landing Page UI | [ ] |
+| 5.4 | Implement Registration form with validation | [ ] |
+| 5.5 | Implement Login form with validation | [ ] |
+| 5.6 | Implement email/password authentication | [ ] |
+| 5.7 | Implement session management | [ ] |
+| 5.8 | Implement protected routes | [ ] |
+
+## Task Category: Frontend - Home & Navigation
+
+| # | Task | Status |
+|---|------|--------|
+| 5.9 | Implement Main Navigation Bar | [ ] |
+| 5.10 | Implement Home Page layout | [ ] |
+| 5.11 | Implement listing card component | [ ] |
+| 5.12 | Implement search bar UI | [ ] |
+| 5.13 | Implement category filter UI | [ ] |
+
+## Task Category: Frontend - Item Posting
+
+| # | Task | Status |
+|---|------|--------|
+| 5.14 | Implement Post Item page layout | [ ] |
+| 5.15 | Implement image upload component | [ ] |
+| 5.16 | Implement image preview functionality | [ ] |
+| 5.17 | Implement form fields (title, description, price, category) | [ ] |
+| 5.18 | Implement location picker | [ ] |
+| 5.19 | Implement submit listing functionality | [ ] |
+
+## Task Category: Frontend - Item Details & Profile
+
+| # | Task | Status |
+|---|------|--------|
+| 5.20 | Implement Item Details page | [ ] |
+| 5.21 | Implement seller info component | [ ] |
+| 5.22 | Implement User Profile page | [ ] |
+| 5.23 | Implement user listings tab | [ ] |
+| 5.24 | Implement transaction history tab | [ ] |
+| 5.25 | Implement Settings page | [ ] |
+| 5.26 | Implement Chat Interface UI | [ ] |
+
+## Task Category: Backend - Firebase Setup
+
+| # | Task | Status |
+|---|------|--------|
+| 5.27 | Create Firebase project | [ ] |
+| 5.28 | Enable Authentication (Email/Password) | [ ] |
+| 5.29 | Set up Firestore database | [ ] |
+| 5.30 | Configure Firestore security rules | [ ] |
+| 5.31 | Set up Firebase Storage for images | [ ] |
+| 5.32 | Configure Storage security rules | [ ] |
+| 5.33 | Set up Firebase Hosting | [ ] |
+
+## Task Category: Backend - CRUD Operations
+
+| # | Task | Status |
+|---|------|--------|
+| 5.34 | Implement create listing function | [ ] |
+| 5.35 | Implement read listings function | [ ] |
+| 5.36 | Implement update listing function | [ ] |
+| 5.37 | Implement delete listing function | [ ] |
+| 5.38 | Implement user profile CRUD | [ ] |
+| 5.39 | Implement transaction recording | [ ] |
+
+## Task Category: Prototype Validation
+
+| # | Task | Status |
+|---|------|--------|
+| 5.40 | Map prototype features to requirements | [ ] |
+| 5.41 | Conduct prototype demo | [ ] |
+| 5.42 | Collect stakeholder feedback | [ ] |
+| 5.43 | Document feedback and revision log | [ ] |
+| 5.44 | Plan revisions for next sprint | [ ] |
+
+---
+
+# SPRINT 6: AI MODEL INTEGRATION (Week 6-7)
+
+## Task Category: Dataset Preparation
+
+| # | Task | Status |
+|---|------|--------|
+| 6.1 | Collect 500-1,000 item images | [ ] |
+| 6.2 | Include multiple categories (electronics, clothing, books, furniture) | [ ] |
+| 6.3 | Capture varied lighting conditions, angles, backgrounds | [ ] |
+| 6.4 | Collect text-containing images for OCR | [ ] |
+| 6.5 | Gather seller transaction data for credibility scoring | [ ] |
+| 6.6 | Annotate images using Roboflow | [ ] |
+| 6.7 | Split dataset (train/validation/test) | [ ] |
+| 6.8 | Apply data augmentation techniques | [ ] |
+
+## Task Category: CNN Model Development
+
+| # | Task | Status |
+|---|------|--------|
+| 6.9 | Set up TensorFlow/PyTorch environment | [ ] |
+| 6.10 | Implement MobileNetV3 architecture | [ ] |
+| 6.11 | Load and preprocess image dataset | [ ] |
+| 6.12 | Train CNN model for item classification | [ ] |
+| 6.13 | Fine-tune hyperparameters | [ ] |
+| 6.14 | Evaluate model accuracy | [ ] |
+| 6.15 | Export model for web deployment (TensorFlow.js) | [ ] |
+| 6.16 | Integrate CNN model into React frontend | [ ] |
+
+## Task Category: OCR Integration
+
+| # | Task | Status |
+|---|------|--------|
+| 6.17 | Set up Tesseract.js library | [ ] |
+| 6.18 | Configure Google Vision API (fallback) | [ ] |
+| 6.19 | Implement text extraction from images | [ ] |
+| 6.20 | Implement post-processing for OCR output | [ ] |
+| 6.21 | Test OCR on various image types | [ ] |
+| 6.22 | Implement auto-generation of titles from extracted text | [ ] |
+| 6.23 | Implement auto-generation of tags/descriptions | [ ] |
+| 6.24 | Handle OCR failure cases | [ ] |
+
+## Task Category: AI Listing Generation Pipeline
+
+| # | Task | Status |
+|---|------|--------|
+| 6.25 | Integrate CNN + OCR into unified pipeline | [ ] |
+| 6.26 | Implement auto-categorization | [ ] |
+| 6.27 | Implement auto-title generation | [ ] |
+| 6.28 | Implement auto-description generation | [ ] |
+| 6.29 | Implement AI price suggestion | [ ] |
+| 6.30 | Add manual edit option before posting | [ ] |
+| 6.31 | Measure processing time (target <5 seconds) | [ ] |
+
+## Task Category: Facial Recognition Module
+
+| # | Task | Status |
+|---|------|--------|
+| 6.32 | Set up facial recognition library (ArcFace/FaceNet) | [ ] |
+| 6.33 | Implement face detection from uploaded images | [ ] |
+| 6.34 | Implement facial feature extraction | [ ] |
+| 6.35 | Implement face comparison (selfie vs ID) | [ ] |
+| 6.36 | Calculate similarity confidence score | [ ] |
+| 6.37 | Set verification threshold (≥85% = verified) | [ ] |
+| 6.38 | Implement verification badge assignment | [ ] |
+
+## Task Category: ML Credibility Scoring
+
+| # | Task | Status |
+|---|------|--------|
+| 6.39 | Define credibility features (ratings, transaction history, profile completeness) | [ ] |
+| 6.40 | Implement confidence scoring algorithm | [ ] |
+| 6.41 | Calculate seller credibility score | [ ] |
+| 6.42 | Display confidence score on seller profile | [ ] |
+| 6.43 | Implement low-confidence flagging system | [ ] |
+| 6.44 | Test scoring accuracy with sample data | [ ] |
+
+---
+
+# SPRINT 7: TESTING AND OPTIMIZATION (Week 8-9)
+
+## Task Category: Geohash Location Filtering
+
+| # | Task | Status |
+|---|------|--------|
+| 7.1 | Integrate geohash encoding library | [ ] |
+| 7.2 | Convert user addresses to geohash | [ ] |
+| 7.3 | Implement proximity calculation | [ ] |
+| 7.4 | Implement nearby listings query | [ ] |
+| 7.5 | Test location filtering accuracy | [ ] |
+| 7.6 | Handle location permission denial | [ ] |
+
+## Task Category: Search Engine (Inverted Index)
+
+| # | Task | Status |
+|---|------|--------|
+| 7.7 | Design inverted index structure | [ ] |
+| 7.8 | Index listing titles and descriptions | [ ] |
+| 7.9 | Implement keyword search function | [ ] |
+| 7.10 | Implement search result ranking | [ ] |
+| 7.11 | Compare performance vs full-text scan | [ ] |
+| 7.12 | Optimize search query response time | [ ] |
+
+## Task Category: TTL & Listing Lifecycle
+
+| # | Task | Status |
+|---|------|--------|
+| 7.13 | Implement TTL timestamp on listings | [ ] |
+| 7.14 | Create scheduled function for expiration check | [ ] |
+| 7.15 | Implement auto-archive for listings >30 days | [ ] |
+| 7.16 | Notify sellers before expiration | [ ] |
+| 7.17 | Allow re-listing of expired items | [ ] |
+
+## Task Category: Anonymous Chat System
+
+| # | Task | Status |
+|---|------|--------|
+| 7.18 | Design chat data structure | [ ] |
+| 7.19 | Implement chat room creation per transaction | [ ] |
+| 7.20 | Implement real-time message sending | [ ] |
+| 7.21 | Hide personal contact information | [ ] |
+| 7.22 | Implement message history persistence | [ ] |
+| 7.23 | Add unread message indicators | [ ] |
+
+## Task Category: Dashboard Analytics
+
+| # | Task | Status |
+|---|------|--------|
+| 7.24 | Design admin dashboard UI | [ ] |
+| 7.25 | Implement total listings counter | [ ] |
+| 7.26 | Implement total users counter | [ ] |
+| 7.27 | Implement total transactions counter | [ ] |
+| 7.28 | Implement seller rating visualization | [ ] |
+| 7.29 | Implement reported fraud monitoring | [ ] |
+| 7.30 | Add real-time data refresh | [ ] |
+
+## Task Category: Testing
+
+| # | Task | Status |
+|---|------|--------|
+| 7.31 | Unit testing for authentication module | [ ] |
+| 7.32 | Unit testing for listing CRUD | [ ] |
+| 7.33 | Integration testing for AI pipeline | [ ] |
+| 7.34 | Integration testing for search + filter | [ ] |
+| 7.35 | Performance testing (load time, classification speed) | [ ] |
+| 7.36 | Security testing (auth bypass, data injection) | [ ] |
+| 7.37 | Mobile responsiveness testing | [ ] |
+| 7.38 | Cross-browser testing | [ ] |
+
+## Task Category: Bug Fixing & Optimization
+
+| # | Task | Status |
+|---|------|--------|
+| 7.39 | Log all discovered bugs | [ ] |
+| 7.40 | Fix high-priority bugs | [ ] |
+| 7.41 | Fix medium-priority bugs | [ ] |
+| 7.42 | Optimize database queries | [ ] |
+| 7.43 | Optimize image upload compression | [ ] |
+| 7.44 | Reduce AI processing time | [ ] |
+| 7.45 | Conduct QA testing | [ ] |
+| 7.46 | Document test results | [ ] |
+
+## Task Category: User Acceptance Testing
+
+| # | Task | Status |
+|---|------|--------|
+| 7.47 | Recruit test users (students, households) | [ ] |
+| 7.48 | Conduct UAT sessions | [ ] |
+| 7.49 | Administer System Usability Scale (SUS) | [ ] |
+| 7.50 | Collect user feedback | [ ] |
+| 7.51 | Analyze UAT results | [ ] |
+| 7.52 | Implement critical user-requested changes | [ ] |
+
+---
+
+# SPRINT 8: FINAL DEPLOYMENT (Week 10-12)
+
+## Task Category: Documentation
+
+| # | Task | Status |
+|---|------|--------|
+| 8.1 | Complete Chapter I: Introduction | [ ] |
+| 8.2 | Complete Chapter II: Review of Related Literature | [ ] |
+| 8.3 | Complete Chapter III: Methodology | [ ] |
+| 8.4 | Complete Chapter IV: System Requirements | [ ] |
+| 8.5 | Complete Chapter V: Prototype & Feasibility | [ ] |
+| 8.6 | Complete Chapter VI: Implementation | [ ] |
+| 8.7 | Complete Chapter VII: Evaluation | [ ] |
+| 8.8 | Complete Chapter VIII: Conclusion & Recommendations | [ ] |
+| 8.9 | Compile all references | [ ] |
+| 8.10 | Create user manual | [ ] |
+| 8.11 | Create developer documentation | [ ] |
+
+## Task Category: Model Evaluation
+
+| # | Task | Status |
+|---|------|--------|
+| 8.12 | Calculate CNN classification accuracy (target ≥80%) | [ ] |
+| 8.13 | Calculate precision, recall, F1-score | [ ] |
+| 8.14 | Evaluate OCR extraction accuracy | [ ] |
+| 8.15 | Evaluate facial verification accuracy | [ ] |
+| 8.16 | Document model performance results | [ ] |
+
+## Task Category: System Evaluation
+
+| # | Task | Status |
+|---|------|--------|
+| 8.17 | Calculate SUS score | [ ] |
+| 8.18 | Measure task completion rates | [ ] |
+| 8.19 | Measure error rates | [ ] |
+| 8.20 | Compile evaluation report | [ ] |
+
+## Task Category: Deployment
+
+| # | Task | Status |
+|---|------|--------|
+| 8.21 | Configure production environment | [ ] |
+| 8.22 | Deploy frontend to Firebase Hosting | [ ] |
+| 8.23 | Deploy backend to Firebase Functions | [ ] |
+| 8.24 | Set up custom domain (if available) | [ ] |
+| 8.25 | Configure SSL certificate | [ ] |
+| 8.26 | Test production deployment | [ ] |
+| 8.27 | Prepare demo environment | [ ] |
+
+## Task Category: Final Presentation
+
+| # | Task | Status |
+|---|------|--------|
+| 8.28 | Create presentation slides | [ ] |
+| 8.29 | Prepare live demo script | [ ] |
+| 8.30 | Record demo video (backup) | [ ] |
+| 8.31 | Rehearse presentation | [ ] |
+| 8.32 | Conduct final defense | [ ] |
+| 8.33 | Submit final system documentation | [ ] |
+| 8.34 | Submit project repository | [ ] |
+
+---
+
+# SUMMARY CHECKLIST (Roll-up View)
+
+## Phase Completion Tracker
+
+| Phase | Total Tasks | Completed | Progress |
+|-------|-------------|-----------|----------|
+| Sprint 1: Project Ideation (Week 1) | 8 | 7 | 87.5% |
+| Sprint 2: Research & Context (Week 1-2) | 18 | [ ] | 0% |
+| Sprint 3: Planning & Design (Week 2) | 23 | [ ] | 0% |
+| Sprint 4: Requirements Engineering (Week 3-4) | 38 | [ ] | 0% |
+| Sprint 5: Prototype Development (Week 5) | 44 | [ ] | 0% |
+| Sprint 6: AI Model Integration (Week 6-7) | 44 | [ ] | 0% |
+| Sprint 7: Testing & Optimization (Week 8-9) | 52 | [ ] | 0% |
+| Sprint 8: Final Deployment (Week 10-12) | 34 | [ ] | 0% |
+| **TOTAL** | **261** | 7 | 2.68% |
+
+---
+
+## Quick Status Legend
+
+| Symbol | Meaning |
+|--------|---------|
+| [ ] | Not Started |
+| [~] | In Progress |
+| [x] | Completed |
+| [!] | Blocked/Issues |
+
+---
+
+## Notes & Reminders
+
+- [ ] Set up daily standup meetings (15 min)
+- [ ] Maintain sprint backlog in project management tool
+- [ ] Document all major decisions
+- [ ] Back up code and data weekly
+- [ ] Get instructor approval at each major milestone
+- [ ] Update this checklist daily
+
+---
+
+**Last Updated:** 2026-05-11  
+**Updated By:** _______________

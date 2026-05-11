@@ -24,13 +24,10 @@ body {
 .navbar {
     position: fixed;
     top: 0; width: 100%;
-    padding: 12px 40px;
+    padding: 16px 40px;
     z-index: 1000;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s var(--ease-apple);
+    transition: background 0.4s var(--ease-apple), backdrop-filter 0.4s var(--ease-apple);
+    backdrop-filter: blur(0px);
 }
 
 .nav-container {

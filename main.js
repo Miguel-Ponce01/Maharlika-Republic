@@ -107,11 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- GSAP ANIMATIONS ---
 
-    // Navbar Scroll Effect
+    // Navbar Scroll
     gsap.to(".navbar", {
-        background: "rgba(255, 255, 255, 0.85)",
-        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.05)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
+        background: "rgba(255, 255, 255, 0.9)",
+        backdropFilter: "blur(20px)",
+        boxShadow: "0 1px 0 rgba(0,0,0,0.05)",
         scrollTrigger: {
             trigger: "body",
             start: "top -50",

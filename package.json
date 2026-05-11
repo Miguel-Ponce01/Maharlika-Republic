@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node diagnostics.js"
+    "test": "node src/diagnostics.js"
   },
   "devDependencies": {
     "vite": "^5.0.0"
