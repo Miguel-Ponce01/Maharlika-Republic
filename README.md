@@ -45,4 +45,8 @@ Davao City's premier destination for high-end Apple gadgets and accessories. Thi
 3. **Access**: Open your browser and navigate to `http://localhost:8080`.
 
 ---
+<<<<<<< HEAD
 *Maharlika Republic (Marexx Republic) - Beyond Innovation.*
+=======
+*Created with care by Anthon Ponce.*
+>>>>>>> 5622f749181bc9883f30040048374ee2dcef95e1
