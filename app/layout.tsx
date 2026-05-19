@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import CartDrawer from "@/components/cart/CartDrawer";
+import ThemeProvider from "@/components/theme/ThemeProvider";
+import InteractiveGridBackground from "@/components/ui/InteractiveGridBackground";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-poppins" });
+const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: "Maharlika Republic",
@@ -20,11 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased bg-brand-white text-brand-black`}>
-        <Navbar />
-        <SearchOverlay />
-        <CartDrawer />
-        <main>{children}</main>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-brand-white text-brand-black transition-colors duration-300`}>
+        <ThemeProvider>
+          <InteractiveGridBackground />
+          <Navbar />
+          <SearchOverlay />
+          <CartDrawer />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

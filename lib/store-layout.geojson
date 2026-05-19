@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "iphone-demo",
+        "name": "iPhone Demo Area",
+        "type": "demo"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [125.61105, 7.08255],
+            [125.61110, 7.08255],
+            [125.61110, 7.08260],
+            [125.61105, 7.08260],
+            [125.61105, 7.08255]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "ipad-demo",
+        "name": "iPad Interaction Counters",
+        "type": "demo"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [125.61115, 7.08255],
+            [125.61120, 7.08255],
+            [125.61120, 7.08260],
+            [125.61115, 7.08260],
+            [125.61115, 7.08255]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "collection-desk",
+        "name": "Online Order Collection Desk",
+        "type": "service"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [125.61105, 7.08245],
+            [125.61120, 7.08245],
+            [125.61120, 7.08250],
+            [125.61105, 7.08250],
+            [125.61105, 7.08245]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -6,6 +6,21 @@
   :root {
     --background: #F9F9F7;
     --foreground: #1A1C1E;
+    --card-bg: #FFFFFF;
+    --border-color: rgba(26, 28, 30, 0.08);
+    --text-muted: #5A5D63;
+    --nav-bg: rgba(249, 249, 247, 0.75);
+    --glass-border: rgba(26, 28, 30, 0.08);
+  }
+
+  .dark {
+    --background: #F9F9F7;
+    --foreground: #1A1C1E;
+    --card-bg: #FFFFFF;
+    --border-color: rgba(26, 28, 30, 0.08);
+    --text-muted: #5A5D63;
+    --nav-bg: rgba(249, 249, 247, 0.75);
+    --glass-border: rgba(26, 28, 30, 0.08);
   }
 }
 
@@ -17,20 +32,60 @@ body {
 
 /* Glassmorphism Utilities */
 .glass {
-  background: rgba(249, 249, 247, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .glass-dark {
-  background: rgba(26, 28, 30, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
 }
 
 /* Mapbox Overrides */
 .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
   display: none !important;
 }
+
+/* Print Overrides */
+@media print {
+  body, html {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Hide elements not needed in print */
+  header, 
+  footer, 
+  nav, 
+  .print\:hidden,
+  [class*="pt-16"], 
+  [class*="pt-24"],
+  [class*="pt-36"] {
+    display: none !important;
+    padding-top: 0 !important;
+  }
+
+  /* Target quotation page wrapper margins */
+  main, div {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #printable-quotation-sheet {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+}
+
