@@ -9,9 +9,7 @@ import {
   Landmark, 
   ArrowRight, 
   Clock, 
-  Smartphone, 
-  CheckCircle,
-  MessageSquare
+  CheckCircle
 } from "lucide-react";
 
 interface HubTab {
@@ -46,7 +44,7 @@ export default function MaharlikaHub() {
       ],
       ctaText: "Get Showroom Directions",
       ctaLink: "#map",
-      color: "from-amber-500/10 to-brand-gold/10"
+      color: "from-amber-500/10 via-brand-gold/5 to-transparent bg-white/95 dark:bg-neutral-900/60"
     },
     {
       id: "genuine",
@@ -63,7 +61,7 @@ export default function MaharlikaHub() {
       ],
       ctaText: "Browse Genuine Products",
       ctaLink: "/products",
-      color: "from-emerald-500/10 to-teal-500/10"
+      color: "from-emerald-500/10 via-teal-500/5 to-transparent bg-white/95 dark:bg-neutral-900/60"
     },
     {
       id: "tradein",
@@ -79,8 +77,8 @@ export default function MaharlikaHub() {
         "Pay only the price difference for your upgrade"
       ],
       ctaText: "Inquire via Messenger",
-      ctaLink: "https://www.facebook.com/marexxrepublicdavao",
-      color: "from-blue-500/10 to-indigo-500/10"
+      ctaLink: "https://www.facebook.com/messages/t/marexxrepublicdavao",
+      color: "from-blue-500/10 via-indigo-500/5 to-transparent bg-white/95 dark:bg-neutral-900/60"
     },
     {
       id: "financing",
@@ -97,7 +95,7 @@ export default function MaharlikaHub() {
       ],
       ctaText: "View Payment Options",
       ctaLink: "/payment-options",
-      color: "from-purple-500/10 to-fuchsia-500/10"
+      color: "from-purple-500/10 via-fuchsia-500/5 to-transparent bg-white/95 dark:bg-neutral-900/60"
     }
   ];
 
@@ -105,9 +103,9 @@ export default function MaharlikaHub() {
   const ActiveIcon = current.icon;
 
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto relative z-10">
-      <div className="text-center mb-12 space-y-3">
-        <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider">
+    <section className="py-24 px-6 max-w-7xl mx-auto relative z-10">
+      <div className="text-center mb-16 space-y-4">
+        <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-extrabold px-5 py-2 rounded-full uppercase tracking-wider">
           Inside Maharlika Republic
         </span>
         <h2 className="text-3xl md:text-4xl font-heading font-extrabold tracking-tighter uppercase text-brand-black">
@@ -120,7 +118,7 @@ export default function MaharlikaHub() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left Side: Interactive Navigation Tabs */}
-        <div className="lg:col-span-4 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-3 pb-3 lg:pb-0 scrollbar-none">
+        <div className="lg:col-span-4 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-3.5 pb-3 lg:pb-0 scrollbar-none">
           {tabs.map((tab) => {
             const TabIcon = tab.icon;
             const isSelected = tab.id === activeTab;
@@ -128,22 +126,24 @@ export default function MaharlikaHub() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 min-w-[200px] lg:w-full text-left p-4.5 rounded-2xl border transition-all duration-300 flex items-center gap-4 relative overflow-hidden group active:scale-[0.98] ${
+                className={`flex-1 min-w-[210px] lg:w-full text-left p-5 rounded-[22px] border transition-all duration-300 flex items-center gap-4 relative overflow-hidden group active:scale-[0.98] ${
                   isSelected 
-                    ? "bg-brand-card border-brand-gold shadow-md" 
-                    : "bg-white/40 backdrop-blur-sm border-brand-border/60 hover:bg-white/80 hover:border-brand-border"
+                    ? "bg-brand-white dark:bg-neutral-800 border-brand-gold shadow-lg shadow-brand-gold/[0.04]" 
+                    : "bg-white/40 dark:bg-white/[0.01] backdrop-blur-sm border-brand-border/60 dark:border-white/[0.03] hover:bg-white/80 dark:hover:bg-white/[0.04] hover:border-brand-gold/20"
                 }`}
               >
-                <div className={`p-2.5 rounded-xl shrink-0 transition-colors ${
-                  isSelected ? "bg-brand-gold text-white" : "bg-neutral-100 text-brand-textMuted group-hover:bg-neutral-200"
+                <div className={`w-11 h-11 flex items-center justify-center rounded-2xl shrink-0 transition-all duration-300 ${
+                  isSelected 
+                    ? "bg-brand-gold text-white shadow-md shadow-brand-gold/25 scale-105" 
+                    : "bg-neutral-100 dark:bg-neutral-800 text-brand-textMuted dark:text-gray-400 group-hover:bg-neutral-200 dark:group-hover:bg-neutral-700 group-hover:scale-102"
                 }`}>
                   <TabIcon className="w-5 h-5" />
                 </div>
                 <div className="space-y-0.5">
-                  <h4 className="font-heading font-bold text-xs uppercase tracking-wider text-brand-black">
+                  <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-brand-black">
                     {tab.label}
                   </h4>
-                  <p className="text-[10px] text-brand-textMuted font-medium truncate max-w-[150px]">
+                  <p className="text-[10px] text-brand-textMuted dark:text-gray-400 font-medium truncate max-w-[150px]">
                     {tab.short}
                   </p>
                 </div>
@@ -151,7 +151,7 @@ export default function MaharlikaHub() {
                 {isSelected && (
                   <motion.div
                     layoutId="activeTabIndicator"
-                    className="absolute right-3 w-1.5 h-6 bg-brand-gold rounded-full"
+                    className="absolute right-4 w-1.5 h-6 bg-brand-gold rounded-full"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
@@ -169,43 +169,54 @@ export default function MaharlikaHub() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: "easeInOut" }}
-              className={`h-full bg-gradient-to-br ${current.color} border border-brand-border/60 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm relative overflow-hidden`}
+              className={`h-full bg-gradient-to-br ${current.color} backdrop-blur-md border border-brand-border/60 dark:border-white/[0.04] rounded-[32px] p-7 md:p-9 flex flex-col justify-between shadow-xl relative overflow-hidden`}
             >
               {/* Giant Decorative Icon Watermark */}
-              <div className="absolute -right-8 -bottom-8 opacity-[0.03] pointer-events-none select-none text-brand-black">
-                <ActiveIcon className="w-64 h-64" />
+              <div className="absolute -right-16 -bottom-16 opacity-[0.06] dark:opacity-[0.03] pointer-events-none select-none text-brand-gold">
+                <ActiveIcon className="w-80 h-80 stroke-[0.75]" />
               </div>
 
-              <div className="space-y-6 relative z-10">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-brand-white/80 backdrop-blur-sm border border-brand-border/40 rounded-2xl text-brand-black shadow-sm">
+              <div className="space-y-7 relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 flex items-center justify-center bg-white dark:bg-neutral-800 border border-brand-border/40 dark:border-white/[0.04] rounded-2xl text-brand-black dark:text-brand-gold shadow-md">
                     <ActiveIcon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-heading font-extrabold text-lg md:text-xl text-brand-black uppercase tracking-tight">
-                    {current.title}
-                  </h3>
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] uppercase tracking-widest text-brand-gold font-extrabold">
+                      {current.label}
+                    </span>
+                    <h3 className="font-heading font-black text-lg md:text-xl text-brand-black dark:text-white uppercase tracking-tight leading-none">
+                      {current.title}
+                    </h3>
+                  </div>
                 </div>
 
-                <p className="text-xs md:text-sm text-brand-black/85 leading-relaxed max-w-2xl">
+                <p className="text-xs md:text-sm text-neutral-600 dark:text-gray-300 leading-relaxed max-w-2xl font-medium">
                   {current.description}
                 </p>
 
                 {/* Bullets List */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                   {current.bullets.map((bullet, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 bg-brand-white/50 backdrop-blur-xs p-3 rounded-xl border border-brand-border/20">
-                      <CheckCircle className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
-                      <span className="text-[11px] font-medium text-brand-black/90 leading-normal">
+                    <motion.div 
+                      key={idx}
+                      whileHover={{ y: -2, scale: 1.01 }}
+                      className="flex items-center gap-3 bg-white/70 dark:bg-neutral-900/30 backdrop-blur-md p-3.5 rounded-2xl border border-black/[0.03] dark:border-white/[0.03] shadow-sm hover:shadow-md transition-all duration-300"
+                    >
+                      <div className="w-6 h-6 rounded-full bg-brand-gold/10 dark:bg-brand-gold/20 flex items-center justify-center shrink-0">
+                        <CheckCircle className="w-3.5 h-3.5 text-brand-gold" />
+                      </div>
+                      <span className="text-[11px] font-semibold text-neutral-800 dark:text-neutral-200 leading-snug">
                         {bullet}
                       </span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* Bottom Action Section */}
-              <div className="mt-8 pt-6 border-t border-brand-border/30 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-                <div className="flex items-center gap-2 text-[10px] text-brand-textMuted font-bold uppercase tracking-wider">
+              <div className="mt-10 pt-6 border-t border-brand-border/30 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+                <div className="flex items-center gap-2 text-[10px] text-brand-textMuted dark:text-gray-400 font-bold uppercase tracking-wider">
                   <Clock className="w-3.5 h-3.5" />
                   <span>Verified Store Operations • Davao City</span>
                 </div>
@@ -214,10 +225,10 @@ export default function MaharlikaHub() {
                   href={current.ctaLink}
                   target={current.ctaLink.startsWith("http") ? "_blank" : undefined}
                   rel={current.ctaLink.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="w-full sm:w-auto px-6 py-3 bg-brand-black text-white hover:bg-gray-800 transition-colors rounded-xl text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 group shadow-sm active:scale-[0.98]"
+                  className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-amber-400 via-brand-gold to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-neutral-950 hover:shadow-lg hover:shadow-brand-gold/15 transition-all duration-300 rounded-2xl text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 group active:scale-[0.97]"
                 >
                   <span>{current.ctaText}</span>
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-neutral-950" />
                 </a>
               </div>
             </motion.div>
