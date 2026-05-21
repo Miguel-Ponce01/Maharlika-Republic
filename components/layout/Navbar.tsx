@@ -39,8 +39,22 @@ export default function Navbar() {
             >
               <Menu className="w-5 h-5" />
             </button>
-            <Link href="/" className="font-heading font-extrabold text-lg uppercase tracking-wider text-brand-black">
-              Maharlika <span className="text-brand-gold">Republic</span>
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative w-8 h-8 overflow-hidden rounded shrink-0">
+                <img 
+                  src="/logo.png" 
+                  className="w-full h-full object-cover dark:hidden mix-blend-multiply" 
+                  alt="Maharlika Republic Logo" 
+                />
+                <img 
+                  src="/logo-black.jpg" 
+                  className="w-full h-full object-cover hidden dark:block mix-blend-screen" 
+                  alt="Maharlika Republic Logo" 
+                />
+              </div>
+              <span className="font-heading font-extrabold text-sm sm:text-base uppercase tracking-wider text-brand-black group-hover:text-brand-gold transition-colors">
+                Maharlika <span className="text-brand-gold">Republic</span>
+              </span>
             </Link>
           </div>
    

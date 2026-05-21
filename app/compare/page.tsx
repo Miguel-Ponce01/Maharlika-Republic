@@ -308,7 +308,7 @@ export default function ComparePage() {
 
   return (
     <div className="min-h-screen pt-32 pb-24 relative z-10 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6">
         
         {/* Breadcrumbs & Header */}
         <div className="flex items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest gap-2 mb-4">
@@ -432,18 +432,18 @@ export default function ComparePage() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[800px]">
-              <thead className="sticky top-16 bg-brand-card/95 backdrop-blur-md z-20 border-b border-brand-border shadow-sm">
+              <thead>
                 <tr className="border-b border-brand-border/20 text-[10px] font-bold text-brand-textMuted uppercase tracking-widest">
-                  <th className="py-5 px-6 w-1/4 bg-brand-card/60">Specification</th>
+                  <th className="sticky top-16 py-5 px-6 w-1/4 bg-brand-card z-20 border-b border-brand-border shadow-sm">Specification</th>
                   {models.map((model, idx) => (
-                    <th key={idx} className="py-5 px-6 w-1/4 bg-brand-card/60">
+                    <th key={idx} className="sticky top-16 py-5 px-6 w-1/4 bg-brand-card z-20 border-b border-brand-border shadow-sm">
                       {model ? (
                         <div className="flex items-center gap-3">
                           <div className="h-10 w-10 bg-brand-white rounded-xl p-1 flex items-center justify-center shrink-0 border border-brand-border/30">
                             <img src={model.image} alt={model.name} className="h-full object-contain mix-blend-darken" />
                           </div>
                           <div className="text-left min-w-0">
-                            <p className="text-[11px] font-bold text-brand-black leading-tight truncate max-w-[120px]">{model.name}</p>
+                            <p className="text-[11px] font-bold text-brand-black leading-tight truncate max-w-[180px]">{model.name}</p>
                             <p className="text-[10px] text-brand-gold font-extrabold mt-0.5">{formatPrice(model.price)}</p>
                           </div>
                           <button
@@ -464,11 +464,13 @@ export default function ComparePage() {
                 
                 {/* 1. Display */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <Layers className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Display Tech</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Screen size & features</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <Layers className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Display Tech</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Screen size & features</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -494,11 +496,13 @@ export default function ComparePage() {
 
                 {/* 2. Chip */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <Cpu className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Processor (Chip)</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Silicon & performance</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <Cpu className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Processor (Chip)</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Silicon & performance</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -524,11 +528,13 @@ export default function ComparePage() {
 
                 {/* 3. Camera */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <Camera className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Camera System</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Optical specifications</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <Camera className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Camera System</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Optical specifications</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -554,11 +560,13 @@ export default function ComparePage() {
 
                 {/* 4. Optical Zoom */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <Smartphone className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Optical Zoom</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Range & lens capture</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <Smartphone className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Optical Zoom</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Range & lens capture</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -574,11 +582,13 @@ export default function ComparePage() {
 
                 {/* 5. Battery */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <Battery className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Battery Runtime</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Video playback capacity</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <Battery className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Battery Runtime</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Video playback capacity</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -594,11 +604,13 @@ export default function ComparePage() {
 
                 {/* 6. Ports */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Connection & Ports</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Cable types & speeds</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <HelpCircle className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Connection & Ports</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Cable types & speeds</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -614,11 +626,13 @@ export default function ComparePage() {
 
                 {/* 7. Safety */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <ShieldAlert className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Safety Features</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">SOS & crash sensors</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <ShieldAlert className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Safety Features</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">SOS & crash sensors</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (
@@ -641,11 +655,13 @@ export default function ComparePage() {
 
                 {/* 8. Build */}
                 <tr className="hover:bg-brand-gold/[0.015] transition-colors">
-                  <td className="py-6 px-6 font-semibold flex items-start gap-2.5">
-                    <Layers className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-brand-black font-bold">Materials & Build</p>
-                      <p className="text-[10px] text-brand-textMuted leading-normal">Design enclosure</p>
+                  <td className="py-6 px-6 font-semibold align-top">
+                    <div className="flex items-start gap-2.5">
+                      <Layers className="w-4 h-4 text-brand-gold mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-brand-black font-bold">Materials & Build</p>
+                        <p className="text-[10px] text-brand-textMuted leading-normal">Design enclosure</p>
+                      </div>
                     </div>
                   </td>
                   {models.map((model, idx) => (

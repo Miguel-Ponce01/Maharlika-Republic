@@ -50,8 +50,22 @@ export default function Footer() {
         {/* Top Section: Brand Info + Newsletter */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-brand-border/60">
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="font-heading font-extrabold text-2xl tracking-tighter text-brand-black uppercase">
-              Maharlika <span className="text-brand-gold">Republic</span>
+            <Link href="/" className="flex items-center gap-3 group mb-4">
+              <div className="relative w-9 h-9 overflow-hidden rounded shrink-0">
+                <img 
+                  src="/logo.png" 
+                  className="w-full h-full object-cover dark:hidden mix-blend-multiply" 
+                  alt="Maharlika Republic Logo" 
+                />
+                <img 
+                  src="/logo-black.jpg" 
+                  className="w-full h-full object-cover hidden dark:block mix-blend-screen" 
+                  alt="Maharlika Republic Logo" 
+                />
+              </div>
+              <span className="font-heading font-extrabold text-xl uppercase tracking-wider text-brand-black group-hover:text-brand-gold transition-colors">
+                Maharlika <span className="text-brand-gold">Republic</span>
+              </span>
             </Link>
             <p className="text-xs text-brand-textMuted max-w-xl leading-relaxed">
               Maharlika Republic (Marexx Republic) is Davao City&apos;s premier reseller of pre-owned and brand-new Apple devices. Enjoy high-quality gadget inspection, store warranty, and flexible financing.

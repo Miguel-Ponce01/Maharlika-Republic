@@ -31,6 +31,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ProductDetailsModal from "@/components/ui/ProductDetailsModal";
 import MaharlikaHub from "@/components/ui/MaharlikaHub";
+import OurClients from "@/components/ui/OurClients";
+
 
 const FACEBOOK_REVIEWS = [
   {
@@ -510,6 +512,9 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      {/* OUR CLIENTS SECTION */}
+      <OurClients />
 
       {/* 11. COMMUNITY RECOMMENDATIONS & REVIEWS */}
       <section className="py-20 px-6 max-w-7xl mx-auto space-y-12">

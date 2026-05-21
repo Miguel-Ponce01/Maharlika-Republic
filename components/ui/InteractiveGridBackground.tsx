@@ -19,24 +19,24 @@ export default function InteractiveGridBackground() {
     };
   }, []);
 
+  if (!mounted) return null;
+
   return (
     <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden bg-[#F9F9F7]">
-      {mounted && (
-        <>
-          {/* Drifting glow blobs */}
-          <motion.div
-            animate={{
-              x: [0, 80, -40, 0],
-              y: [0, -60, 80, 0],
-              scale: [1, 1.2, 0.9, 1],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute top-[10%] left-[20%] w-[350px] h-[350px] rounded-full bg-brand-gold/5 blur-[80px]"
-          />
+      {/* Drifting glow blobs */}
+      <motion.div
+        animate={{
+          x: [0, 80, -40, 0],
+          y: [0, -60, 80, 0],
+          scale: [1, 1.2, 0.9, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="absolute top-[10%] left-[20%] w-[350px] h-[350px] rounded-full bg-brand-gold/5 blur-[80px]"
+      />
       <motion.div
         animate={{
           x: [0, -90, 50, 0],
@@ -76,8 +76,6 @@ export default function InteractiveGridBackground() {
           WebkitMaskImage: `radial-gradient(450px circle at ${mousePos.x}px ${mousePos.y}px, black 30%, transparent 100%)`,
         }}
       />
-      </>
-      )}
     </div>
   );
 }
