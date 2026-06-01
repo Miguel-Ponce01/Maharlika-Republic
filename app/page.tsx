@@ -503,7 +503,7 @@ export default function Home() {
             Get daily updates on arrivals, legitness check tutorials, and customer upgrade testimonials.
           </p>
           <a 
-            href="https://tiktok.com" 
+            href="https://www.tiktok.com/@marexxrepublic" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="inline-block px-6 py-2.5 bg-brand-black dark:bg-brand-gold text-white hover:bg-gray-800 dark:hover:bg-yellow-600 transition-colors rounded-full font-bold text-xs uppercase shadow-sm"

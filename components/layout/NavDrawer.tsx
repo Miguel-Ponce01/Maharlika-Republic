@@ -21,7 +21,7 @@ export default function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
     { name: "Mac", href: "/products?type=Mac", icon: Laptop },
     { name: "Apple Watch", href: "/products?type=Apple Watch", icon: Watch },
     { name: "AirPods & Earphones", href: "/products?type=AirPods & Earphones", icon: Headphones },
-    { name: "Compare iPhone Models", href: "/compare", icon: Sparkles }
+    { name: "All Products", href: "/products", icon: Sparkles }
   ];
 
   const categoryLinks = [
@@ -35,17 +35,11 @@ export default function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
   ];
 
   const supportLinks = [
-    { name: "Earn BTB Badges", href: "/products" },
-    { name: "Service Center", href: "/#map" },
-    { name: "Our Brands", href: "/products" },
-    { name: "Collaborations", href: "/products" },
     { name: "Store Locator", href: "/#map" },
-    { name: "BoxTrade", href: "/products" },
     { name: "Payment Options", href: "/payment-options" },
     { name: "Warranty Policy", href: "/products" },
-    { name: "Delivery & Shipping", href: "/products" },
-    { name: "Careers", href: "/products" },
-    { name: "Contact Us", href: "https://www.facebook.com/messages/t/marexxrepublicdavao" }
+    { name: "Contact Us via Facebook", href: "https://www.facebook.com/messages/t/marexxrepublicdavao" },
+    { name: "Follow on TikTok", href: "https://www.tiktok.com/@marexxrepublic" }
   ];
 
   const drawerVariants = {
@@ -207,7 +201,7 @@ export default function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
                     <Facebook className="w-4 h-4" />
                   </a>
                   <a 
-                    href="https://instagram.com" 
+                    href="https://www.instagram.com/marexxrepublic" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="p-2.5 rounded-full border border-brand-border/50 hover:border-brand-gold hover:text-brand-gold transition-all duration-300 hover:scale-105 bg-white dark:bg-neutral-800 text-brand-black dark:text-white"

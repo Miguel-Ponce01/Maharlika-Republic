@@ -2,3 +2,13 @@ node_modules
 dist
 .DS_Store
 *.local
+.next
+.next/
+*.pack
+*.pack.gz
+.vercel
+build
+/out
+/coverage
+*.tsbuildinfo
+next-env.d.ts

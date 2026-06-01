@@ -39,16 +39,16 @@ export default function Navbar() {
             >
               <Menu className="w-5 h-5" />
             </button>
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-8 h-8 overflow-hidden rounded shrink-0">
+            <Link href="/" className="flex items-center gap-1.5 group">
+              <div className="relative w-12 h-12 overflow-hidden shrink-0 flex items-center justify-center -ml-1">
                 <img 
                   src="/logo.png" 
-                  className="w-full h-full object-cover dark:hidden mix-blend-multiply" 
+                  className="w-full h-full object-contain dark:hidden mix-blend-multiply scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
                 <img 
                   src="/logo-black.jpg" 
-                  className="w-full h-full object-cover hidden dark:block mix-blend-screen" 
+                  className="w-full h-full object-contain hidden dark:block mix-blend-screen scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
               </div>

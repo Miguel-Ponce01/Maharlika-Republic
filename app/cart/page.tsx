@@ -34,16 +34,25 @@ export default function CartPage() {
   const handleCalculateShipping = (e: React.FormEvent) => {
     e.preventDefault();
     if (!townCity) return;
-    
-    // Simulate a dynamic calculation based on name length or static rates
-    if (shippingMethod === "rider") {
-      const distanceKM = Math.max(3, (townCity.length % 10) + 1);
-      const computedFee = 79 + Math.max(0, distanceKM - 4) * 15;
-      setShippingFee(computedFee);
-    } else if (shippingMethod === "outside") {
-      setShippingFee(250);
-    } else {
+
+    // City-based flat rate lookup (Davao Region + major PH cities)
+    const CITY_RATES: Record<string, number> = {
+      "davao city": 79, "bajada": 79, "toril": 79, "buhangin": 79,
+      "calinan": 79, "marilog": 79, "paquibato": 79, "baguio": 120,
+      "tagum": 120, "digos": 120, "panabo": 120, "mati": 150,
+      "general santos": 150, "cotabato": 150, "zamboanga": 200,
+      "cebu": 200, "cebu city": 200, "mandaue": 200, "lapu-lapu": 200,
+      "manila": 250, "quezon city": 250, "makati": 250, "pasig": 250,
+      "taguig": 250, "marikina": 250, "caloocan": 250, "las piñas": 250,
+      "iloilo": 220, "bacolod": 220, "cagayan de oro": 180,
+    };
+
+    if (shippingMethod === "pickup") {
       setShippingFee(0);
+    } else {
+      const key = townCity.trim().toLowerCase();
+      const rate = CITY_RATES[key] ?? (shippingMethod === "outside" ? 250 : 200);
+      setShippingFee(rate);
     }
     setIsCalculated(true);
   };
@@ -228,12 +237,8 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Update cart mockup action button */}
-              <div className="flex justify-end">
-                <button className="px-6 py-2.5 border border-brand-border hover:bg-brand-border rounded-xl text-xs font-semibold uppercase tracking-wider text-brand-black transition-colors">
-                  Update Cart
-                </button>
-              </div>
+
+
             </div>
 
             {/* Right Column: Cart Totals */}

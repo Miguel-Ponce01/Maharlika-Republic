@@ -10,9 +10,8 @@ export default function Footer() {
     { name: "Mac", href: "/products?type=Mac" },
     { name: "Apple Watch", href: "/products?type=Apple Watch" },
     { name: "AirPods", href: "/products?type=AirPods & Earphones" },
-    { name: "AirTag", href: "/products?type=Chargers & Cables" },
-    { name: "Apple Accessories", href: "/products?type=Accessories" },
-    { name: "Compare iPhones", href: "/compare" }
+    { name: "Chargers & Cables", href: "/products?type=Chargers & Cables" },
+    { name: "Apple Accessories", href: "/products?type=Accessories" }
   ];
 
   const shopCategories = [
@@ -25,15 +24,9 @@ export default function Footer() {
   ];
 
   const support = [
-    { name: "Earn BTB Badges", href: "/products" },
-    { name: "Service Center", href: "/#map" },
-    { name: "Our Brands", href: "/products" },
-    { name: "Collaborations", href: "/products" },
     { name: "Store Locator", href: "/#map" },
     { name: "Payment Options", href: "/payment-options" },
     { name: "Warranty Policy", href: "/products" },
-    { name: "Delivery & Shipping", href: "/products" },
-    { name: "Careers", href: "/products" },
     { name: "Privacy Statement", href: "/products" },
     { name: "Terms of Use", href: "/products" }
   ];
@@ -50,16 +43,16 @@ export default function Footer() {
         {/* Top Section: Brand Info + Newsletter */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-brand-border/60">
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-3 group mb-4">
-              <div className="relative w-9 h-9 overflow-hidden rounded shrink-0">
+            <Link href="/" className="flex items-center gap-2 group mb-4">
+              <div className="relative w-14 h-14 overflow-hidden shrink-0 flex items-center justify-center -ml-2">
                 <img 
                   src="/logo.png" 
-                  className="w-full h-full object-cover dark:hidden mix-blend-multiply" 
+                  className="w-full h-full object-contain dark:hidden mix-blend-multiply scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
                 <img 
                   src="/logo-black.jpg" 
-                  className="w-full h-full object-cover hidden dark:block mix-blend-screen" 
+                  className="w-full h-full object-contain hidden dark:block mix-blend-screen scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
               </div>
@@ -80,7 +73,7 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a 
-                href="https://instagram.com" 
+                href="https://www.instagram.com/marexxrepublic" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-brand-black hover:text-brand-gold transition-colors"

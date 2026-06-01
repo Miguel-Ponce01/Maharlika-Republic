@@ -18,29 +18,10 @@ interface CartState {
   clearCart: () => void;
 }
 
-const DEFAULT_ITEMS: CartItem[] = [
-  {
-    id: "iphone-16-pro-max",
-    name: "iPhone 16 Pro Max",
-    price: 84990,
-    image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop",
-    quantity: 1,
-    specs: "256GB, Desert Titanium"
-  },
-  {
-    id: "macbook-pro-m3-max",
-    name: "MacBook Pro 16\" M3 Max",
-    price: 199990,
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop",
-    quantity: 1,
-    specs: "36GB RAM, 1TB SSD, Space Black"
-  }
-];
-
 export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
-      items: DEFAULT_ITEMS,
+      items: [],
       addItem: (newItem) => set((state) => {
         const exists = state.items.find(item => item.id === newItem.id);
         if (exists) {
