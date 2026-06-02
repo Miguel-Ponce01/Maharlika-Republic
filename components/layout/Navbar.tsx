@@ -49,14 +49,14 @@ export default function Navbar() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-full flex items-center justify-between">
           
-          {/* Left Side: Brand Logo */}
-          <div className="flex items-center space-x-2">
+          {/* Left Side: Menu + Brand Logo */}
+          <div className="flex items-center space-x-4 xl:space-x-6">
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden flex items-center p-2 -ml-2 text-brand-black dark:text-white hover:text-brand-gold transition-colors focus:outline-none"
+              className="flex items-center gap-2 p-2 -ml-2 text-brand-black dark:text-white hover:text-brand-gold transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-5 h-5 md:w-6 md:h-6" />
             </button>
             <Link href="/" className="flex items-center gap-1 group">
               <div 

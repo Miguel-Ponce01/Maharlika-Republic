@@ -337,18 +337,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           
           <div className="flex flex-col md:flex-row items-center md:items-start gap-5">
-            <div className="relative shrink-0 select-none pb-2">
-              {/* Decorative Ribbon Tails */}
-              <svg className="absolute top-[34px] left-1/2 -translate-x-1/2 w-8 h-6 text-brand-gold/70 drop-shadow-[0_2px_3px_rgba(0,0,0,0.1)]" viewBox="0 0 32 24" fill="currentColor">
-                <path d="M10 0 L4 22 L10 18.5 L16 22 Z" />
-                <path d="M22 0 L16 22 L22 18.5 L28 22 Z" />
-              </svg>
-              {/* Scalloped Gold Seal */}
-              <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 via-brand-gold to-yellow-600 shadow-md shadow-brand-gold/20 text-neutral-900 border border-amber-200/30">
-                <div className="absolute inset-[2.5px] rounded-full border border-dashed border-white/50" />
-                <div className="absolute inset-[4.5px] rounded-full border border-white/20" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/30" />
-                <Award className="w-5 h-5 text-neutral-950 relative z-10 drop-shadow-[0_0.5px_0.5px_rgba(255,255,255,0.2)]" />
+            <div className="relative shrink-0 select-none">
+              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+                <Award className="w-6 h-6 stroke-[1.5]" />
               </div>
             </div>
             <div className="space-y-1">
@@ -360,18 +351,9 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-5 border-y md:border-y-0 md:border-x border-brand-border py-8 md:py-0 md:px-8">
-            <div className="relative shrink-0 select-none pb-2">
-              {/* Decorative Ribbon Tails */}
-              <svg className="absolute top-[34px] left-1/2 -translate-x-1/2 w-8 h-6 text-brand-gold/70 drop-shadow-[0_2px_3px_rgba(0,0,0,0.1)]" viewBox="0 0 32 24" fill="currentColor">
-                <path d="M10 0 L4 22 L10 18.5 L16 22 Z" />
-                <path d="M22 0 L16 22 L22 18.5 L28 22 Z" />
-              </svg>
-              {/* Scalloped Gold Seal */}
-              <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 via-brand-gold to-yellow-600 shadow-md shadow-brand-gold/20 text-neutral-900 border border-amber-200/30">
-                <div className="absolute inset-[2.5px] rounded-full border border-dashed border-white/50" />
-                <div className="absolute inset-[4.5px] rounded-full border border-white/20" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/30" />
-                <ShieldCheck className="w-5 h-5 text-neutral-950 relative z-10 drop-shadow-[0_0.5px_0.5px_rgba(255,255,255,0.2)]" />
+            <div className="relative shrink-0 select-none">
+              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+                <ShieldCheck className="w-6 h-6 stroke-[1.5]" />
               </div>
             </div>
             <div className="space-y-1">
@@ -383,18 +365,9 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-5">
-            <div className="relative shrink-0 select-none pb-2">
-              {/* Decorative Ribbon Tails */}
-              <svg className="absolute top-[34px] left-1/2 -translate-x-1/2 w-8 h-6 text-brand-gold/70 drop-shadow-[0_2px_3px_rgba(0,0,0,0.1)]" viewBox="0 0 32 24" fill="currentColor">
-                <path d="M10 0 L4 22 L10 18.5 L16 22 Z" />
-                <path d="M22 0 L16 22 L22 18.5 L28 22 Z" />
-              </svg>
-              {/* Scalloped Gold Seal */}
-              <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 via-brand-gold to-yellow-600 shadow-md shadow-brand-gold/20 text-neutral-900 border border-amber-200/30">
-                <div className="absolute inset-[2.5px] rounded-full border border-dashed border-white/50" />
-                <div className="absolute inset-[4.5px] rounded-full border border-white/20" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/30" />
-                <Clock className="w-5 h-5 text-neutral-950 relative z-10 drop-shadow-[0_0.5px_0.5px_rgba(255,255,255,0.2)]" />
+            <div className="relative shrink-0 select-none">
+              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+                <Clock className="w-6 h-6 stroke-[1.5]" />
               </div>
             </div>
             <div className="space-y-1">
