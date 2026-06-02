@@ -12,7 +12,6 @@ import MegaMenu from "./MegaMenu";
 
 const navLinks = [
   { name: "Inside", href: "/#hub" },
-  { name: "Protection", href: "/#cases" },
   { name: "Community", href: "/#community" },
   { name: "Stories", href: "/#clients" },
   { name: "About", href: "/#about" }
