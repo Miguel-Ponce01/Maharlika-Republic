@@ -32,6 +32,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProductDetailsModal from "@/components/ui/ProductDetailsModal";
 import MaharlikaHub from "@/components/ui/MaharlikaHub";
 import OurClients from "@/components/ui/OurClients";
+import { useAuthStore } from "@/src/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 type ProductItem = {
   id: string;
@@ -95,6 +97,10 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [bestItems, setBestItems] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  const user = useAuthStore((state) => state.user);
+  const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchBestItems() {
@@ -247,12 +253,18 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Link 
-                    href="/products?type=Mac"
+                  <button 
+                    onClick={() => {
+                      if (user) {
+                        router.push("/products?type=Mac");
+                      } else {
+                        setAuthModalOpen(true);
+                      }
+                    }}
                     className="px-6 py-3 bg-brand-gold hover:bg-yellow-600 text-white rounded-full font-medium transition-colors shadow-lg shadow-brand-gold/15 inline-block"
                   >
                     Shop MacBook Pro
-                  </Link>
+                  </button>
                 </motion.div>
               </div>
             </motion.div>

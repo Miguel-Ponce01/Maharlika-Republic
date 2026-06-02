@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/src/db';
 import { orders, orderItems } from '@/src/db/schema';
+import { createClient } from '@/utils/supabase/server';
 
 // =============================================================================
 // POST /api/checkout — Persist a new order to Supabase
@@ -14,6 +15,9 @@ function generateOrderReference(): string {
 
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
     const body = await request.json();
     const { customerName, customerEmail, customerPhone, shippingAddress, paymentMethod, items, notes } = body;
 
@@ -41,6 +45,7 @@ export async function POST(request: Request) {
         .insert(orders)
         .values({
           orderReference,
+          userId: user ? user.id : null,
           customerName,
           customerEmail,
           customerPhone: customerPhone ?? null,

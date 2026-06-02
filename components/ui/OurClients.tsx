@@ -14,21 +14,21 @@ interface Client {
 const CLIENTS: Client[] = [
   {
     id: 0,
-    image: "/clients/client1.png",
-    name: "Shry Electronics & Friends",
-    location: "Davao City",
+    image: "/clients/pic2.jpg",
+    name: "Hands-on Device Testing",
+    location: "Marexx Showroom",
   },
   {
     id: 1,
-    image: "/clients/client2.png",
-    name: "Marexx Republic & Clients",
-    location: "Tagum City",
+    image: "/clients/pic3.jpg",
+    name: "Happy Upgraded Clients",
+    location: "Davao City",
   },
   {
     id: 2,
-    image: "/clients/client3.png",
-    name: "Happy Family Upgrade",
-    location: "Davao City",
+    image: "/clients/pic1.jpg",
+    name: "Marexx Grand Opening",
+    location: "F. Torres St, Bajada",
   },
 ];
 
@@ -92,7 +92,7 @@ export default function OurClients() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-gray-400 text-sm md:text-base max-w-md leading-relaxed font-medium"
             >
-              Trusted by businesses across the Philippines, our clients choose our PC bundles for their reliability and value.
+              Trusted by hundreds of Apple enthusiasts across Davao. See real moments from our showroom and our happy community of upgraded clients.
             </motion.p>
           </div>
 
@@ -128,7 +128,7 @@ export default function OurClients() {
               const isActive = relativeIndex === 0;
 
               // Responsive scaling & shifting
-              const stepX = isMobile ? 35 : 75; 
+              const stepX = isMobile ? 35 : 75;
               const translateX = relativeIndex * stepX;
               const scale = 1 - relativeIndex * 0.08;
               const zIndex = L - relativeIndex;
@@ -149,11 +149,10 @@ export default function OurClients() {
                     damping: 24,
                   }}
                   onClick={() => setActiveIndex(index)}
-                  className={`absolute left-0 w-[210px] sm:w-[260px] aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer origin-left shadow-2xl transition-all duration-300 ${
-                    isActive
+                  className={`absolute left-0 w-[210px] sm:w-[260px] aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer origin-left shadow-2xl transition-all duration-300 ${isActive
                       ? "ring-2 ring-brand-gold ring-offset-2 ring-offset-neutral-950 shadow-brand-gold/10"
                       : "hover:opacity-80"
-                  }`}
+                    }`}
                 >
                   <img
                     src={client.image}

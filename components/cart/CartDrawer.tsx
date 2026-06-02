@@ -4,12 +4,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Plus, Minus, Trash2 } from "lucide-react";
 import { useUIStore } from "@/src/store/useUIStore";
 import { useCartStore } from "@/src/store/useCartStore";
+import { useAuthStore } from "@/src/store/useAuthStore";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CartDrawer() {
   const isCartOpen = useUIStore((state) => state.isCartOpen);
   const setCartOpen = useUIStore((state) => state.setCartOpen);
   const { items, updateQuantity, removeItem } = useCartStore();
+  const user = useAuthStore((state) => state.user);
+  const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
+  const router = useRouter();
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -121,13 +126,19 @@ export default function CartDrawer() {
                   >
                     View Full Cart
                   </Link>
-                  <Link 
-                    href="/checkout"
-                    onClick={() => setCartOpen(false)}
+                  <button 
+                    onClick={() => {
+                      setCartOpen(false);
+                      if (user) {
+                        router.push("/checkout");
+                      } else {
+                        setAuthModalOpen(true);
+                      }
+                    }}
                     className="w-full py-3.5 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-brand-gold/15 flex items-center justify-center text-center text-sm"
                   >
                     Checkout
-                  </Link>
+                  </button>
                 </div>
               </div>
             )}

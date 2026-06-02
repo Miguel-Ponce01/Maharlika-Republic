@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Facebook, Instagram, Send } from "lucide-react";
 
 export default function Footer() {
@@ -35,6 +36,9 @@ export default function Footer() {
     e.preventDefault();
     alert("Thank you for subscribing to Maharlika Republic newsletter!");
   };
+
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <footer className="bg-[#E4ECE8] dark:bg-[#111214] text-brand-black/80 dark:text-white/80 border-t border-brand-border/60 mt-20 transition-colors duration-300">

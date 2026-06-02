@@ -2,10 +2,12 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingBag, Sun, Moon, Menu } from "lucide-react";
+import { Search, ShoppingBag, Sun, Moon, Menu, User } from "lucide-react";
 import { useUIStore } from "@/src/store/useUIStore";
 import { useTheme } from "@/src/store/useThemeStore";
+import { useAuthStore } from "@/src/store/useAuthStore";
 import NavDrawer from "./NavDrawer";
 
 const navLinks = [
@@ -23,6 +25,12 @@ export default function Navbar() {
   const toggleSearch = useUIStore((state) => state.toggleSearch);
   const toggleCart = useUIStore((state) => state.toggleCart);
   const { theme, toggleTheme, mounted } = useTheme();
+  
+  const user = useAuthStore((state) => state.user);
+  const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return null;
 
 
   return (
@@ -87,6 +95,15 @@ export default function Navbar() {
           </nav>
    
           <div className="flex items-center space-x-2">
+            {user ? (
+              <Link href="/account" className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
+                <User className="w-5 h-5" />
+              </Link>
+            ) : (
+              <button onClick={() => setAuthModalOpen(true)} className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
+                <User className="w-5 h-5" />
+              </button>
+            )}
             <button onClick={toggleSearch} className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
               <Search className="w-5 h-5" />
             </button>

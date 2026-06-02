@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 import { useCartStore } from "@/src/store/useCartStore";
+import { useAuthStore } from "@/src/store/useAuthStore";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Truck, Check } from "lucide-react";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem } = useCartStore();
+  const user = useAuthStore((state) => state.user);
+  const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
+  const router = useRouter();
+  
   const [payAs, setPayAs] = useState("Cash");
   const [shippingMethod, setShippingMethod] = useState("rider"); // "rider" | "outside" | "pickup"
   const [shippingFee, setShippingFee] = useState(79); // Default Rider Dash base rate
@@ -400,12 +406,18 @@ export default function CartPage() {
                 </div>
 
                 {/* Checkout Link CTA */}
-                <Link 
-                  href={`/checkout?payAs=${payAs}&shipping=${shippingMethod}&fee=${shippingFee}`}
+                <button 
+                  onClick={() => {
+                    if (user) {
+                      router.push(`/checkout?payAs=${payAs}&shipping=${shippingMethod}&fee=${shippingFee}`);
+                    } else {
+                      setAuthModalOpen(true);
+                    }
+                  }}
                   className="w-full py-4 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-brand-gold/15 flex items-center justify-center text-center uppercase tracking-widest text-xs"
                 >
                   Proceed to Checkout
-                </Link>
+                </button>
 
               </div>
             </div>

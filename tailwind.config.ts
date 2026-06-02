@@ -22,6 +22,8 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],
         heading: ['var(--font-outfit)', 'sans-serif'],
+        cursive: ['var(--font-cursive)', 'cursive'],
+        ladyrose: ['var(--font-ladyrose)', 'sans-serif'],
       },
     },
   },

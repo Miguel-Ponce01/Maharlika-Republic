@@ -122,16 +122,26 @@ function CheckoutContent() {
 
     setIsSubmitting(true);
     
-    // Simulate API POST /api/checkout
+    // Send real order data to /api/checkout
     try {
-      const orderId = `MHLK-${Math.floor(100000 + Math.random() * 900000)}`;
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          orderId,
+          customerName: formData.fullName,
           customerEmail: formData.email,
-          items: items.map(item => ({ id: item.id, qty: item.quantity }))
+          customerPhone: formData.phone,
+          shippingAddress: formData.deliveryMethod === 'pickup' 
+            ? 'Store Pick-up' 
+            : `${formData.addressStreet}, ${formData.addressCity}, ${formData.addressRegion}`,
+          paymentMethod: formData.paymentMethod,
+          items: items.map(item => ({
+            productName: item.name,
+            variantSku: `${item.id}-base`, // Match the SKU format used in the seed
+            quantity: item.quantity,
+            unitPriceCents: item.price * 100,
+          })),
+          notes: `Delivery Method: ${formData.deliveryMethod}`
         })
       });
 
@@ -140,7 +150,7 @@ function CheckoutContent() {
       if (response.ok) {
         // Success payload for modal
         setOrderSuccess({
-          orderId,
+          orderId: result.order.reference,
           date: new Date().toLocaleDateString(),
           ...formData,
           items: [...items],
@@ -150,9 +160,13 @@ function CheckoutContent() {
         });
         clearCart();
         window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        console.error("Checkout failed:", result.error);
+        alert(result.error || "Checkout failed. Please try again.");
       }
     } catch (err) {
       console.error(err);
+      alert("An unexpected error occurred.");
     } finally {
       setIsSubmitting(false);
     }

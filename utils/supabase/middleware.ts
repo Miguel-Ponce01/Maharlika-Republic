@@ -29,7 +29,24 @@ export const updateSession = async (request: NextRequest) => {
   });
 
   // Refresh the session — keeps the user logged in across navigations
-  await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Protect /admin routes
+  if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
+    if (!user) {
+      // Redirect to login if not authenticated
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/login';
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // Redirect logged-in users away from the login page
+  if (request.nextUrl.pathname.startsWith('/admin/login') && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/admin';
+    return NextResponse.redirect(url);
+  }
 
   return supabaseResponse;
 };
