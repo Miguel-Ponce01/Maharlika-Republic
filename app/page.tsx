@@ -585,6 +585,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ABOUT US */}
+      <section id="about" className="py-20 px-6 max-w-7xl mx-auto border-t border-brand-border/40">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+              Our Story
+            </span>
+            <h2 className="text-3xl font-heading font-extrabold tracking-tighter uppercase">About Maharlika Republic</h2>
+            <p className="text-sm text-brand-textMuted leading-relaxed">
+              Maharlika Republic was built on a simple vision: to provide the people of Davao City and neighboring regions with access to high-quality, authentic Apple products through flexible and inclusive payment methods. We believe that premium technology should be accessible without the burden of restrictive credit requirements.
+            </p>
+            <p className="text-sm text-brand-textMuted leading-relaxed">
+              From our physical showroom in Bajada to our active online community, we pride ourselves on transparency, top-notch customer service, and an unwavering commitment to bringing the best gadgets closer to you.
+            </p>
+            <div className="pt-4">
+              <Link href="/products" className="inline-flex items-center gap-2 px-6 py-3 bg-brand-black text-brand-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 dark:hover:bg-gray-200 transition-colors">
+                Discover Our Catalog
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+          <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+            <img src="/clients/pic1.jpg" alt="Maharlika Republic Showroom" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white dark:border-white/10">
+                <p className="text-brand-black dark:text-white font-extrabold text-sm uppercase tracking-wider mb-1">Davao's Trusted Tech Hub</p>
+                <p className="text-xs text-brand-textMuted">Located at F. Torres St, Bajada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* OUR CLIENTS SECTION */}
       <OurClients />
 
@@ -688,41 +722,6 @@ export default function Home() {
         </div>
       </section>
 
-
-
-      {/* ABOUT US */}
-      <section id="about" className="py-20 px-6 max-w-7xl mx-auto border-t border-brand-border/40">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-              Our Story
-            </span>
-            <h2 className="text-3xl font-heading font-extrabold tracking-tighter uppercase">About Maharlika Republic</h2>
-            <p className="text-sm text-brand-textMuted leading-relaxed">
-              Maharlika Republic was built on a simple vision: to provide the people of Davao City and neighboring regions with access to high-quality, authentic Apple products through flexible and inclusive payment methods. We believe that premium technology should be accessible without the burden of restrictive credit requirements.
-            </p>
-            <p className="text-sm text-brand-textMuted leading-relaxed">
-              From our physical showroom in Bajada to our active online community, we pride ourselves on transparency, top-notch customer service, and an unwavering commitment to bringing the best gadgets closer to you.
-            </p>
-            <div className="pt-4">
-              <Link href="/products" className="inline-flex items-center gap-2 px-6 py-3 bg-brand-black text-brand-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 dark:hover:bg-gray-200 transition-colors">
-                Discover Our Catalog
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-          <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
-            <img src="/clients/pic1.jpg" alt="Maharlika Republic Showroom" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6">
-              <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white dark:border-white/10">
-                <p className="text-brand-black dark:text-white font-extrabold text-sm uppercase tracking-wider mb-1">Davao's Trusted Tech Hub</p>
-                <p className="text-xs text-brand-textMuted">Located at F. Torres St, Bajada</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 12. MAP & SHOWROOM LOCATOR */}
       <section id="map" className="py-20 px-6 border-t border-brand-border bg-brand-white dark:bg-transparent">

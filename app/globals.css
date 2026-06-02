@@ -19,7 +19,7 @@
     --card-bg: #1A1C1E;
     --border-color: rgba(255, 255, 255, 0.1);
     --text-muted: #9CA3AF;
-    --nav-bg: rgba(18, 20, 22, 0.85);
+    --nav-bg: rgba(10, 10, 10, 0.75);
     --glass-border: rgba(255, 255, 255, 0.08);
   }
 
@@ -56,8 +56,8 @@ body {
 /* Glassmorphism Utilities */
 .glass {
   background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--glass-border);
 }
 
