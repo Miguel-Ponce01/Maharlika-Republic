@@ -52,7 +52,7 @@ export default async function AdminInventory() {
             <tbody className="divide-y divide-brand-border">
               {allProducts.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-brand-textMuted">
+                  <td colSpan={6} className="px-6 py-8 text-center text-brand-textMuted">
                     No products found in inventory.
                   </td>
                 </tr>
