@@ -8,19 +8,21 @@ import { Search, ShoppingBag, Sun, Moon, Menu, User } from "lucide-react";
 import { useUIStore } from "@/src/store/useUIStore";
 import { useTheme } from "@/src/store/useThemeStore";
 import { useAuthStore } from "@/src/store/useAuthStore";
-import NavDrawer from "./NavDrawer";
+import MegaMenu from "./MegaMenu";
 
 const navLinks = [
-  { name: "All Products", href: "/products" },
-  { name: "Mac", href: "/products?type=Mac" },
-  { name: "iPhone", href: "/products?type=iPhone" },
-  { name: "iPad", href: "/products?type=iPad" },
-  { name: "Accessories", href: "/products?type=Accessories" },
+  { name: "Inside Maharlika", href: "/#hub" },
+  { name: "Cases & Protection", href: "/#cases" },
+  { name: "Offers", href: "/#offers" },
+  { name: "Our Clients", href: "/#clients" },
+  { name: "Our Community", href: "/#community" },
+  { name: "About Us", href: "/#about" },
+  { name: "Location", href: "/#map" }
 ];
 
 export default function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const toggleSearch = useUIStore((state) => state.toggleSearch);
   const toggleCart = useUIStore((state) => state.toggleCart);
@@ -41,11 +43,12 @@ export default function Navbar() {
           {/* Left Side: Drawer Trigger + Brand Logo */}
           <div className="flex items-center space-x-3">
             <button 
-              onClick={() => setIsDrawerOpen(true)}
-              className="p-2 -ml-2 text-brand-black/80 hover:text-brand-gold transition-colors focus:outline-none"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex items-center gap-2 p-2 -ml-2 text-brand-black/80 hover:text-brand-gold transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               <Menu className="w-5 h-5" />
+              <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:block">Menu</span>
             </button>
             <Link href="/" className="flex items-center gap-1.5 group">
               <div className="relative w-12 h-12 overflow-hidden shrink-0 flex items-center justify-center -ml-1">
@@ -115,12 +118,8 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Slide Navigation Drawer */}
-      <AnimatePresence>
-        {isDrawerOpen && (
-          <NavDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
-        )}
-      </AnimatePresence>
+      {/* Mega Menu Dropdown */}
+      <MegaMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </>
   );
 }

@@ -103,7 +103,7 @@ export default function MaharlikaHub() {
   const ActiveIcon = current.icon;
 
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto relative z-10">
+    <section id="hub" className="py-24 px-6 max-w-7xl mx-auto relative z-10">
       <div className="text-center mb-16 space-y-4">
         <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-extrabold px-5 py-2 rounded-full uppercase tracking-wider">
           Inside Maharlika Republic

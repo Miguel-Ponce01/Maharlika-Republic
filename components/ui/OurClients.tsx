@@ -54,7 +54,7 @@ export default function OurClients() {
   };
 
   return (
-    <section className="relative py-24 px-6 md:px-12 overflow-hidden bg-neutral-950 text-white min-h-[500px] flex items-center">
+    <section id="clients" className="relative py-24 px-6 md:px-12 overflow-hidden bg-neutral-950 text-white min-h-[500px] flex items-center">
       {/* Immersive blurred dynamic background cross-fade */}
       <div className="absolute inset-0 overflow-hidden -z-10">
         <AnimatePresence mode="wait">

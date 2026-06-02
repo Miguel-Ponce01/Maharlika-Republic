@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MaharlikaMap from "@/components/map/MaharlikaMap";
 import {
   Smartphone,
@@ -102,6 +102,37 @@ export default function Home() {
   const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
   const router = useRouter();
 
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [dragDistance, setDragDistance] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setDragDistance(0);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    setDragDistance(Math.abs(walk));
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
   useEffect(() => {
     async function fetchBestItems() {
       try {
@@ -135,6 +166,7 @@ export default function Home() {
   }, []);
 
   const handleBestItemClick = (item: ProductItem) => {
+    if (dragDistance > 10) return; // Prevent click if dragged
     setSelectedProduct(item);
   };
 
@@ -416,20 +448,30 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-none min-h-[300px]">
+          <div 
+            ref={sliderRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            className={`flex gap-6 overflow-x-auto pb-4 scrollbar-none min-h-[300px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          >
             {loading ? (
               <div className="flex w-full items-center justify-center gap-2 text-brand-gold text-xs font-bold uppercase tracking-widest">
                 <div className="w-5 h-5 border-2 border-brand-gold/20 border-t-brand-gold rounded-full animate-spin"></div>
                 Loading best items...
               </div>
             ) : (
-              bestItems.map((item) => (
-                <div 
+              bestItems.map((item, i) => (
+                <motion.div 
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.5, type: "spring" }}
                   key={item.name} 
                   onClick={() => handleBestItemClick(item)}
-                  className="w-64 bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between shrink-0 hover:shadow-lg transition-all group cursor-pointer active:scale-[0.98] duration-300"
+                  className="w-64 bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between shrink-0 hover:shadow-lg transition-all group active:scale-[0.98] duration-300"
                 >
-                  <div className="aspect-square w-full bg-neutral-100 dark:bg-neutral-800 rounded-xl overflow-hidden relative flex items-center justify-center p-4">
+                  <div className="aspect-square w-full bg-neutral-100 dark:bg-neutral-800 rounded-xl overflow-hidden relative flex items-center justify-center p-4 select-none pointer-events-none">
                     <img 
                       src={item.image} 
                       alt={item.name} 
@@ -441,11 +483,11 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                  <div className="mt-4 space-y-1">
+                  <div className="mt-4 space-y-1 select-none">
                     <h3 className="font-heading font-bold text-sm tracking-tight text-brand-black group-hover:text-brand-gold transition-colors">{item.name}</h3>
                     <p className="text-xs font-bold text-brand-gold">{formatPrice(item.price)}</p>
                   </div>
-                </div>
+                </motion.div>
               ))
             )}
           </div>
@@ -458,7 +500,7 @@ export default function Home() {
       <MaharlikaHub />
 
       {/* 8. CASES & PROTECTION GRID */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
+      <section id="cases" className="py-20 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-10 space-y-2">
           <h2 className="text-3xl font-heading font-extrabold tracking-tighter uppercase">Cases & Protection</h2>
           <p className="text-xs text-brand-textMuted">Stunning armor for your Apple items</p>
@@ -487,7 +529,7 @@ export default function Home() {
       </section>
 
       {/* 9. DON'T MISS OUT ON OFFERS */}
-      <section className="py-20 px-6 bg-neutral-50 dark:bg-black/10">
+      <section id="offers" className="py-20 px-6 bg-neutral-50 dark:bg-black/10">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-heading font-bold uppercase tracking-tighter">Don&apos;t miss out on these offers!</h2>
@@ -542,7 +584,7 @@ export default function Home() {
       <OurClients />
 
       {/* 11. COMMUNITY RECOMMENDATIONS & REVIEWS */}
-      <section className="py-20 px-6 max-w-7xl mx-auto space-y-12">
+      <section id="community" className="py-20 px-6 max-w-7xl mx-auto space-y-12">
         <div className="text-center space-y-2">
           <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
             Verified Customer Reviews
@@ -642,6 +684,40 @@ export default function Home() {
       </section>
 
 
+
+      {/* ABOUT US */}
+      <section id="about" className="py-20 px-6 max-w-7xl mx-auto border-t border-brand-border/40">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+              Our Story
+            </span>
+            <h2 className="text-3xl font-heading font-extrabold tracking-tighter uppercase">About Maharlika Republic</h2>
+            <p className="text-sm text-brand-textMuted leading-relaxed">
+              Maharlika Republic was built on a simple vision: to provide the people of Davao City and neighboring regions with access to high-quality, authentic Apple products through flexible and inclusive payment methods. We believe that premium technology should be accessible without the burden of restrictive credit requirements.
+            </p>
+            <p className="text-sm text-brand-textMuted leading-relaxed">
+              From our physical showroom in Bajada to our active online community, we pride ourselves on transparency, top-notch customer service, and an unwavering commitment to bringing the best gadgets closer to you.
+            </p>
+            <div className="pt-4">
+              <Link href="/products" className="inline-flex items-center gap-2 px-6 py-3 bg-brand-black text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 transition-colors">
+                Discover Our Catalog
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+          <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+            <img src="/clients/pic1.jpg" alt="Maharlika Republic Showroom" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white">
+                <p className="text-brand-black font-extrabold text-sm uppercase tracking-wider mb-1">Davao's Trusted Tech Hub</p>
+                <p className="text-xs text-brand-textMuted">Located at F. Torres St, Bajada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 12. MAP & SHOWROOM LOCATOR */}
       <section id="map" className="py-20 px-6 border-t border-brand-border bg-brand-white">
