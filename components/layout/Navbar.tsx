@@ -53,13 +53,8 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-1.5 group">
               <div className="relative w-12 h-12 overflow-hidden shrink-0 flex items-center justify-center -ml-1">
                 <img 
-                  src="/logo.png" 
-                  className="w-full h-full object-contain dark:hidden mix-blend-multiply scale-[1.7]" 
-                  alt="Maharlika Republic Logo" 
-                />
-                <img 
-                  src="/logo-black.jpg" 
-                  className="w-full h-full object-contain hidden dark:block mix-blend-screen contrast-150 scale-[1.7]" 
+                  src="/logo-new.png" 
+                  className="w-full h-full object-contain scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
               </div>

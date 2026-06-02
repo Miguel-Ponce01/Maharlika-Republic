@@ -50,13 +50,8 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 group mb-4">
               <div className="relative w-14 h-14 overflow-hidden shrink-0 flex items-center justify-center -ml-2">
                 <img 
-                  src="/logo.png" 
-                  className="w-full h-full object-contain dark:hidden mix-blend-multiply scale-[1.7]" 
-                  alt="Maharlika Republic Logo" 
-                />
-                <img 
-                  src="/logo-black.jpg" 
-                  className="w-full h-full object-contain hidden dark:block mix-blend-screen contrast-150 scale-[1.7]" 
+                  src="/logo-new.png" 
+                  className="w-full h-full object-contain scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
               </div>
