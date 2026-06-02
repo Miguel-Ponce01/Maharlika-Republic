@@ -19,6 +19,8 @@ type ProductItem = {
   brand: string;
   compatibility: string;
   specs: string;
+  variantId: number;
+  maxStock: number;
 };
 
 const ITEMS_PER_PAGE = 12;
@@ -89,7 +91,9 @@ function ProductsContent() {
               type: p.systemMetadata?.type || p.categoryType,
               brand: p.brandName,
               compatibility: p.systemMetadata?.compatibility || "",
-              specs: specsStr || "Standard"
+              specs: specsStr || "Standard",
+              variantId: variant.id || 0,
+              maxStock: variant.stockOnHand || 0
             };
           });
           setProductsList(mappedProducts);
@@ -133,13 +137,19 @@ function ProductsContent() {
 
   const handleAddToCart = (product: ProductItem, e: React.MouseEvent) => {
     e.preventDefault();
+    if (product.maxStock <= 0) {
+      alert("This item is currently out of stock!");
+      return;
+    }
     addItem({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
       quantity: 1,
-      specs: product.specs
+      specs: product.specs,
+      variantId: product.variantId,
+      maxStock: product.maxStock
     });
     setCartOpen(true);
   };
@@ -207,15 +217,24 @@ function ProductsContent() {
                   />
                   {/* Subtle hover overlay to add to cart */}
                   <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(product, e);
-                      }}
-                      className="translate-y-8 group-hover:translate-y-0 transition-all duration-300 px-6 py-3 bg-brand-black text-white text-xs font-bold rounded-full shadow-xl hover:bg-gray-800"
-                    >
-                      Quick Add
-                    </button>
+                    {product.maxStock <= 0 ? (
+                      <button 
+                        disabled
+                        className="translate-y-8 group-hover:translate-y-0 transition-all duration-300 px-6 py-3 bg-gray-400 text-white text-xs font-bold rounded-full shadow-xl cursor-not-allowed"
+                      >
+                        Out of Stock
+                      </button>
+                    ) : (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(product, e);
+                        }}
+                        className="translate-y-8 group-hover:translate-y-0 transition-all duration-300 px-6 py-3 bg-brand-black text-white text-xs font-bold rounded-full shadow-xl hover:bg-gray-800"
+                      >
+                        Quick Add
+                      </button>
+                    )}
                   </div>
                 </div>
 

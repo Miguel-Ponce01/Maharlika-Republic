@@ -21,7 +21,7 @@ export default async function AdminInventory() {
   };
 
   return (
-    <div className="p-6 md:p-10 space-y-8 max-w-7xl mx-auto">
+    <div className="p-6 md:p-10 space-y-8 max-w-[1600px] w-full mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-heading font-bold text-brand-black">Inventory</h1>
@@ -45,14 +45,13 @@ export default async function AdminInventory() {
                 <th className="px-6 py-4 font-bold uppercase tracking-wider">SKU</th>
                 <th className="px-6 py-4 font-bold uppercase tracking-wider">Specs</th>
                 <th className="px-6 py-4 font-bold uppercase tracking-wider">Stock</th>
-                <th className="px-6 py-4 font-bold uppercase tracking-wider text-right">Price</th>
-                <th className="px-6 py-4 font-bold uppercase tracking-wider text-right">Actions</th>
+                <th className="px-6 py-4 font-bold uppercase tracking-wider text-right">Price & Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-brand-border">
               {allProducts.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-brand-textMuted">
+                  <td colSpan={5} className="px-6 py-8 text-center text-brand-textMuted">
                     No products found in inventory.
                   </td>
                 </tr>
@@ -86,14 +85,14 @@ export default async function AdminInventory() {
                           {variant.stockOnHand} in stock
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-right font-bold text-brand-black">
-                        {formatPrice(variant.priceCents)}
-                      </td>
                       <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <button className="p-2 text-brand-textMuted hover:bg-gray-100 rounded-lg transition-colors" title="Edit (Coming Soon)">
+                        <div className="flex items-center justify-end gap-4">
+                          <span className="font-bold text-brand-black mr-2">
+                            {formatPrice(variant.priceCents)}
+                          </span>
+                          <Link href={`/admin/inventory/${variant.id}/edit`} className="p-2 text-brand-textMuted hover:bg-brand-gold hover:text-white rounded-lg transition-colors shadow-sm bg-gray-100" title="Edit Variant">
                             <Edit className="w-4 h-4" />
-                          </button>
+                          </Link>
                           <DeleteVariantButton variantId={variant.id} />
                         </div>
                       </td>

@@ -16,6 +16,8 @@ interface Product {
   compatibility: string;
   specs: string;
   monthlyInstallment?: number;
+  variantId: number;
+  maxStock: number;
 }
 
 interface ProductDetailsModalProps {
@@ -122,6 +124,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   };
 
   const handleAddToCart = () => {
+    if (product.maxStock <= 0) return;
     const specsString = `${selectedColor}, ${product.specs.includes(",") ? product.specs.split(",")[0] : product.specs}`;
     addItem({
       id: `${product.id}-${selectedColor.toLowerCase().replace(/\s+/g, "-")}`,
@@ -129,7 +132,9 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
       price: product.price,
       image: product.image,
       quantity: 1,
-      specs: specsString
+      specs: specsString,
+      variantId: product.variantId,
+      maxStock: product.maxStock
     });
     setCartOpen(true);
     onClose();
@@ -274,13 +279,22 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
 
                 {/* Buy Button CTA */}
                 <div className="pt-6 border-t border-brand-border/40 flex flex-col sm:flex-row gap-3">
-                  <button
-                    onClick={handleAddToCart}
-                    className="flex-1 py-4 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-brand-gold/15 flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
-                  >
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Add to Cart</span>
-                  </button>
+                  {product.maxStock <= 0 ? (
+                    <button
+                      disabled
+                      className="flex-1 py-4 bg-gray-400 text-white font-bold rounded-xl shadow-lg cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
+                    >
+                      <span>Out of Stock</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleAddToCart}
+                      className="flex-1 py-4 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-brand-gold/15 flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
+                    >
+                      <ShoppingBag className="w-4 h-4" />
+                      <span>Add to Cart</span>
+                    </button>
+                  )}
                   <a
                     href="https://www.facebook.com/messages/t/marexxrepublicdavao"
                     target="_blank"

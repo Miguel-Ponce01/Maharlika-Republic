@@ -104,3 +104,93 @@ export async function deleteVariant(variantId: number) {
     return { error: error.message || "Failed to delete variant" };
   }
 }
+
+export async function updateVariant(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) return { error: "Unauthorized" };
+
+  try {
+    const variantId = parseInt(formData.get("variantId") as string, 10);
+    const productId = parseInt(formData.get("productId") as string, 10);
+
+    const brandName = formData.get("brandName") as string;
+    const modelName = formData.get("modelName") as string;
+    const categoryType = formData.get("categoryType") as string;
+    const baseDescription = formData.get("baseDescription") as string;
+
+    const skuString = formData.get("skuString") as string;
+    const storageCapacity = formData.get("storageCapacity") as string;
+    const colorSpec = formData.get("colorSpec") as string;
+    const stockOnHand = parseInt(formData.get("stockOnHand") as string, 10);
+    const pricePhp = parseFloat(formData.get("price") as string);
+    const imageFile = formData.get("imageFile") as File | null;
+
+    const priceCents = Math.round(pricePhp * 100);
+
+    let newImageUrl: string | undefined = undefined;
+    
+    // Only upload if a new file is provided
+    if (imageFile && imageFile.size > 0) {
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from("product-images")
+        .upload(fileName, imageFile);
+        
+      if (uploadError) {
+        console.error("Storage upload error:", uploadError);
+        throw new Error("Failed to upload new image.");
+      }
+      
+      const { data: publicUrlData } = supabase.storage
+        .from("product-images")
+        .getPublicUrl(fileName);
+        
+      newImageUrl = publicUrlData.publicUrl;
+    }
+
+    // Update Product and Variant in a transaction
+    await db.transaction(async (tx) => {
+      // Update parent product
+      await tx
+        .update(products)
+        .set({
+          brandName,
+          modelName,
+          categoryType,
+          baseDescription,
+        })
+        .where(eq(products.id, productId));
+
+      // Update variant
+      const variantUpdateData: any = {
+        skuString,
+        storageCapacity: storageCapacity || null,
+        colorSpec: colorSpec || null,
+        stockOnHand: isNaN(stockOnHand) ? 0 : stockOnHand,
+        priceCents,
+      };
+      
+      if (newImageUrl) {
+        variantUpdateData.imageUrl = newImageUrl;
+      }
+
+      await tx
+        .update(productVariants)
+        .set(variantUpdateData)
+        .where(eq(productVariants.id, variantId));
+    });
+
+  } catch (error: any) {
+    console.error("Failed to update product:", error);
+    return { error: error.message || "Failed to update product" };
+  }
+
+  revalidatePath("/admin/inventory");
+  revalidatePath("/products");
+  revalidatePath("/");
+  redirect("/admin/inventory");
+}
