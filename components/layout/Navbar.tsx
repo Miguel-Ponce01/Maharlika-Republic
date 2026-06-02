@@ -107,6 +107,24 @@ export default function Navbar() {
                 <User className="w-5 h-5" />
               </button>
             )}
+            
+            {/* Theme Toggle Switch */}
+            {mounted && (
+              <button 
+                onClick={toggleTheme} 
+                className={`relative mx-2 w-10 h-6 flex items-center rounded-full transition-colors duration-300 ${
+                  theme === 'dark' ? 'bg-brand-gold' : 'bg-gray-200 border border-gray-300'
+                }`}
+                aria-label="Toggle Dark Mode"
+              >
+                <div 
+                  className={`w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-300 ${
+                    theme === 'dark' ? 'translate-x-5' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            )}
+
             <button onClick={toggleSearch} className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
               <Search className="w-5 h-5" />
             </button>

@@ -11,9 +11,9 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      theme: 'light', // Locked to light theme
-      toggleTheme: () => {}, // No-op
-      setTheme: () => {} // No-op
+      theme: 'light',
+      toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
+      setTheme: (theme) => set({ theme })
     }),
     {
       name: 'maharlika-theme-storage'
@@ -23,12 +23,13 @@ export const useThemeStore = create<ThemeState>()(
 
 export function useTheme() {
   const [mounted, setMounted] = useState(false);
+  const { theme, toggleTheme, setTheme } = useThemeStore();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  return { theme: 'light' as const, toggleTheme: () => {}, mounted };
+  return { theme, toggleTheme, setTheme, mounted };
 }
 
 
