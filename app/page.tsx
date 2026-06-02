@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MaharlikaMap from "@/components/map/MaharlikaMap";
 import {
   Smartphone,
@@ -33,6 +33,17 @@ import ProductDetailsModal from "@/components/ui/ProductDetailsModal";
 import MaharlikaHub from "@/components/ui/MaharlikaHub";
 import OurClients from "@/components/ui/OurClients";
 
+type ProductItem = {
+  id: string;
+  name: string;
+  price: number;
+  monthlyInstallment: number;
+  image: string;
+  type: string;
+  brand: string;
+  compatibility: string;
+  specs: string;
+};
 
 const FACEBOOK_REVIEWS = [
   {
@@ -81,51 +92,54 @@ const FACEBOOK_REVIEWS = [
 
 export default function Home() {
   const [activeStory, setActiveStory] = useState<number | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+  const [bestItems, setBestItems] = useState<ProductItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleBestItemClick = (item: typeof bestItems[0]) => {
-    // Parse price number
-    const numericPrice = parseInt(item.price.replace(/[^\d]/g, ""), 10);
-    
-    // Map to a complete product object
-    let type = "iPhone";
-    let specs = "Standard Spec";
-    let compatibility = "Universal";
-    let id = item.name.toLowerCase().replace(/\s+/g, "-");
-
-    if (item.name.includes("MacBook") || item.name.includes("Mac")) {
-      type = "Mac";
-      specs = "M3 Max, 36GB RAM, 1TB SSD";
-      compatibility = "macOS Sequoia";
-    } else if (item.name.includes("iPhone")) {
-      type = "iPhone";
-      specs = "256GB, Pro Camera System";
-      compatibility = "iOS 18 / Apple Intelligence";
-    } else if (item.name.includes("iPad")) {
-      type = "iPad";
-      specs = "M4 Chip, 256GB Wi-Fi";
-      compatibility = "iPadOS 18 / Apple Pencil Pro";
-    } else if (item.name.includes("AirPods")) {
-      type = "AirPods & Earphones";
-      specs = "Active Noise Cancellation, Spatial Audio";
-      compatibility = "Universal Bluetooth";
-    } else if (item.name.includes("Apple Watch")) {
-      type = "Apple Watch";
-      specs = "Titanium Case, Cellular + GPS";
-      compatibility = "watchOS 11 / iPhone Xs or later";
+  useEffect(() => {
+    async function fetchBestItems() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        if (data.success && data.products) {
+          const mapped = data.products.slice(0, 5).map((p: any) => {
+            const variant = p.variants?.[0] || {};
+            const specsStr = [variant.storageCapacity, variant.colorSpec].filter(Boolean).join(", ");
+            return {
+              id: p.systemMetadata?.id || p.modelName.toLowerCase().replace(/\s+/g, '-'),
+              name: p.modelName,
+              price: variant.priceCents ? variant.priceCents / 100 : 0,
+              monthlyInstallment: p.systemMetadata?.monthlyInstallment || 0,
+              image: variant.imageUrl || "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400",
+              type: p.systemMetadata?.type || p.categoryType,
+              brand: p.brandName,
+              compatibility: p.systemMetadata?.compatibility || "",
+              specs: specsStr || "Standard"
+            };
+          });
+          setBestItems(mapped);
+        }
+      } catch (err) {
+        console.error("Failed to load products", err);
+      } finally {
+        setLoading(false);
+      }
     }
+    fetchBestItems();
+  }, []);
 
-    setSelectedProduct({
-      id,
-      name: item.name,
-      price: numericPrice,
-      image: item.image,
-      type,
-      brand: "Apple",
-      compatibility,
-      specs
-    });
+  const handleBestItemClick = (item: ProductItem) => {
+    setSelectedProduct(item);
   };
+
+  const formatPrice = (value: number) => {
+    return new Intl.NumberFormat("en-PH", {
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 0,
+    }).format(value);
+  };
+
 
   const shopApple = [
     { name: "iPhone", image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop", href: "/products?type=iPhone" },
@@ -143,14 +157,6 @@ export default function Home() {
     { name: "Watch Protection", image: "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?q=80&w=400&auto=format&fit=crop", href: "/products?type=Accessories" },
     { name: "AirPods Protection", image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?q=80&w=400&auto=format&fit=crop", href: "/products?type=Accessories" },
     { name: "AirTag Protection", image: "https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=400&auto=format&fit=crop", href: "/products?type=Accessories" }
-  ];
-
-  const bestItems = [
-    { name: "MacBook Pro M3 Max", price: "₱149,990", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=300" },
-    { name: "iPhone 15 Pro Max", price: "₱64,990", image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=300" },
-    { name: "iPad Pro M4", price: "₱59,990", image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=300" },
-    { name: "AirPods Max Space Gray", price: "₱29,990", image: "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=300" },
-    { name: "Apple Watch Ultra 2", price: "₱48,990", image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=300" },
   ];
 
   const offers = [
@@ -241,12 +247,12 @@ export default function Home() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <button 
-                    onClick={() => handleBestItemClick(bestItems[0])}
-                    className="px-6 py-3 bg-brand-gold hover:bg-yellow-600 text-white rounded-full font-medium transition-colors shadow-lg shadow-brand-gold/15"
+                  <Link 
+                    href="/products?type=Mac"
+                    className="px-6 py-3 bg-brand-gold hover:bg-yellow-600 text-white rounded-full font-medium transition-colors shadow-lg shadow-brand-gold/15 inline-block"
                   >
                     Shop MacBook Pro
-                  </button>
+                  </Link>
                 </motion.div>
               </div>
             </motion.div>
@@ -398,31 +404,38 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-none">
-            {bestItems.map((item) => (
-              <div 
-                key={item.name} 
-                onClick={() => handleBestItemClick(item)}
-                className="w-64 bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between shrink-0 hover:shadow-lg transition-all group cursor-pointer active:scale-[0.98] duration-300"
-              >
-                <div className="aspect-square w-full bg-neutral-100 dark:bg-neutral-800 rounded-xl overflow-hidden relative flex items-center justify-center p-4">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-4 py-2 bg-brand-black text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
-                      Quick View
-                    </span>
+          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-none min-h-[300px]">
+            {loading ? (
+              <div className="flex w-full items-center justify-center gap-2 text-brand-gold text-xs font-bold uppercase tracking-widest">
+                <div className="w-5 h-5 border-2 border-brand-gold/20 border-t-brand-gold rounded-full animate-spin"></div>
+                Loading best items...
+              </div>
+            ) : (
+              bestItems.map((item) => (
+                <div 
+                  key={item.name} 
+                  onClick={() => handleBestItemClick(item)}
+                  className="w-64 bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between shrink-0 hover:shadow-lg transition-all group cursor-pointer active:scale-[0.98] duration-300"
+                >
+                  <div className="aspect-square w-full bg-neutral-100 dark:bg-neutral-800 rounded-xl overflow-hidden relative flex items-center justify-center p-4">
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="px-4 py-2 bg-brand-black text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
+                        Quick View
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-4 space-y-1">
+                    <h3 className="font-heading font-bold text-sm tracking-tight text-brand-black group-hover:text-brand-gold transition-colors">{item.name}</h3>
+                    <p className="text-xs font-bold text-brand-gold">{formatPrice(item.price)}</p>
                   </div>
                 </div>
-                <div className="mt-4 space-y-1">
-                  <h3 className="font-heading font-bold text-sm tracking-tight text-brand-black group-hover:text-brand-gold transition-colors">{item.name}</h3>
-                  <p className="text-xs font-bold text-brand-gold">{item.price}</p>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>

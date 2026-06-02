@@ -8,163 +8,18 @@ import { useUIStore } from "@/src/store/useUIStore";
 import { ShoppingBag, ChevronRight, HelpCircle } from "lucide-react";
 import ProductDetailsModal from "@/components/ui/ProductDetailsModal";
 
-// The full product catalog list
-const ALL_PRODUCTS = [
-  {
-    id: "iphone-16-pro-max",
-    name: "iPhone 16 Pro Max",
-    price: 84990,
-    monthlyInstallment: 3541,
-    image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop",
-    type: "iPhone",
-    brand: "Apple",
-    compatibility: "iPhone 16 Pro Max",
-    specs: "256GB, Desert Titanium"
-  },
-  {
-    id: "iphone-16",
-    name: "iPhone 16",
-    price: 56990,
-    monthlyInstallment: 2374,
-    image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?q=80&w=400&auto=format&fit=crop",
-    type: "iPhone",
-    brand: "Apple",
-    compatibility: "iPhone 16",
-    specs: "128GB, Ultramarine"
-  },
-  {
-    id: "iphone-15",
-    name: "iPhone 15",
-    price: 46990,
-    monthlyInstallment: 1957,
-    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=400&auto=format&fit=crop",
-    type: "iPhone",
-    brand: "Apple",
-    compatibility: "iPhone 15",
-    specs: "128GB, Black"
-  },
-  {
-    id: "ipad-10th-gen",
-    name: "iPad 10th Gen 10.9\" Wi-Fi",
-    price: 25500,
-    monthlyInstallment: 1062,
-    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=400&auto=format&fit=crop",
-    type: "iPad",
-    brand: "Apple",
-    compatibility: "iPad",
-    specs: "64GB, Blue"
-  },
-  {
-    id: "ipad-air-m2",
-    name: "iPad Air 11\" M2 Wi-Fi",
-    price: 42990,
-    monthlyInstallment: 1791,
-    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=400&auto=format&fit=crop",
-    type: "iPad",
-    brand: "Apple",
-    compatibility: "iPad",
-    specs: "128GB, Space Grey"
-  },
-  {
-    id: "macbook-air-m3",
-    name: "MacBook Air 13\" M3",
-    price: 61500,
-    monthlyInstallment: 2562,
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop",
-    type: "Mac",
-    brand: "Apple",
-    compatibility: "Mac",
-    specs: "8GB RAM, 256GB SSD, Midnight"
-  },
-  {
-    id: "macbook-pro-m3-max",
-    name: "MacBook Pro 16\" M3 Max",
-    price: 199990,
-    monthlyInstallment: 8332,
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop",
-    type: "Mac",
-    brand: "Apple",
-    compatibility: "Mac",
-    specs: "36GB RAM, 1TB SSD, Space Black"
-  },
-  {
-    id: "apple-watch-s10",
-    name: "Apple Watch Series 10 GPS",
-    price: 26500,
-    monthlyInstallment: 1104,
-    image: "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?q=80&w=400&auto=format&fit=crop",
-    type: "Apple Watch",
-    brand: "Apple",
-    compatibility: "Apple Watch",
-    specs: "46mm, Jet Black Aluminum"
-  },
-  {
-    id: "earpods-lightning",
-    name: "EarPods with Lightning Connector",
-    price: 1250,
-    monthlyInstallment: 0,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop",
-    type: "AirPods & Earphones",
-    brand: "Apple",
-    compatibility: "iPhone 15",
-    specs: "White"
-  },
-  {
-    id: "apple-pencil-usb-c",
-    name: "Apple Pencil (USB-C)",
-    price: 5250,
-    monthlyInstallment: 218,
-    image: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?q=80&w=400&auto=format&fit=crop",
-    type: "Accessories",
-    brand: "Apple",
-    compatibility: "iPad",
-    specs: "White"
-  },
-  {
-    id: "airpods-4",
-    name: "AirPods 4",
-    price: 8490,
-    monthlyInstallment: 353,
-    image: "https://images.unsplash.com/photo-1588449668338-d15168b5a4c5?q=80&w=400&auto=format&fit=crop",
-    type: "AirPods & Earphones",
-    brand: "Apple",
-    compatibility: "Universal",
-    specs: "White"
-  },
-  {
-    id: "magsafe-charger",
-    name: "MagSafe Charger (1m)",
-    price: 2490,
-    monthlyInstallment: 103,
-    image: "https://images.unsplash.com/photo-1622445262465-24819af52287?q=80&w=400&auto=format&fit=crop",
-    type: "Chargers & Cables",
-    brand: "Apple",
-    compatibility: "iPhone 16",
-    specs: "Silver"
-  },
-  {
-    id: "20w-usb-c-adapter",
-    name: "20W USB-C Power Adapter",
-    price: 1190,
-    monthlyInstallment: 0,
-    image: "https://images.unsplash.com/photo-1619173003444-2457fb1e57c6?q=80&w=400&auto=format&fit=crop",
-    type: "Chargers & Cables",
-    brand: "Apple",
-    compatibility: "Universal",
-    specs: "White"
-  },
-  {
-    id: "silicone-case-16-pro",
-    name: "Silicone Case with MagSafe for iPhone 16 Pro Max",
-    price: 3290,
-    monthlyInstallment: 137,
-    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=400&auto=format&fit=crop",
-    type: "Accessories",
-    brand: "Apple",
-    compatibility: "iPhone 16 Pro Max",
-    specs: "Stone Grey"
-  }
-];
+// The products are now fetched dynamically from the Supabase database via the API
+type ProductItem = {
+  id: string;
+  name: string;
+  price: number;
+  monthlyInstallment: number;
+  image: string;
+  type: string;
+  brand: string;
+  compatibility: string;
+  specs: string;
+};
 
 const ITEMS_PER_PAGE = 12;
 
@@ -209,6 +64,45 @@ function ProductsContent() {
   const [currentCategory, setCurrentCategory] = useState("All Products");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [productsList, setProductsList] = useState<ProductItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from database
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        
+        if (data.success && data.products) {
+          // Map database structure to flat frontend structure
+          const mappedProducts = data.products.map((p: any) => {
+            const variant = p.variants?.[0] || {};
+            const specsStr = [variant.storageCapacity, variant.colorSpec].filter(Boolean).join(", ");
+            
+            return {
+              id: p.systemMetadata?.id || p.modelName.toLowerCase().replace(/\s+/g, '-'),
+              name: p.modelName,
+              price: variant.priceCents ? variant.priceCents / 100 : 0,
+              monthlyInstallment: p.systemMetadata?.monthlyInstallment || 0,
+              image: variant.imageUrl || "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400",
+              type: p.systemMetadata?.type || p.categoryType,
+              brand: p.brandName,
+              compatibility: p.systemMetadata?.compatibility || "",
+              specs: specsStr || "Standard"
+            };
+          });
+          setProductsList(mappedProducts);
+        }
+      } catch (err) {
+        console.error("Failed to load products", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchProducts();
+  }, []);
 
   // Parse URL parameter
   useEffect(() => {
@@ -223,12 +117,12 @@ function ProductsContent() {
 
   // Filter products by the current category
   const processedProducts = useMemo(() => {
-    let list = [...ALL_PRODUCTS];
+    let list = [...productsList];
     if (currentCategory !== "All Products") {
       list = list.filter(p => p.type === currentCategory);
     }
     return list;
-  }, [currentCategory]);
+  }, [currentCategory, productsList]);
 
   // Pagination logic
   const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
@@ -237,7 +131,7 @@ function ProductsContent() {
     return processedProducts.slice(start, start + ITEMS_PER_PAGE);
   }, [processedProducts, currentPage]);
 
-  const handleAddToCart = (product: typeof ALL_PRODUCTS[0], e: React.MouseEvent) => {
+  const handleAddToCart = (product: ProductItem, e: React.MouseEvent) => {
     e.preventDefault();
     addItem({
       id: product.id,
@@ -284,8 +178,13 @@ function ProductsContent() {
       </div>
 
       {/* Product Grid Area (Full Width, No Sidebar) */}
-      <div className="max-w-7xl mx-auto px-6 py-24">
-        {processedProducts.length === 0 ? (
+      <div className="max-w-7xl mx-auto px-6 py-24 min-h-[60vh]">
+        {loading ? (
+          <div className="text-center py-20 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 border-4 border-brand-gold/20 border-t-brand-gold rounded-full animate-spin mb-6"></div>
+            <h3 className="text-sm font-bold text-brand-black uppercase tracking-widest">Loading Catalog</h3>
+          </div>
+        ) : processedProducts.length === 0 ? (
           <div className="text-center py-20">
             <ShoppingBag className="w-12 h-12 text-brand-border mx-auto mb-4" />
             <h3 className="text-lg font-bold text-brand-black">No products matched</h3>
