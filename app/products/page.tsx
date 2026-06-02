@@ -169,7 +169,7 @@ function ProductsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-white text-brand-black transition-colors duration-300">
+    <div className="min-h-screen transition-colors duration-300">
       
       {/* Dynamic Header Strip */}
       <div className="bg-[#F5F5F7] dark:bg-black text-brand-black dark:text-white pt-36 pb-16 px-6 text-center border-b border-brand-border/40 relative overflow-hidden">
@@ -230,7 +230,7 @@ function ProductsContent() {
                           e.stopPropagation();
                           handleAddToCart(product, e);
                         }}
-                        className="translate-y-8 group-hover:translate-y-0 transition-all duration-300 px-6 py-3 bg-brand-black text-white text-xs font-bold rounded-full shadow-xl hover:bg-gray-800"
+                        className="translate-y-8 group-hover:translate-y-0 transition-all duration-300 px-6 py-3 bg-brand-black text-brand-white text-xs font-bold rounded-full shadow-xl hover:opacity-80"
                       >
                         Quick Add
                       </button>

@@ -32,7 +32,7 @@ export const updateSession = async (request: NextRequest) => {
   const { data: { user } } = await supabase.auth.getUser();
 
   // Define admin emails
-  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  const ADMIN_EMAILS = ["anthonpnc@gmail.com"];
   const isAdmin = user && user.email && ADMIN_EMAILS.includes(user.email);
 
   // Protect /admin routes

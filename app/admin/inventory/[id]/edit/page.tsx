@@ -4,8 +4,11 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import EditVariantForm from "./EditVariantForm";
 
-export default async function EditVariantPage({ params }: { params: { id: string } }) {
-  const variantId = parseInt(params.id, 10);
+type Params = Promise<{ id: string }> | { id: string };
+
+export default async function EditVariantPage({ params }: { params: Params }) {
+  const resolvedParams = await Promise.resolve(params);
+  const variantId = parseInt(resolvedParams.id, 10);
   
   if (isNaN(variantId)) {
     return notFound();

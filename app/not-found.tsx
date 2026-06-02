@@ -6,7 +6,7 @@ import { ArrowLeft, ShoppingBag } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-brand-white text-brand-black flex items-center justify-center px-6 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-brand-gold/5 blur-[120px] pointer-events-none" />
 

@@ -46,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${outfit.variable} ${ladyrose.variable} font-sans antialiased bg-brand-white text-brand-black transition-colors duration-300`}>
+      <body className={`${inter.variable} ${outfit.variable} ${ladyrose.variable} font-sans antialiased transition-colors duration-300`}>
         <ThemeProvider>
           <AuthProvider />
           <AuthModal />

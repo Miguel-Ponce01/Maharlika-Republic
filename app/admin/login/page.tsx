@@ -54,7 +54,7 @@ export default function AdminLogin() {
                   type="email" 
                   name="email" 
                   required
-                  placeholder="admin@maharlika.com" 
+                  placeholder="anthonpnc@gmail.com" 
                   className="w-full bg-brand-white/50 border border-brand-border rounded-xl pl-12 pr-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"
                 />
               </div>

@@ -56,7 +56,7 @@ export const orders = pgTable("orders", {
   shippingAddress: text("shipping_address"),
   paymentMethod: text("payment_method").notNull(), // 'gcash' | 'maya' | 'cod' | 'bank_transfer'
   paymentStatus: text("payment_status").default("PENDING").notNull(), // 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED'
-  orderStatus: text("order_status").default("PROCESSING").notNull(), // 'PROCESSING' | 'CONFIRMED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'
+  orderStatus: text("order_status").default("PROCESSING").notNull(), // 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'COMPLETED' | 'CANCELLED'
   totalAmountCents: integer("total_amount_cents").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),

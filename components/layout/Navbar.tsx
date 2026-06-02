@@ -38,45 +38,50 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 w-full z-40 glass">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           
           {/* Left Side: Drawer Trigger + Brand Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 md:space-x-5">
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="flex items-center gap-2 p-2 -ml-2 text-brand-black/80 hover:text-brand-gold transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
-              <Menu className="w-5 h-5" />
-              <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:block">Menu</span>
+              <Menu className="w-6 h-6" />
+              <span className="text-xs font-bold uppercase tracking-wider hidden sm:block mt-0.5">Menu</span>
             </button>
-            <Link href="/" className="flex items-center gap-1.5 group">
-              <div className="relative w-12 h-12 overflow-hidden shrink-0 flex items-center justify-center -ml-1">
+            <Link href="/" className="flex items-center gap-1 group">
+              <div className="relative w-14 h-14 overflow-hidden shrink-0 flex items-center justify-center -ml-3">
                 <img 
                   src="/logo-new.png" 
-                  className="w-full h-full object-contain scale-[1.7]" 
+                  className="w-full h-full object-contain scale-[1.8] drop-shadow-sm" 
                   alt="Maharlika Republic Logo" 
                 />
               </div>
-              <span className="font-heading font-extrabold text-sm sm:text-base uppercase tracking-wider text-brand-black group-hover:text-brand-gold transition-colors">
-                Maharlika <span className="text-brand-gold">Republic</span>
-              </span>
+              <div className="flex flex-col justify-center leading-none mt-0.5 hidden sm:flex -ml-1">
+                <span className="font-heading font-extrabold text-sm sm:text-[15px] uppercase tracking-wider text-brand-black group-hover:text-brand-gold transition-colors leading-[1.1]">
+                  Maharlika
+                </span>
+                <span className="font-heading font-extrabold text-sm sm:text-[15px] uppercase tracking-wider text-brand-gold transition-colors leading-[1.1]">
+                  Republic
+                </span>
+              </div>
             </Link>
           </div>
    
-          <nav className="hidden lg:flex relative items-center space-x-1" onMouseLeave={() => setHoveredIndex(null)}>
+          <nav className="hidden lg:flex relative items-center space-x-1 xl:space-x-2" onMouseLeave={() => setHoveredIndex(null)}>
             {navLinks.map((link, index) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-brand-black/80 hover:text-brand-gold transition-colors z-10"
+                className="relative px-2.5 xl:px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-black/80 hover:text-brand-gold transition-colors z-10 whitespace-nowrap"
                 onMouseEnter={() => setHoveredIndex(index)}
               >
                 {link.name}
                 {hoveredIndex === index && (
                   <motion.div
                     layoutId="navbar-indicator"
-                    className="absolute inset-0 bg-white/10 dark:bg-white/5 border border-white/5 rounded-full -z-10"
+                    className="absolute inset-0 bg-black/5 dark:bg-white/10 rounded-full -z-10"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -92,14 +97,14 @@ export default function Navbar() {
             ))}
           </nav>
    
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-4">
             {user ? (
               <Link href="/account" className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
-                <User className="w-5 h-5" />
+                <User className="w-5 h-5 md:w-6 md:h-6" />
               </Link>
             ) : (
               <button onClick={() => setAuthModalOpen(true)} className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
-                <User className="w-5 h-5" />
+                <User className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             )}
             
@@ -107,25 +112,25 @@ export default function Navbar() {
             {mounted && (
               <button 
                 onClick={toggleTheme} 
-                className={`relative mx-1.5 w-8 h-5 flex items-center rounded-full transition-colors duration-300 ${
+                className={`relative mx-2 w-10 h-6 flex items-center rounded-full transition-colors duration-300 ${
                   theme === 'dark' ? 'bg-brand-gold' : 'bg-gray-200 border border-gray-300'
                 }`}
                 aria-label="Toggle Dark Mode"
               >
                 <div 
-                  className={`w-3.5 h-3.5 bg-white rounded-full shadow-sm transform transition-transform duration-300 ${
-                    theme === 'dark' ? 'translate-x-4' : 'translate-x-0.5'
+                  className={`w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-300 ${
+                    theme === 'dark' ? 'translate-x-5' : 'translate-x-1'
                   }`}
                 />
               </button>
             )}
 
             <button onClick={toggleSearch} className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors">
-              <Search className="w-5 h-5" />
+              <Search className="w-5 h-5 md:w-6 md:h-6" />
             </button>
             <button onClick={toggleCart} className="p-2 text-brand-black/80 hover:text-brand-gold transition-colors relative">
-              <ShoppingBag className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-brand-gold rounded-full"></span>
+              <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" />
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-brand-gold rounded-full border-2 border-brand-white"></span>
             </button>
           </div>
         </div>

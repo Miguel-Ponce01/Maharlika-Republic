@@ -74,7 +74,7 @@ export default function CartPage() {
   const total = subtotal + shippingFee;
 
   return (
-    <div className="pt-24 pb-20 px-6 min-h-screen bg-brand-white text-brand-black transition-colors duration-300">
+    <div className="pt-24 pb-20 px-6 min-h-screen transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Breadcrumb / Title */}

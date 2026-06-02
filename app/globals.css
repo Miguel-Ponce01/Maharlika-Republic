@@ -22,6 +22,16 @@
     --nav-bg: rgba(18, 20, 22, 0.85);
     --glass-border: rgba(255, 255, 255, 0.08);
   }
+
+  .admin-theme, .dark .admin-theme {
+    --background: #F9F9F7 !important;
+    --foreground: #1A1C1E !important;
+    --card-bg: #FFFFFF !important;
+    --border-color: rgba(26, 28, 30, 0.08) !important;
+    --text-muted: #5A5D63 !important;
+    --nav-bg: rgba(249, 249, 247, 0.75) !important;
+    --glass-border: rgba(26, 28, 30, 0.08) !important;
+  }
 }
 
 body {

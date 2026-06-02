@@ -1,53 +1,123 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { updateOrderStatus } from "./actions";
+import { ChevronDown, Check } from "lucide-react";
+
+const STATUSES = [
+  { value: "PENDING", label: "PENDING", color: "bg-gray-100 text-gray-800 border-gray-200", dot: "bg-gray-500" },
+  { value: "PROCESSING", label: "PROCESSING", color: "bg-blue-50 text-blue-700 border-blue-200", dot: "bg-blue-500" },
+  { value: "SHIPPED", label: "SHIPPED", color: "bg-indigo-50 text-indigo-700 border-indigo-200", dot: "bg-indigo-500" },
+  { value: "DELIVERED", label: "DELIVERED", color: "bg-teal-50 text-teal-700 border-teal-200", dot: "bg-teal-500" },
+  { value: "COMPLETED", label: "COMPLETED", color: "bg-green-50 text-green-700 border-green-200", dot: "bg-green-500" },
+  { value: "CANCELLED", label: "CANCELLED", color: "bg-red-50 text-red-700 border-red-200", dot: "bg-red-500" }
+];
 
 export default function StatusDropdown({ orderId, currentStatus }: { orderId: number, currentStatus: string }) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(currentStatus);
+  const [isOpen, setIsOpen] = useState(false);
+  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleStatusChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value;
+  // Close dropdown on outside click or scroll
+  useEffect(() => {
+    function handleEvent(event: Event) {
+      if (event.type === "scroll") {
+        setIsOpen(false);
+        return;
+      }
+      const target = event.target as Node;
+      if (
+        buttonRef.current && !buttonRef.current.contains(target) &&
+        menuRef.current && !menuRef.current.contains(target)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleEvent);
+    window.addEventListener("scroll", handleEvent, true); // use capture phase to catch internal scrolls
+    
+    return () => {
+      document.removeEventListener("mousedown", handleEvent);
+      window.removeEventListener("scroll", handleEvent, true);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    if (!loading) {
+      if (!isOpen && buttonRef.current) {
+        const rect = buttonRef.current.getBoundingClientRect();
+        setCoords({
+          top: rect.bottom + 4,
+          left: rect.left,
+          width: rect.width,
+        });
+      }
+      setIsOpen(!isOpen);
+    }
+  };
+
+  const handleStatusChange = async (newStatus: string) => {
+    setIsOpen(false);
+    if (newStatus === status) return;
+    
     setLoading(true);
+    const oldStatus = status;
     setStatus(newStatus);
     
     const result = await updateOrderStatus(orderId, newStatus);
     
     if (result?.error) {
       alert(result.error);
-      setStatus(currentStatus); // revert
+      setStatus(oldStatus); // revert
     }
     setLoading(false);
   };
 
+  const currentConfig = STATUSES.find(s => s.value === status) || STATUSES[0];
+
   return (
-    <div className="relative inline-block w-36">
-      <select 
-        value={status}
-        onChange={handleStatusChange}
+    <>
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={toggleDropdown}
         disabled={loading}
-        className={`appearance-none w-full border border-brand-border rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-brand-gold cursor-pointer ${
-          status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-          status === 'PROCESSING' ? 'bg-blue-100 text-blue-800' :
-          status === 'SHIPPED' ? 'bg-indigo-100 text-indigo-800' :
-          status === 'DELIVERED' ? 'bg-teal-100 text-teal-800' :
-          status === 'CANCELLED' ? 'bg-red-100 text-red-800' :
-          'bg-gray-100 text-gray-800'
-        }`}
+        className={`relative inline-flex items-center justify-between w-40 border rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-1 ${currentConfig.color} ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-md'}`}
       >
-        <option value="PENDING">PENDING</option>
-        <option value="PROCESSING">PROCESSING</option>
-        <option value="SHIPPED">SHIPPED</option>
-        <option value="DELIVERED">DELIVERED</option>
-        <option value="COMPLETED">COMPLETED</option>
-        <option value="CANCELLED">CANCELLED</option>
-      </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-        </svg>
-      </div>
-    </div>
+        <span className="flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full ${currentConfig.dot}`}></span>
+          {status}
+        </span>
+        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && typeof document !== "undefined" && createPortal(
+        <div 
+          ref={menuRef}
+          className="fixed z-[9999] bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden py-1 origin-top-right"
+          style={{ top: coords.top, left: coords.left, width: coords.width }}
+        >
+          {STATUSES.map((s) => (
+            <button
+              key={s.value}
+              onClick={() => handleStatusChange(s.value)}
+              className={`w-full flex items-center justify-between px-3 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors hover:bg-gray-50 ${status === s.value ? 'bg-gray-50 text-gray-900' : 'text-gray-500'}`}
+            >
+              <span className="flex items-center gap-2">
+                <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}></span>
+                {s.label}
+              </span>
+              {status === s.value && <Check className="w-3.5 h-3.5 text-brand-gold" />}
+            </button>
+          ))}
+        </div>,
+        document.body
+      )}
+    </>
   );
 }

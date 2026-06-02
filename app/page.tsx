@@ -260,31 +260,31 @@ export default function Home() {
   ];
 
   return (
-    <div className="pt-16 min-h-screen bg-brand-white text-brand-black transition-colors duration-300">
+    <div className="pt-16 min-h-screen transition-colors duration-300">
       
       {/* 1. HERO SPOTLIGHT (Floating Luxury Dark Card) */}
-      <section className="py-12 px-6 relative z-10 max-w-7xl mx-auto">
-        <div className="bg-[#121416] text-white rounded-3xl p-8 md:p-16 relative overflow-hidden border border-white/[0.08] shadow-2xl shadow-brand-gold/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+      <section className="py-16 md:py-24 px-6 relative z-10 max-w-7xl mx-auto mt-4">
+        <div className="bg-gradient-to-br from-[#1A1C1E] to-[#0A0B0C] text-white rounded-[2.5rem] p-10 md:p-20 relative overflow-hidden border border-white/10 shadow-2xl shadow-brand-gold/20">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12 relative z-20">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="space-y-6 max-w-lg text-center md:text-left"
+              className="space-y-6 max-w-xl text-center md:text-left"
             >
               <motion.h3 
                 initial={{ opacity: 0, letterSpacing: "0.1em" }}
-                animate={{ opacity: 1, letterSpacing: "0.15em" }}
+                animate={{ opacity: 1, letterSpacing: "0.2em" }}
                 transition={{ delay: 0.2, duration: 0.8 }}
                 className="text-brand-gold text-xs font-bold uppercase tracking-widest"
               >
                 SPOTLIGHT FEATURE
               </motion.h3>
-              <h1 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tighter leading-tight">
+              <h1 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tighter leading-tight drop-shadow-lg">
                 Fast runs in the family.
               </h1>
-              <p className="text-2xl text-gray-400 font-medium">MacBook Pro</p>
-              <div className="flex justify-center md:justify-start gap-4 mt-6">
+              <p className="text-xl md:text-3xl text-gray-400 font-medium tracking-tight">MacBook Pro</p>
+              <div className="flex justify-center md:justify-start gap-4 mt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -297,7 +297,7 @@ export default function Home() {
                         setAuthModalOpen(true);
                       }
                     }}
-                    className="px-6 py-3 bg-brand-gold hover:bg-yellow-600 text-white rounded-full font-medium transition-colors shadow-lg shadow-brand-gold/15 inline-block"
+                    className="px-8 py-4 bg-brand-gold hover:bg-yellow-600 text-white rounded-full font-bold transition-all shadow-[0_0_40px_-10px_rgba(202,138,4,0.5)] inline-block uppercase tracking-wider text-xs"
                   >
                     Shop MacBook Pro
                   </button>
@@ -309,25 +309,26 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8, type: "spring", stiffness: 100 }}
-              className="w-full md:w-1/2 flex justify-center"
+              className="w-full md:w-1/2 flex justify-center relative z-20"
             >
               <motion.img 
                 animate={{
-                  y: [0, -10, 0]
+                  y: [0, -15, 0]
                 }}
                 transition={{
-                  duration: 5,
+                  duration: 6,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
                 src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop" 
                 alt="MacBook Pro mockup" 
-                className="max-h-[350px] object-contain drop-shadow-[0_25px_25px_rgba(180,124,46,0.15)]"
+                className="max-h-[400px] md:max-h-[500px] object-contain drop-shadow-[0_30px_30px_rgba(180,124,46,0.25)]"
               />
             </motion.div>
           </div>
           {/* Ambient Glow Inside Card */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-gold/5 blur-[100px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-brand-gold/15 blur-[120px] pointer-events-none z-0" />
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[100px] pointer-events-none z-0" />
         </div>
       </section>
 

@@ -99,6 +99,8 @@ function CheckoutContent() {
     }).format(value);
   };
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => {
@@ -121,6 +123,7 @@ function CheckoutContent() {
     if (items.length === 0) return;
 
     setIsSubmitting(true);
+    setError(null);
     
     // Send real order data to /api/checkout
     try {
@@ -163,18 +166,18 @@ function CheckoutContent() {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         console.error("Checkout failed:", result.error);
-        alert(result.error || "Checkout failed. Please try again.");
+        setError(result.error || "Checkout failed. Please try again.");
       }
     } catch (err) {
       console.error(err);
-      alert("An unexpected error occurred.");
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-brand-white text-brand-black pt-24 pb-20 px-6 relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen pt-24 pb-20 px-6 relative overflow-hidden transition-colors duration-300">
       {/* Decorative Orbs */}
       <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-brand-gold/5 rounded-full blur-3xl z-0" />
       <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl z-0" />
@@ -211,6 +214,13 @@ function CheckoutContent() {
             {/* Left side: Checkout Forms */}
             <div className="lg:col-span-7 bg-brand-card rounded-3xl border border-brand-border p-6 md:p-8 shadow-sm">
               <form onSubmit={handleSubmit} className="space-y-8">
+                
+                {error && (
+                  <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl text-red-600 dark:text-red-400 text-sm font-medium flex items-start gap-3">
+                    <span className="shrink-0 mt-0.5">⚠️</span>
+                    <span>{error}</span>
+                  </div>
+                )}
                 
                 {/* 1. Customer Details */}
                 <div className="space-y-4">

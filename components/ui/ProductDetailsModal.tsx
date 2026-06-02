@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Check, ShieldCheck, HelpCircle, ArrowRight, Truck } from "lucide-react";
 import { useCartStore } from "@/src/store/useCartStore";
@@ -104,14 +104,17 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   const addItem = useCartStore((state) => state.addItem);
   const setCartOpen = useUIStore((state) => state.setCartOpen);
 
-  const colors = product ? getColorPalette(product.type, product.name) : [];
+  const colors = useMemo(() => {
+    return product ? getColorPalette(product.type, product.name) : [];
+  }, [product?.id, product?.name, product?.type]);
+  
   const [selectedColor, setSelectedColor] = useState<string>("");
 
   useEffect(() => {
     if (colors.length > 0) {
       setSelectedColor(colors[0].name);
     }
-  }, [product]);
+  }, [colors]);
 
   if (!product) return null;
 

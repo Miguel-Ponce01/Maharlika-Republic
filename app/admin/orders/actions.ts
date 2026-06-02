@@ -10,7 +10,7 @@ export async function updateOrderStatus(orderId: number, newStatus: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  const ADMIN_EMAILS = ["anthonpnc@gmail.com"];
   if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) {
     return { error: "Unauthorized" };
   }

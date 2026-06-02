@@ -24,7 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="min-h-screen bg-transparent flex">
+    <div className="min-h-screen bg-brand-white text-brand-black flex admin-theme">
       {/* Mobile Sidebar Overlay */}
       {isMobileOpen && (
         <div 
