@@ -56,7 +56,7 @@ export default function Footer() {
                 />
                 <img 
                   src="/logo-black.jpg" 
-                  className="w-full h-full object-contain hidden dark:block mix-blend-screen scale-[1.7]" 
+                  className="w-full h-full object-contain hidden dark:block mix-blend-screen contrast-150 scale-[1.7]" 
                   alt="Maharlika Republic Logo" 
                 />
               </div>

@@ -22,7 +22,7 @@ export default function InteractiveGridBackground() {
   if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden bg-[#F9F9F7]">
+    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden bg-brand-white">
       {/* Drifting glow blobs */}
       <motion.div
         animate={{
