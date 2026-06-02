@@ -482,7 +482,7 @@ export default function Home() {
                       className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="px-4 py-2 bg-brand-black text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
+                      <span className="px-4 py-2 bg-black text-white dark:bg-white dark:text-black text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
                         Quick View
                       </span>
                     </div>
