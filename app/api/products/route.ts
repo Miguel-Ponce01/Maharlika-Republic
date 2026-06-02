@@ -9,32 +9,11 @@ import { eq } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    const allProducts = await db
-      .select({
-        id: products.id,
-        brandName: products.brandName,
-        modelName: products.modelName,
-        categoryType: products.categoryType,
-        baseDescription: products.baseDescription,
-        systemMetadata: products.systemMetadata,
-        createdAt: products.createdAt,
-      })
-      .from(products);
-
-    // Fetch variants for each product
-    const productsWithVariants = await Promise.all(
-      allProducts.map(async (product) => {
-        const variants = await db
-          .select()
-          .from(productVariants)
-          .where(eq(productVariants.productId, product.id));
-
-        return {
-          ...product,
-          variants,
-        };
-      })
-    );
+    const productsWithVariants = await db.query.products.findMany({
+      with: {
+        variants: true,
+      },
+    });
 
     return NextResponse.json(
       { success: true, products: productsWithVariants },

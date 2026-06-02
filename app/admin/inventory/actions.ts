@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/src/db";
-import { products, productVariants } from "@/src/db/schema";
+import { products, productVariants, orderItems } from "@/src/db/schema";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -11,7 +11,8 @@ export async function addProduct(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) return { error: "Unauthorized" };
+  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) return { error: "Unauthorized" };
 
   try {
     const brandName = formData.get("brandName") as string;
@@ -89,9 +90,19 @@ export async function deleteVariant(variantId: number) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) return { error: "Unauthorized" };
+  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) return { error: "Unauthorized" };
 
   try {
+    // Check if variant is referenced in any orders
+    const existingOrders = await db.query.orderItems.findFirst({
+      where: eq(orderItems.variantId, variantId),
+    });
+
+    if (existingOrders) {
+      return { error: "Cannot delete variant: it has been ordered by a customer." };
+    }
+
     // Delete the variant. (Note: in a real app, you'd soft delete or check if it's in an order)
     await db.delete(productVariants).where(eq(productVariants.id, variantId));
     
@@ -109,7 +120,8 @@ export async function updateVariant(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) return { error: "Unauthorized" };
+  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) return { error: "Unauthorized" };
 
   try {
     const variantId = parseInt(formData.get("variantId") as string, 10);

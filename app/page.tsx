@@ -45,6 +45,8 @@ type ProductItem = {
   brand: string;
   compatibility: string;
   specs: string;
+  variantId: number;
+  maxStock: number;
 };
 
 const FACEBOOK_REVIEWS = [
@@ -151,7 +153,9 @@ export default function Home() {
               type: p.systemMetadata?.type || p.categoryType,
               brand: p.brandName,
               compatibility: p.systemMetadata?.compatibility || "",
-              specs: specsStr || "Standard"
+              specs: specsStr || "Standard",
+              variantId: variant.id || 0,
+              maxStock: variant.stockOnHand || 0,
             };
           });
           setBestItems(mapped);

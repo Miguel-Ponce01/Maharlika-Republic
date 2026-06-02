@@ -10,8 +10,14 @@ export async function updateOrderStatus(orderId: number, newStatus: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
+  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) {
     return { error: "Unauthorized" };
+  }
+
+  const validStatuses = ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED'];
+  if (!validStatuses.includes(newStatus)) {
+    return { error: "Invalid status value" };
   }
 
   try {

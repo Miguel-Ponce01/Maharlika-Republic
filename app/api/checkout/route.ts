@@ -10,14 +10,22 @@ import { eq, sql } from 'drizzle-orm';
 
 function generateOrderReference(): string {
   const year = new Date().getFullYear();
-  const random = Math.floor(Math.random() * 900000) + 100000;
-  return `MR-${year}-${random}`;
+  const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
+  const random = Math.floor(Math.random() * 900) + 100; // 3 digit random
+  return `MR-${year}-${timestamp}-${random}`;
 }
 
 export async function POST(request: Request) {
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized: You must be logged in to place an order.' },
+        { status: 401 }
+      );
+    }
 
     const body = await request.json();
     const { customerName, customerEmail, customerPhone, shippingAddress, paymentMethod, items, notes } = body;
@@ -72,7 +80,7 @@ export async function POST(request: Request) {
         .insert(orders)
         .values({
           orderReference,
-          userId: user ? user.id : null,
+          userId: user.id,
           customerName,
           customerEmail,
           customerPhone: customerPhone ?? null,

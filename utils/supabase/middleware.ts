@@ -31,10 +31,14 @@ export const updateSession = async (request: NextRequest) => {
   // Refresh the session — keeps the user logged in across navigations
   const { data: { user } } = await supabase.auth.getUser();
 
+  // Define admin emails
+  const ADMIN_EMAILS = ["amponce@mcm.edu.ph", "admin@maharlika.com"];
+  const isAdmin = user && user.email && ADMIN_EMAILS.includes(user.email);
+
   // Protect /admin routes
   if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-    if (!user) {
-      // Redirect to login if not authenticated
+    if (!isAdmin) {
+      // Redirect to login (or home) if not authenticated as admin
       const url = request.nextUrl.clone();
       url.pathname = '/admin/login';
       return NextResponse.redirect(url);

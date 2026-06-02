@@ -140,6 +140,7 @@ function CheckoutContent() {
             variantSku: `${item.id}-base`, // Match the SKU format used in the seed
             quantity: item.quantity,
             unitPriceCents: item.price * 100,
+            variantId: item.variantId,
           })),
           notes: `Delivery Method: ${formData.deliveryMethod}`
         })
