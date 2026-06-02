@@ -602,7 +602,7 @@ export default function Home() {
         </div>
 
         {/* Facebook-style Recommendations Bar */}
-        <div className="bg-white/70 backdrop-blur-md border border-brand-border/60 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm shadow-brand-gold/5">
+        <div className="bg-white/70 dark:bg-neutral-900/80 backdrop-blur-md border border-brand-border/60 dark:border-white/10 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm shadow-brand-gold/5">
           <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
             <div className="p-4 bg-brand-gold/10 rounded-2xl text-brand-gold flex items-center justify-center">
               <Facebook className="w-8 h-8 fill-current" />
@@ -613,7 +613,7 @@ export default function Home() {
                   <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />
                 ))}
               </div>
-              <h3 className="font-heading font-extrabold text-lg text-brand-black leading-snug">
+              <h3 className="font-heading font-extrabold text-lg text-brand-black dark:text-white leading-snug">
                 100% Recommend
               </h3>
               <p className="text-xs text-brand-textMuted font-semibold mt-0.5">
@@ -622,8 +622,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-white border border-brand-border/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto shadow-sm">
-            <p className="text-xs font-heading font-bold uppercase tracking-wider text-brand-black/90">
+          <div className="bg-white dark:bg-neutral-900 border border-brand-border/40 dark:border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto shadow-sm">
+            <p className="text-xs font-heading font-bold uppercase tracking-wider text-brand-black/90 dark:text-white/90">
               Do you recommend Maharlika Gadgets?
             </p>
             <div className="flex gap-2 w-full sm:w-auto">
@@ -640,7 +640,7 @@ export default function Home() {
                 href="https://www.facebook.com/marexxrepublicdavao/reviews"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 sm:flex-initial px-5 py-2.5 bg-neutral-50 hover:bg-neutral-100 text-brand-black border border-brand-border/50 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all duration-300 active:scale-95"
+                className="flex-1 sm:flex-initial px-5 py-2.5 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 text-brand-black dark:text-white border border-brand-border/50 dark:border-white/10 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all duration-300 active:scale-95"
               >
                 <span>No</span>
               </a>
@@ -653,7 +653,7 @@ export default function Home() {
           {FACEBOOK_REVIEWS.map((review, idx) => (
             <div
               key={idx}
-              className="bg-white/80 backdrop-blur-sm border border-brand-border rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-brand-gold/20 transition-all duration-300 relative group"
+              className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm border border-brand-border dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-brand-gold/20 transition-all duration-300 relative group"
             >
               {/* Facebook Icon watermark */}
               <Facebook className="absolute top-6 right-6 w-4 h-4 text-[#1877F2]/20 group-hover:text-[#1877F2]/40 transition-colors" />
@@ -665,7 +665,7 @@ export default function Home() {
                     {review.initials}
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm leading-tight text-brand-black">{review.name}</h4>
+                    <h4 className="font-bold text-sm leading-tight text-brand-black dark:text-white">{review.name}</h4>
                     <div className="flex items-center gap-1 mt-0.5">
                       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wide">{review.date}</span>
                       <span className="text-[10px] text-gray-400">•</span>
@@ -678,7 +678,7 @@ export default function Home() {
                 </div>
 
                 {/* Review Text */}
-                <p className="text-xs md:text-sm text-brand-black/85 leading-relaxed italic">
+                <p className="text-xs md:text-sm text-brand-black/85 dark:text-white/85 leading-relaxed italic">
                   &ldquo;{review.text}&rdquo;
                 </p>
               </div>
@@ -704,7 +704,7 @@ export default function Home() {
               From our physical showroom in Bajada to our active online community, we pride ourselves on transparency, top-notch customer service, and an unwavering commitment to bringing the best gadgets closer to you.
             </p>
             <div className="pt-4">
-              <Link href="/products" className="inline-flex items-center gap-2 px-6 py-3 bg-brand-black text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 transition-colors">
+              <Link href="/products" className="inline-flex items-center gap-2 px-6 py-3 bg-brand-black text-brand-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 dark:hover:bg-gray-200 transition-colors">
                 Discover Our Catalog
                 <ArrowRight className="w-4 h-4" />
               </Link>
@@ -714,8 +714,8 @@ export default function Home() {
             <img src="/clients/pic1.jpg" alt="Maharlika Republic Showroom" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
-              <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white">
-                <p className="text-brand-black font-extrabold text-sm uppercase tracking-wider mb-1">Davao's Trusted Tech Hub</p>
+              <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white dark:border-white/10">
+                <p className="text-brand-black dark:text-white font-extrabold text-sm uppercase tracking-wider mb-1">Davao's Trusted Tech Hub</p>
                 <p className="text-xs text-brand-textMuted">Located at F. Torres St, Bajada</p>
               </div>
             </div>
@@ -724,17 +724,17 @@ export default function Home() {
       </section>
 
       {/* 12. MAP & SHOWROOM LOCATOR */}
-      <section id="map" className="py-20 px-6 border-t border-brand-border bg-brand-white">
+      <section id="map" className="py-20 px-6 border-t border-brand-border bg-brand-white dark:bg-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 flex flex-col md:flex-row justify-between items-end gap-6">
             <div>
-              <h2 className="text-3xl font-heading font-bold mb-4 tracking-tighter uppercase">Our Showroom Location</h2>
+              <h2 className="text-3xl font-heading font-bold mb-4 tracking-tighter uppercase text-brand-black dark:text-white">Our Showroom Location</h2>
               <p className="text-xs text-brand-textMuted max-w-xl">
-                Locate us in the heart of Bajada. Use the map controls to toggle between the <strong className="font-semibold text-brand-black">Macro View (City)</strong> and the <strong className="font-semibold text-brand-black">Indoor Layout</strong> of our Bajada hub.
+                Locate us in the heart of Bajada. Use the map controls to toggle between the <strong className="font-semibold text-brand-black dark:text-white">Macro View (City)</strong> and the <strong className="font-semibold text-brand-black dark:text-white">Indoor Layout</strong> of our Bajada hub.
               </p>
             </div>
             <div className="text-right hidden md:block shrink-0">
-              <p className="font-medium text-brand-black">Davao Wisdom Building</p>
+              <p className="font-medium text-brand-black dark:text-white">Davao Wisdom Building</p>
               <p className="text-xs text-brand-textMuted">F. Torres St, Bajada, Davao City</p>
             </div>
           </div>

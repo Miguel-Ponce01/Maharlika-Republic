@@ -60,7 +60,7 @@ export default function Footer() {
                   alt="Maharlika Republic Logo" 
                 />
               </div>
-              <span className="font-heading font-extrabold text-xl uppercase tracking-wider text-brand-black group-hover:text-brand-gold transition-colors">
+              <span className="font-heading font-extrabold text-xl uppercase tracking-wider text-brand-black dark:text-white group-hover:text-brand-gold transition-colors">
                 Maharlika <span className="text-brand-gold">Republic</span>
               </span>
             </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
                 href="https://www.facebook.com/marexxrepublicdavao" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-brand-black hover:text-brand-gold transition-colors"
+                className="text-brand-black dark:text-white hover:text-brand-gold transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -80,7 +80,7 @@ export default function Footer() {
                 href="https://www.instagram.com/marexxrepublic" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-brand-black hover:text-brand-gold transition-colors"
+                className="text-brand-black dark:text-white hover:text-brand-gold transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black">
+            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black dark:text-white">
               Subscribe to our newsletter
             </h4>
             <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -96,7 +96,7 @@ export default function Footer() {
                 type="email" 
                 placeholder="Your email" 
                 required
-                className="flex-grow p-3 rounded-xl border border-brand-border bg-brand-white dark:bg-black/20 text-xs text-brand-black focus:outline-none"
+                className="flex-grow p-3 rounded-xl border border-brand-border bg-brand-white dark:bg-black/20 text-xs text-brand-black dark:text-white focus:outline-none"
               />
               <button 
                 type="submit"
@@ -113,7 +113,7 @@ export default function Footer() {
           
           {/* Col 1: Shop Apple */}
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black">
+            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black dark:text-white">
               Shop Apple
             </h4>
             <ul className="space-y-2.5">
@@ -129,7 +129,7 @@ export default function Footer() {
 
           {/* Col 2: Shop Categories */}
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black">
+            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black dark:text-white">
               Shop Categories
             </h4>
             <ul className="space-y-2.5">
@@ -145,7 +145,7 @@ export default function Footer() {
 
           {/* Col 3: Support */}
           <div className="space-y-4 col-span-2 md:col-span-1">
-            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black">
+            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black dark:text-white">
               Support
             </h4>
             <ul className="space-y-2.5 grid grid-cols-2 md:grid-cols-1 gap-x-4 gap-y-2.5">

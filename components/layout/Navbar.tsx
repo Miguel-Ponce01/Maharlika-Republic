@@ -69,12 +69,12 @@ export default function Navbar() {
             </Link>
           </div>
    
-          <nav className="hidden md:flex relative items-center space-x-2" onMouseLeave={() => setHoveredIndex(null)}>
+          <nav className="hidden lg:flex relative items-center space-x-1" onMouseLeave={() => setHoveredIndex(null)}>
             {navLinks.map((link, index) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative px-4 py-2 text-xs font-semibold uppercase tracking-widest text-brand-black/80 hover:text-brand-gold transition-colors z-10"
+                className="relative px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-brand-black/80 hover:text-brand-gold transition-colors z-10"
                 onMouseEnter={() => setHoveredIndex(index)}
               >
                 {link.name}
@@ -112,14 +112,14 @@ export default function Navbar() {
             {mounted && (
               <button 
                 onClick={toggleTheme} 
-                className={`relative mx-2 w-10 h-6 flex items-center rounded-full transition-colors duration-300 ${
+                className={`relative mx-1.5 w-8 h-5 flex items-center rounded-full transition-colors duration-300 ${
                   theme === 'dark' ? 'bg-brand-gold' : 'bg-gray-200 border border-gray-300'
                 }`}
                 aria-label="Toggle Dark Mode"
               >
                 <div 
-                  className={`w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-300 ${
-                    theme === 'dark' ? 'translate-x-5' : 'translate-x-1'
+                  className={`w-3.5 h-3.5 bg-white rounded-full shadow-sm transform transition-transform duration-300 ${
+                    theme === 'dark' ? 'translate-x-4' : 'translate-x-0.5'
                   }`}
                 />
               </button>
