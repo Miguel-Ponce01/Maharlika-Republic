@@ -179,17 +179,20 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
               </button>
 
               {/* Left Column: Product Image Spotlight */}
-              <div className="w-full md:w-1/2 bg-[#F5F5F7] dark:bg-[#1C1F22] p-8 flex items-center justify-center relative overflow-hidden group border-b md:border-b-0 md:border-r border-brand-border">
-                <div className="absolute top-4 left-4 flex gap-2">
-                  <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+              <div className="w-full md:w-1/2 bg-neutral-50/50 dark:bg-black/30 p-8 flex items-center justify-center relative overflow-hidden group border-b md:border-b-0 md:border-r border-neutral-200/50 dark:border-white/[0.04]">
+                {/* Spotlight Ambient Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.12),transparent_70%)] pointer-events-none z-0" />
+                
+                <div className="absolute top-6 left-6 flex gap-2 z-10">
+                  <span className="text-[10px] bg-brand-gold/10 text-brand-gold font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-brand-gold/20">
                     {product.type}
                   </span>
-                  <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                    <ShieldCheck className="w-3 h-3" /> Genuine
+                  <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 border border-emerald-500/20">
+                    <ShieldCheck className="w-3.5 h-3.5" /> Genuine
                   </span>
                 </div>
 
-                <div className="w-full h-[280px] md:h-[400px] flex items-center justify-center p-4 relative">
+                <div className="w-full h-[280px] md:h-[400px] flex items-center justify-center p-4 relative z-10">
                   <motion.img
                     layoutId={`product-image-${product.id}`}
                     src={product.image}
@@ -205,30 +208,30 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
                   {/* Brand & Title */}
                   <div className="space-y-1">
                     <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{product.brand}</p>
-                    <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-brand-black tracking-tight leading-none">
+                    <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-neutral-900 dark:text-white tracking-tight leading-none">
                       {product.name}
                     </h2>
                   </div>
 
                   {/* Pricing Matrix */}
-                  <div className="p-4 bg-[#F5F5F7] dark:bg-[#1C1F22] rounded-2xl border border-brand-border/40">
+                  <div className="p-5 bg-neutral-50/40 dark:bg-white/[0.02] rounded-2xl border border-neutral-200/50 dark:border-white/[0.04]">
                     <div className="flex justify-between items-baseline">
-                      <span className="text-xs text-brand-textMuted font-bold uppercase tracking-wider">Cash price</span>
-                      <span className="text-2xl font-extrabold text-brand-gold">{formatPrice(product.price)}</span>
+                      <span className="text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Cash Price</span>
+                      <span className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-[-0.02em]">{formatPrice(product.price)}</span>
                     </div>
                   </div>
 
                   {/* Specs summary list */}
                   <div className="space-y-1.5 text-xs text-brand-black/90">
                     <p className="font-bold uppercase tracking-wider text-[10px] text-brand-textMuted">Features & Parameters</p>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-1 border-t border-brand-border/40">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-1 border-t border-neutral-200/50 dark:border-white/[0.04]">
                       <div>
                         <span className="text-[10px] text-brand-textMuted block uppercase">Hardware configuration</span>
-                        <span className="font-semibold text-brand-black truncate block">{product.specs}</span>
+                        <span className="font-semibold text-neutral-900 dark:text-white truncate block">{product.specs}</span>
                       </div>
                       <div>
                         <span className="text-[10px] text-brand-textMuted block uppercase">Compatibility</span>
-                        <span className="font-semibold text-brand-black truncate block">{product.compatibility}</span>
+                        <span className="font-semibold text-neutral-900 dark:text-white truncate block">{product.compatibility}</span>
                       </div>
                     </div>
                   </div>
@@ -238,24 +241,28 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
                     <div className="space-y-2">
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-bold uppercase tracking-wider text-[10px] text-brand-textMuted">Finish / Color</span>
-                        <span className="font-semibold text-brand-black">{selectedColor}</span>
+                        <span className="font-semibold text-neutral-900 dark:text-white">{selectedColor}</span>
                       </div>
                       <div className="flex gap-2.5">
                         {colors.map((color) => (
                           <button
                             key={color.name}
                             onClick={() => setSelectedColor(color.name)}
-                            className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${
+                            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] relative ${
                               selectedColor === color.name
-                                ? "border-brand-gold scale-110 shadow-md ring-2 ring-brand-gold/25"
-                                : "border-brand-border/60 hover:scale-105"
+                                ? "border-brand-gold scale-105 shadow-sm ring-2 ring-brand-gold/20"
+                                : "border-neutral-300 dark:border-white/10 hover:scale-[1.05]"
                             }`}
-                            style={{ backgroundColor: color.hex }}
                             title={color.name}
                           >
-                            {selectedColor === color.name && (
-                              <Check className={`w-3.5 h-3.5 ${color.hex === "#f2f1ed" || color.hex === "#ffffff" || color.hex === "#f5f5f7" ? "text-black" : "text-white"}`} />
-                            )}
+                            <span 
+                              className="w-7 h-7 rounded-full block flex items-center justify-center" 
+                              style={{ backgroundColor: color.hex }}
+                            >
+                              {selectedColor === color.name && (
+                                <Check className={`w-3.5 h-3.5 ${color.hex === "#f2f1ed" || color.hex === "#ffffff" || color.hex === "#f5f5f7" ? "text-black" : "text-white"}`} />
+                              )}
+                            </span>
                           </button>
                         ))}
                       </div>
@@ -263,36 +270,42 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
                   )}
 
                   {/* Immersive Local Financing Schemes */}
-                  <div className="space-y-2 pt-2">
+                  <div className="space-y-3 pt-3">
                     <span className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider block">Davao Local Financing Estimates</span>
-                    <div className="grid grid-cols-2 gap-3 text-xs">
-                      <div className="p-3 bg-brand-white dark:bg-black/10 border border-brand-border rounded-xl space-y-1">
-                        <span className="text-[10px] text-brand-textMuted font-bold uppercase block">Paluwagan (10 Mo.)</span>
-                        <span className="font-heading font-extrabold text-brand-black">{formatPrice(computedMonthlyPaluwagan)}/mo</span>
-                        <span className="text-[9px] text-brand-textMuted block leading-none">No CC Required</span>
-                      </div>
-                      <div className="p-3 bg-brand-white dark:bg-black/10 border border-brand-border rounded-xl space-y-1">
-                        <span className="text-[10px] text-brand-textMuted font-bold uppercase block">Lay-Away (6 Mo.)</span>
-                        <span className="font-heading font-extrabold text-brand-black">{formatPrice(computedMonthlyLayaway)}/mo</span>
-                        <span className="text-[9px] text-brand-textMuted block leading-none">0% Interest Dues</span>
-                      </div>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
+                      <motion.div 
+                        whileHover={{ y: -2 }}
+                        className="p-4 bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/50 dark:border-white/[0.04] rounded-2xl space-y-1.5 transition-all duration-300 hover:border-brand-gold/30"
+                      >
+                        <span className="text-[9px] text-brand-gold font-semibold uppercase tracking-[0.05em] block">Paluwagan (10 Mo.)</span>
+                        <span className="font-heading font-extrabold text-neutral-900 dark:text-white text-base md:text-lg leading-tight block">{formatPrice(computedMonthlyPaluwagan)}<span className="text-xs font-normal text-gray-400">/mo</span></span>
+                        <span className="text-[10px] text-neutral-400 dark:text-gray-500 font-medium block leading-none">No credit card required</span>
+                      </motion.div>
+                      <motion.div 
+                        whileHover={{ y: -2 }}
+                        className="p-4 bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/50 dark:border-white/[0.04] rounded-2xl space-y-1.5 transition-all duration-300 hover:border-brand-gold/30"
+                      >
+                        <span className="text-[9px] text-brand-gold font-semibold uppercase tracking-[0.05em] block">Lay-Away (6 Mo.)</span>
+                        <span className="font-heading font-extrabold text-neutral-900 dark:text-white text-base md:text-lg leading-tight block">{formatPrice(computedMonthlyLayaway)}<span className="text-xs font-normal text-gray-400">/mo</span></span>
+                        <span className="text-[10px] text-neutral-400 dark:text-gray-500 font-medium block leading-none">0% fixed interest rate</span>
+                      </motion.div>
                     </div>
                   </div>
                 </div>
 
                 {/* Buy Button CTA */}
-                <div className="pt-6 border-t border-brand-border/40 flex flex-col sm:flex-row gap-3">
+                <div className="pt-6 border-t border-neutral-200/50 dark:border-white/[0.06] flex flex-col sm:flex-row gap-3">
                   {product.maxStock <= 0 ? (
                     <button
                       disabled
-                      className="flex-1 py-4 bg-gray-400 text-white font-bold rounded-xl shadow-lg cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
+                      className="flex-1 py-3.5 bg-gray-400 text-white font-bold rounded-full cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
                     >
                       <span>Out of Stock</span>
                     </button>
                   ) : (
                     <button
                       onClick={handleAddToCart}
-                      className="flex-1 py-4 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-brand-gold/15 flex items-center justify-center gap-2 uppercase tracking-widest text-xs"
+                      className="flex-1 py-3.5 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-900 rounded-full font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] active:scale-[0.98]"
                     >
                       <ShoppingBag className="w-4 h-4" />
                       <span>Add to Cart</span>
@@ -302,7 +315,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
                     href="https://www.facebook.com/messages/t/marexxrepublicdavao"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-4 px-6 border border-brand-border hover:bg-brand-white/40 dark:hover:bg-white/5 text-brand-black dark:text-white font-semibold rounded-xl transition-colors flex items-center justify-center text-center uppercase tracking-wider text-[10px] gap-1"
+                    className="py-3.5 px-6 border border-neutral-300 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-white/[0.04] text-neutral-800 dark:text-white rounded-full font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center text-center uppercase tracking-wider text-[10px] gap-1 active:scale-[0.98]"
                   >
                     <span>Inquire via Messenger</span>
                     <ArrowRight className="w-3.5 h-3.5 text-brand-gold" />

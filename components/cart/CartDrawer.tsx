@@ -66,7 +66,7 @@ export default function CartDrawer() {
                 </div>
               ) : (
                 items.map((item) => (
-                  <div key={item.id} className="flex gap-4 p-4 rounded-2xl border border-brand-border bg-brand-white/50 relative group">
+                  <div key={item.id} className="flex gap-4 p-4 rounded-2xl border border-neutral-200/50 dark:border-white/[0.04] bg-neutral-50/50 dark:bg-white/[0.01] relative group">
                     <img 
                       src={item.image} 
                       alt={item.name} 
@@ -74,24 +74,24 @@ export default function CartDrawer() {
                     />
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <h4 className="font-heading font-semibold text-sm text-brand-black line-clamp-1 tracking-tight">{item.name}</h4>
+                        <h4 className="font-heading font-semibold text-sm text-neutral-900 dark:text-white line-clamp-1 tracking-tight">{item.name}</h4>
                         <span className="text-[10px] text-brand-textMuted block mt-0.5">{item.specs}</span>
                       </div>
                       
                       <div className="flex items-center justify-between mt-2">
                         {/* Quantity Counter */}
-                        <div className="flex items-center border border-brand-border rounded-lg overflow-hidden bg-brand-card">
+                        <div className="flex items-center border border-neutral-200/50 dark:border-white/[0.04] rounded-lg overflow-hidden bg-brand-card">
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="p-1.5 hover:bg-brand-border text-brand-textMuted hover:text-brand-black transition-colors"
+                            className="p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-brand-textMuted hover:text-brand-black transition-colors"
                           >
                             <Minus className="w-3.5 h-3.5" />
                           </button>
-                          <span className="px-3 text-xs font-semibold text-brand-black">{item.quantity}</span>
+                          <span className="px-3 text-xs font-semibold text-neutral-900 dark:text-white">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             disabled={item.quantity >= item.maxStock}
-                            className="p-1.5 hover:bg-brand-border text-brand-textMuted hover:text-brand-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-brand-textMuted hover:text-brand-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                           >
                             <Plus className="w-3.5 h-3.5" />
                           </button>
@@ -114,16 +114,16 @@ export default function CartDrawer() {
             </div>
             
             {items.length > 0 && (
-              <div className="p-6 border-t border-brand-border bg-brand-card">
-                <div className="flex justify-between text-lg font-medium mb-4 text-brand-black">
-                  <span>Subtotal</span>
-                  <span className="font-bold text-brand-gold">{formatPrice(subtotal)}</span>
+              <div className="p-6 border-t border-neutral-200/50 dark:border-white/[0.06] bg-brand-card">
+                <div className="flex justify-between items-center text-base mb-4 text-neutral-900 dark:text-white">
+                  <span className="font-semibold text-[11px] uppercase tracking-wider text-brand-textMuted">Subtotal</span>
+                  <span className="font-bold text-brand-gold text-lg">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex flex-col gap-3">
                   <Link 
                     href="/cart"
                     onClick={() => setCartOpen(false)}
-                    className="w-full py-3 bg-brand-card hover:bg-brand-border border border-brand-border text-brand-black font-semibold rounded-xl transition-colors flex items-center justify-center text-center text-sm shadow-sm"
+                    className="w-full py-3 border border-neutral-300 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-white/[0.04] text-neutral-800 dark:text-white rounded-full font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center text-center text-xs uppercase tracking-wider active:scale-[0.98]"
                   >
                     View Full Cart
                   </Link>
@@ -136,7 +136,7 @@ export default function CartDrawer() {
                         setAuthModalOpen(true);
                       }
                     }}
-                    className="w-full py-3.5 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-brand-gold/15 flex items-center justify-center text-center text-sm"
+                    className="w-full py-3.5 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-900 rounded-full font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center text-center text-xs uppercase tracking-wider active:scale-[0.98] shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
                   >
                     Checkout
                   </button>

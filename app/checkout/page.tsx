@@ -189,7 +189,25 @@ function CheckoutContent() {
           Back to store
         </Link>
 
-        <h1 className="text-3xl md:text-5xl font-heading font-bold text-brand-black mb-10 tracking-tighter">Checkout</h1>
+        <h1 className="text-3xl md:text-5xl font-heading font-bold text-neutral-900 dark:text-white mb-6 tracking-tighter">Checkout</h1>
+
+        {/* Stepper Progress Timeline */}
+        <div className="flex items-center justify-start gap-3 mb-12 text-xs font-semibold text-neutral-400 dark:text-gray-500 overflow-x-auto pb-2 scrollbar-none">
+          <span className="text-neutral-900 dark:text-white flex items-center gap-1.5 shrink-0">
+            <span className="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 flex items-center justify-center text-[10px] font-bold">1</span>
+            Review Bag
+          </span>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <span className="text-brand-gold flex items-center gap-1.5 shrink-0">
+            <span className="w-5 h-5 rounded-full bg-brand-gold text-neutral-950 flex items-center justify-center text-[10px] font-bold">2</span>
+            Details & Delivery
+          </span>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <span className="flex items-center gap-1.5 shrink-0">
+            <span className="w-5 h-5 rounded-full border border-neutral-300 dark:border-white/10 flex items-center justify-center text-[10px] font-bold">3</span>
+            Receipt
+          </span>
+        </div>
 
         {orderSuccess ? (
           <OfficialQuotation 
@@ -212,7 +230,7 @@ function CheckoutContent() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
             {/* Left side: Checkout Forms */}
-            <div className="lg:col-span-7 bg-brand-card rounded-3xl border border-brand-border p-6 md:p-8 shadow-sm">
+            <div className="lg:col-span-7 bg-white dark:bg-[#121212]/60 backdrop-blur-xl border border-neutral-200/50 dark:border-white/[0.06] rounded-[2rem] p-6 md:p-8 shadow-sm">
               <form onSubmit={handleSubmit} className="space-y-8">
                 
                 {error && (
@@ -224,7 +242,7 @@ function CheckoutContent() {
                 
                 {/* 1. Customer Details */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-heading font-bold text-brand-black flex items-center gap-2 pb-2 border-b border-brand-border">
+                  <h3 className="text-lg font-heading font-bold text-neutral-900 dark:text-white flex items-center gap-2 pb-2 border-b border-neutral-200/50 dark:border-white/[0.06]">
                     <User className="w-5 h-5 text-brand-gold" />
                     Customer Details
                   </h3>
@@ -238,7 +256,7 @@ function CheckoutContent() {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         placeholder="John Doe" 
-                        className="w-full bg-brand-white/50 dark:bg-white/5 border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold transition-colors"
+                        className="w-full bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/60 dark:border-white/[0.04] rounded-2xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                       />
                     </div>
                     <div className="space-y-2">
@@ -250,7 +268,7 @@ function CheckoutContent() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="john@example.com" 
-                        className="w-full bg-brand-white/50 dark:bg-white/5 border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold transition-colors"
+                        className="w-full bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/60 dark:border-white/[0.04] rounded-2xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                       />
                     </div>
                     <div className="space-y-2 md:col-span-2">
@@ -262,7 +280,7 @@ function CheckoutContent() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="0912 345 6789" 
-                        className="w-full bg-brand-white/50 dark:bg-white/5 border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold transition-colors"
+                        className="w-full bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/60 dark:border-white/[0.04] rounded-2xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                       />
                     </div>
                   </div>
@@ -270,12 +288,16 @@ function CheckoutContent() {
 
                 {/* 2. Delivery Method */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-heading font-bold text-brand-black flex items-center gap-2 pb-2 border-b border-brand-border">
+                  <h3 className="text-lg font-heading font-bold text-neutral-900 dark:text-white flex items-center gap-2 pb-2 border-b border-neutral-200/50 dark:border-white/[0.06]">
                     <MapPin className="w-5 h-5 text-brand-gold" />
                     Delivery Option
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
-                    <label className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${formData.deliveryMethod === "cod" ? "border-brand-gold bg-brand-gold/5" : "border-brand-border bg-brand-white/50 dark:bg-white/5"}`}>
+                    <label className={`p-4 rounded-2xl border transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex items-center justify-between group active:scale-[0.98] ${
+                      formData.deliveryMethod === "cod" 
+                        ? "border-brand-gold bg-brand-gold/[0.03] text-neutral-950 dark:text-white" 
+                        : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03]"
+                    }`}>
                       <input 
                         type="radio" 
                         name="deliveryMethod" 
@@ -285,13 +307,17 @@ function CheckoutContent() {
                         className="sr-only"
                       />
                       <div className="space-y-1">
-                        <span className="text-sm font-semibold text-brand-black block">Cash on Delivery</span>
+                        <span className="text-sm font-semibold text-neutral-900 dark:text-white block">Cash on Delivery</span>
                         <span className="text-[10px] text-brand-textMuted">Shipped locally (₱150)</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-brand-textMuted group-hover:translate-x-0.5 transition-transform" />
                     </label>
 
-                    <label className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${formData.deliveryMethod === "pickup" ? "border-brand-gold bg-brand-gold/5" : "border-brand-border bg-brand-white/50 dark:bg-white/5"}`}>
+                    <label className={`p-4 rounded-2xl border transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex items-center justify-between group active:scale-[0.98] ${
+                      formData.deliveryMethod === "pickup" 
+                        ? "border-brand-gold bg-brand-gold/[0.03] text-neutral-950 dark:text-white" 
+                        : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03]"
+                    }`}>
                       <input 
                         type="radio" 
                         name="deliveryMethod" 
@@ -301,7 +327,7 @@ function CheckoutContent() {
                         className="sr-only"
                       />
                       <div className="space-y-1">
-                        <span className="text-sm font-semibold text-brand-black block">Showroom Pick-up</span>
+                        <span className="text-sm font-semibold text-neutral-900 dark:text-white block">Showroom Pick-up</span>
                         <span className="text-[10px] text-brand-textMuted">F. Torres St, Davao City (Free)</span>
                       </div>
                       <Building className="w-4 h-4 text-brand-gold" />
@@ -319,7 +345,7 @@ function CheckoutContent() {
                           value={formData.addressRegion}
                           onChange={handleInputChange}
                           placeholder="Davao Region" 
-                          className="w-full bg-brand-white/50 dark:bg-white/5 border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold transition-colors"
+                          className="w-full bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/60 dark:border-white/[0.04] rounded-2xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                         />
                       </div>
                       <div className="space-y-2">
@@ -331,7 +357,7 @@ function CheckoutContent() {
                           value={formData.addressCity}
                           onChange={handleInputChange}
                           placeholder="Davao City" 
-                          className="w-full bg-brand-white/50 dark:bg-white/5 border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold transition-colors"
+                          className="w-full bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/60 dark:border-white/[0.04] rounded-2xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                         />
                       </div>
                       <div className="space-y-2">
@@ -343,7 +369,7 @@ function CheckoutContent() {
                           value={formData.addressStreet}
                           onChange={handleInputChange}
                           placeholder="F. Torres St, House #4" 
-                          className="w-full bg-brand-white/50 dark:bg-white/5 border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold transition-colors"
+                          className="w-full bg-neutral-50/50 dark:bg-white/[0.02] border border-neutral-200/60 dark:border-white/[0.04] rounded-2xl px-4 py-3 text-sm text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                         />
                       </div>
                     </div>
@@ -352,19 +378,23 @@ function CheckoutContent() {
 
                 {/* 3. Payment Method */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-heading font-bold text-brand-black flex items-center gap-2 pb-2 border-b border-brand-border">
+                  <h3 className="text-lg font-heading font-bold text-neutral-900 dark:text-white flex items-center gap-2 pb-2 border-b border-neutral-200/50 dark:border-white/[0.06]">
                     <CreditCard className="w-5 h-5 text-brand-gold" />
                     Payment Method
                   </h3>
                   
                   {formData.deliveryMethod === "pickup" ? (
-                    <div className="p-4 rounded-2xl border border-brand-border bg-brand-white/50 dark:bg-white/5 space-y-1">
-                      <span className="text-sm font-semibold text-brand-black block">Cash / Card on Store Pick-up</span>
+                    <div className="p-5 rounded-2xl border border-neutral-200/50 dark:border-white/[0.06] bg-neutral-50/50 dark:bg-white/[0.01] space-y-1">
+                      <span className="text-sm font-semibold text-neutral-900 dark:text-white block">Cash / Card on Store Pick-up</span>
                       <span className="text-xs text-brand-textMuted">Complete payment via Cash or Terminal Credit Cards when verifying order in showroom.</span>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <label className={`p-4 rounded-2xl border cursor-pointer flex justify-between items-center ${formData.paymentMethod === "gcash" ? "border-brand-gold bg-brand-gold/5" : "border-brand-border bg-brand-white/50 dark:bg-white/5"}`}>
+                      <label className={`p-4 rounded-2xl border transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex justify-between items-center active:scale-[0.98] ${
+                        formData.paymentMethod === "gcash" 
+                          ? "border-brand-gold bg-brand-gold/[0.03] text-neutral-950 dark:text-white" 
+                          : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03]"
+                      }`}>
                         <input 
                           type="radio" 
                           name="paymentMethod" 
@@ -374,13 +404,17 @@ function CheckoutContent() {
                           className="sr-only"
                         />
                         <div className="space-y-0.5">
-                          <span className="text-sm font-semibold text-brand-black block">GCash Digital Wallet</span>
+                          <span className="text-sm font-semibold text-neutral-900 dark:text-white block">GCash Digital Wallet</span>
                           <span className="text-[10px] text-brand-textMuted">Instant online clearance</span>
                         </div>
                         <span className="w-8 h-8 bg-blue-500/10 text-blue-500 rounded-lg flex items-center justify-center font-bold text-[10px] uppercase">G</span>
                       </label>
 
-                      <label className={`p-4 rounded-2xl border cursor-pointer flex justify-between items-center ${formData.paymentMethod === "maya" ? "border-brand-gold bg-brand-gold/5" : "border-brand-border bg-brand-white/50 dark:bg-white/5"}`}>
+                      <label className={`p-4 rounded-2xl border transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex justify-between items-center active:scale-[0.98] ${
+                        formData.paymentMethod === "maya" 
+                          ? "border-brand-gold bg-brand-gold/[0.03] text-neutral-950 dark:text-white" 
+                          : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03]"
+                      }`}>
                         <input 
                           type="radio" 
                           name="paymentMethod" 
@@ -390,13 +424,17 @@ function CheckoutContent() {
                           className="sr-only"
                         />
                         <div className="space-y-0.5">
-                          <span className="text-sm font-semibold text-brand-black block">Maya Wallet</span>
+                          <span className="text-sm font-semibold text-neutral-900 dark:text-white block">Maya Wallet</span>
                           <span className="text-[10px] text-brand-textMuted">Online payment clearance</span>
                         </div>
                         <span className="w-8 h-8 bg-green-500/10 text-green-500 rounded-lg flex items-center justify-center font-bold text-[10px] uppercase">M</span>
                       </label>
 
-                      <label className={`p-4 rounded-2xl border cursor-pointer flex justify-between items-center ${formData.paymentMethod === "card" ? "border-brand-gold bg-brand-gold/5" : "border-brand-border bg-brand-white/50 dark:bg-white/5"}`}>
+                      <label className={`p-4 rounded-2xl border transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex justify-between items-center active:scale-[0.98] ${
+                        formData.paymentMethod === "card" 
+                          ? "border-brand-gold bg-brand-gold/[0.03] text-neutral-950 dark:text-white" 
+                          : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03]"
+                      }`}>
                         <input 
                           type="radio" 
                           name="paymentMethod" 
@@ -406,13 +444,17 @@ function CheckoutContent() {
                           className="sr-only"
                         />
                         <div className="space-y-0.5">
-                          <span className="text-sm font-semibold text-brand-black block">Credit / Debit Card</span>
+                          <span className="text-sm font-semibold text-neutral-900 dark:text-white block">Credit / Debit Card</span>
                           <span className="text-[10px] text-brand-textMuted">Visa, Mastercard</span>
                         </div>
                         <CreditCard className="w-4 h-4 text-brand-textMuted" />
                       </label>
 
-                      <label className={`p-4 rounded-2xl border cursor-pointer flex justify-between items-center ${formData.paymentMethod === "cod" ? "border-brand-gold bg-brand-gold/5" : "border-brand-border bg-brand-white/50 dark:bg-white/5"}`}>
+                      <label className={`p-4 rounded-2xl border transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex justify-between items-center active:scale-[0.98] ${
+                        formData.paymentMethod === "cod" 
+                          ? "border-brand-gold bg-brand-gold/[0.03] text-neutral-950 dark:text-white" 
+                          : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03]"
+                      }`}>
                         <input 
                           type="radio" 
                           name="paymentMethod" 
@@ -422,7 +464,7 @@ function CheckoutContent() {
                           className="sr-only"
                         />
                         <div className="space-y-0.5">
-                          <span className="text-sm font-semibold text-brand-black block">Cash on Delivery (COD)</span>
+                          <span className="text-sm font-semibold text-neutral-900 dark:text-white block">Cash on Delivery (COD)</span>
                           <span className="text-[10px] text-brand-textMuted">Pay when item arrives</span>
                         </div>
                         <span className="w-8 h-8 bg-brand-gold/10 text-brand-gold rounded-lg flex items-center justify-center font-bold text-[10px] uppercase">COD</span>
@@ -435,7 +477,7 @@ function CheckoutContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-brand-gold hover:bg-yellow-600 disabled:bg-gray-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-brand-gold/15 flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-900 font-bold rounded-full transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-2 text-xs uppercase tracking-wider active:scale-[0.98] shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] disabled:bg-neutral-300 dark:disabled:bg-neutral-800 disabled:text-neutral-500 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <span>Processing transaction payload...</span>
@@ -449,36 +491,36 @@ function CheckoutContent() {
 
             {/* Right side: Cart Summary */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="bg-brand-card rounded-3xl border border-brand-border p-6 space-y-6 shadow-sm">
-                <h3 className="text-lg font-heading font-bold text-brand-black flex items-center gap-2 pb-2 border-b border-brand-border">
+              <div className="bg-white dark:bg-[#121212]/60 backdrop-blur-xl border border-neutral-200/50 dark:border-white/[0.06] rounded-[2rem] p-6 md:p-8 space-y-6 shadow-sm">
+                <h3 className="text-lg font-heading font-bold text-neutral-900 dark:text-white flex items-center gap-2 pb-2 border-b border-neutral-200/50 dark:border-white/[0.06]">
                   <ShoppingBag className="w-5 h-5 text-brand-gold" />
                   Order Summary
                 </h3>
 
                 <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
                   {items.map((item) => (
-                    <div key={item.id} className="flex gap-4 items-center">
+                    <div key={item.id} className="flex gap-4 items-center bg-neutral-50/50 dark:bg-white/[0.01] p-3.5 rounded-2xl border border-neutral-200/50 dark:border-white/[0.04]">
                       <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg bg-black/5 dark:bg-black/40 border border-brand-border" />
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-heading font-semibold text-xs text-brand-black truncate">{item.name}</h4>
+                        <h4 className="font-heading font-semibold text-xs text-neutral-900 dark:text-white truncate">{item.name}</h4>
                         <span className="text-[9px] text-brand-textMuted block truncate">{item.specs}</span>
                         <span className="text-[10px] text-brand-gold mt-1 block">Qty: {item.quantity}</span>
                       </div>
-                      <span className="text-xs font-bold text-brand-black">{formatPrice(item.price * item.quantity)}</span>
+                      <span className="text-xs font-bold text-neutral-900 dark:text-white">{formatPrice(item.price * item.quantity)}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="border-t border-brand-border pt-4 space-y-3">
+                <div className="border-t border-neutral-200/50 dark:border-white/[0.06] pt-4 space-y-3">
                   <div className="flex justify-between text-xs text-brand-textMuted">
                     <span>Subtotal</span>
-                    <span className="text-brand-black">{formatPrice(subtotal)}</span>
+                    <span className="text-neutral-900 dark:text-white">{formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-xs text-brand-textMuted">
                     <span>Delivery Fee</span>
-                    <span className="text-brand-black">{formatPrice(shippingFee)}</span>
+                    <span className="text-neutral-900 dark:text-white">{formatPrice(shippingFee)}</span>
                   </div>
-                  <div className="flex justify-between text-base font-bold border-t border-brand-border pt-3">
+                  <div className="flex justify-between text-base font-bold border-t border-neutral-200/50 dark:border-white/[0.06] pt-3">
                     <span>Total Amount</span>
                     <span className="text-brand-gold">{formatPrice(total)}</span>
                   </div>

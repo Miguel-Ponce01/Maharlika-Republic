@@ -5,7 +5,8 @@ import { useCartStore } from "@/src/store/useCartStore";
 import { useAuthStore } from "@/src/store/useAuthStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Truck, Check } from "lucide-react";
+import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Truck, Check, CreditCard, Wallet } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem } = useCartStore();
@@ -23,6 +24,7 @@ export default function CartPage() {
   const [townCity, setTownCity] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [isCalculated, setIsCalculated] = useState(false);
+  const [isShippingOpen, setIsShippingOpen] = useState(false);
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -255,18 +257,48 @@ export default function CartPage() {
                 <h2 className="text-xl font-heading font-bold text-brand-black tracking-tighter uppercase pb-2 border-b border-brand-border">Cart Totals</h2>
                 
                 {/* Pay As Selector */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-brand-textMuted uppercase tracking-wider block">Pay As</label>
-                  <select 
-                    value={payAs} 
-                    onChange={(e) => setPayAs(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-brand-border bg-brand-white dark:bg-[#1C1F22] text-sm text-brand-black dark:text-white focus:outline-none focus:border-brand-gold transition-colors"
-                  >
-                    <option value="Cash">Cash on Delivery / Pickup</option>
-                    <option value="GCash">GCash</option>
-                    <option value="Maya">Maya</option>
-                    <option value="Card">Credit / Debit Card</option>
-                  </select>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider block">Payment Method</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { id: "Cash", name: "Cash / COD", icon: Wallet, desc: "In-store or Delivery" },
+                      { id: "GCash", name: "GCash", icon: Wallet, desc: "Instant Mobile Pay" },
+                      { id: "Maya", name: "Maya", icon: Wallet, desc: "Maya Digital Pay" },
+                      { id: "Card", name: "Card Payment", icon: CreditCard, desc: "Visa / Mastercard" },
+                    ].map((opt) => {
+                      const Icon = opt.icon;
+                      const isSelected = payAs === opt.id;
+                      return (
+                        <button
+                          type="button"
+                          key={opt.id}
+                          onClick={() => setPayAs(opt.id)}
+                          className={`text-left p-3.5 rounded-2xl border transition-all duration-300 flex flex-col justify-between h-[100px] relative active:scale-[0.98] group ${
+                            isSelected
+                              ? "border-brand-gold bg-brand-gold/[0.03] text-brand-black dark:text-white"
+                              : "border-neutral-200/60 dark:border-white/[0.04] bg-neutral-50/40 dark:bg-white/[0.01] hover:bg-neutral-100/60 dark:hover:bg-white/[0.03] text-neutral-500 dark:text-gray-400"
+                          }`}
+                        >
+                          <div className="flex justify-between items-center w-full">
+                            <div className={`p-1.5 rounded-lg transition-colors ${
+                              isSelected ? "bg-brand-gold/10 text-brand-gold" : "bg-neutral-100 dark:bg-neutral-800 text-gray-400 group-hover:text-brand-gold/70"
+                            }`}>
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            {isSelected && (
+                              <span className="w-4 h-4 rounded-full bg-brand-gold flex items-center justify-center">
+                                <Check className="w-2.5 h-2.5 text-neutral-950 stroke-[3]" />
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <span className="text-[11px] font-bold block leading-none text-neutral-900 dark:text-white">{opt.name}</span>
+                            <span className="text-[9px] text-neutral-400 dark:text-gray-500 mt-1 block leading-none">{opt.desc}</span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 {/* Subtotal */}
@@ -329,72 +361,88 @@ export default function CartPage() {
                 </div>
 
                 {/* Calculate Shipping Form toggler */}
-                <details className="group border border-brand-border rounded-2xl bg-brand-white/40 overflow-hidden transition-all duration-300">
-                  <summary className="flex items-center justify-between p-3.5 cursor-pointer text-xs font-bold text-brand-black uppercase tracking-wider hover:bg-brand-border transition-colors list-none">
+                <div className="border border-neutral-200/50 dark:border-white/[0.06] rounded-2xl bg-[#FAFAFA] dark:bg-[#121212]/40 overflow-hidden transition-all duration-300">
+                  <button
+                    type="button"
+                    onClick={() => setIsShippingOpen(!isShippingOpen)}
+                    className="w-full flex items-center justify-between p-3.5 text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider hover:bg-neutral-100 dark:hover:bg-white/[0.04] transition-colors"
+                  >
                     <span className="flex items-center gap-2">
                       <Truck className="w-4 h-4 text-brand-gold" />
                       Calculate Shipping
                     </span>
-                    <span className="transition-transform group-open:rotate-180">▼</span>
-                  </summary>
+                    <span className={`transition-transform duration-300 ${isShippingOpen ? "rotate-180" : ""}`}>▼</span>
+                  </button>
                   
-                  <form onSubmit={handleCalculateShipping} className="p-4 border-t border-brand-border space-y-3 bg-brand-white">
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">Country</label>
-                      <select 
-                        value={country} 
-                        onChange={(e) => setCountry(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-brand-border bg-brand-card dark:bg-[#1C1F22] text-xs text-brand-black dark:text-white focus:outline-none focus:border-brand-gold transition-colors"
+                  <AnimatePresence initial={false}>
+                    {isShippingOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
                       >
-                        <option value="Philippines">Philippines</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">State / County</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. Davao del Sur" 
-                        value={stateCounty} 
-                        onChange={(e) => setStateCounty(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-brand-border bg-brand-card text-xs text-brand-black focus:outline-none"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">Town / City</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. Bajada, Davao City" 
-                        value={townCity} 
-                        onChange={(e) => setTownCity(e.target.value)}
-                        required
-                        className="w-full p-2.5 rounded-lg border border-brand-border bg-brand-card text-xs text-brand-black focus:outline-none"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">Postcode / ZIP</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. 8000" 
-                        value={zipCode} 
-                        onChange={(e) => setZipCode(e.target.value)}
-                        className="w-full p-2.5 rounded-lg border border-brand-border bg-brand-card text-xs text-brand-black focus:outline-none"
-                      />
-                    </div>
-                    
-                    <button 
-                      type="submit" 
-                      className="w-full py-2.5 bg-brand-black hover:bg-gray-800 dark:hover:bg-gray-200 text-brand-white font-bold rounded-lg text-xs uppercase tracking-wider transition-colors shadow-sm"
-                    >
-                      Update
-                    </button>
+                        <form onSubmit={handleCalculateShipping} className="p-4 border-t border-neutral-200/50 dark:border-white/[0.06] space-y-3 bg-white dark:bg-black/25">
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">Country</label>
+                            <select 
+                              value={country} 
+                              onChange={(e) => setCountry(e.target.value)}
+                              className="w-full p-2.5 rounded-lg border border-neutral-200/60 dark:border-white/[0.06] bg-neutral-50 dark:bg-[#1C1F22] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold transition-colors"
+                            >
+                              <option value="Philippines">Philippines</option>
+                            </select>
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">State / County</label>
+                            <input 
+                              type="text" 
+                              placeholder="e.g. Davao del Sur" 
+                              value={stateCounty} 
+                              onChange={(e) => setStateCounty(e.target.value)}
+                              className="w-full p-2.5 rounded-lg border border-neutral-200/60 dark:border-white/[0.06] bg-neutral-50 dark:bg-[#1C1F22] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold transition-colors"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">Town / City</label>
+                            <input 
+                              type="text" 
+                              placeholder="e.g. Bajada, Davao City" 
+                              value={townCity} 
+                              onChange={(e) => setTownCity(e.target.value)}
+                              required
+                              className="w-full p-2.5 rounded-lg border border-neutral-200/60 dark:border-white/[0.06] bg-neutral-50 dark:bg-[#1C1F22] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold transition-colors"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-brand-textMuted uppercase tracking-wider">Postcode / ZIP</label>
+                            <input 
+                              type="text" 
+                              placeholder="e.g. 8000" 
+                              value={zipCode} 
+                              onChange={(e) => setZipCode(e.target.value)}
+                              className="w-full p-2.5 rounded-lg border border-neutral-200/60 dark:border-white/[0.06] bg-neutral-50 dark:bg-[#1C1F22] text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-brand-gold transition-colors"
+                            />
+                          </div>
+                          
+                          <button 
+                            type="submit" 
+                            className="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-900 font-bold rounded-lg text-xs uppercase tracking-wider transition-colors shadow-sm"
+                          >
+                            Update
+                          </button>
 
-                    {isCalculated && (
-                      <p className="text-[10px] text-green-600 font-semibold text-center mt-2">
-                        ✔ Shipping rates calculated based on location!
-                      </p>
+                          {isCalculated && (
+                            <p className="text-[10px] text-green-600 font-semibold text-center mt-2">
+                              ✔ Shipping rates calculated based on location!
+                            </p>
+                          )}
+                        </form>
+                      </motion.div>
                     )}
-                  </form>
-                </details>
+                  </AnimatePresence>
+                </div>
 
                 {/* Final Total */}
                 <div className="flex justify-between items-center py-2 text-base border-y border-brand-border">
