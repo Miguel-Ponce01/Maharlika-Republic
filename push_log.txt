@@ -1,9 +1,0 @@
-
-> maharlika-republic@1.0.0 db:push
-> dotenv -e .env.local -- drizzle-kit push
-
-No config path provided, using default 'drizzle.config.ts'
-Reading config file 'C:\Users\MYPC\Documents\Maharlika Republic\drizzle.config.ts'
-Using 'postgres' driver for database querying
-[⣷] Pulling schema from database...
-[2K[1G[⣷] Pulling schema from database...
