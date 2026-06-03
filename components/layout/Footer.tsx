@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Facebook, Instagram, Send } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 
 export default function Footer() {
   const shopApple = [
@@ -32,11 +32,6 @@ export default function Footer() {
     { name: "Terms of Use", href: "/products" }
   ];
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thank you for subscribing to Maharlika Republic newsletter!");
-  };
-
   const pathname = usePathname();
   if (pathname.startsWith("/admin")) return null;
 
@@ -44,9 +39,9 @@ export default function Footer() {
     <footer className="bg-[#E4ECE8] dark:bg-[#111214] text-brand-black/80 dark:text-white/80 border-t border-brand-border/60 mt-20 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-16">
         
-        {/* Top Section: Brand Info + Newsletter */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-brand-border/60">
-          <div className="lg:col-span-2 space-y-4">
+        {/* Top Section: Brand Info */}
+        <div className="pb-12 border-b border-brand-border/60">
+          <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2 group mb-4">
               <div className="relative w-14 h-14 overflow-hidden shrink-0 flex items-center justify-center -ml-2">
                 <img 
@@ -80,26 +75,6 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
-          </div>
-
-          <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs uppercase tracking-widest text-brand-black dark:text-white">
-              Subscribe to our newsletter
-            </h4>
-            <form onSubmit={handleSubscribe} className="flex gap-2">
-              <input 
-                type="email" 
-                placeholder="Your email" 
-                required
-                className="flex-grow p-3 rounded-xl border border-brand-border bg-brand-white dark:bg-black/20 text-xs text-brand-black dark:text-white focus:outline-none"
-              />
-              <button 
-                type="submit"
-                className="px-5 bg-brand-black text-brand-white hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors rounded-xl flex items-center justify-center"
-              >
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </form>
           </div>
         </div>
 

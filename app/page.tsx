@@ -94,11 +94,43 @@ const FACEBOOK_REVIEWS = [
   }
 ];
 
+const HERO_PRODUCTS = [
+  {
+    name: "Premium MacBook Colorway",
+    image: "/hero/hero5.png",
+  },
+  {
+    name: "MacBook Pro Sleek Profile",
+    image: "/hero/hero2.png",
+  },
+  {
+    name: "Apple Silicon M5 Chip",
+    image: "/hero/hero1.png",
+  },
+  {
+    name: "Liquid Retina Display",
+    image: "/hero/hero3.png",
+  },
+  {
+    name: "Magic Keyboard Layout",
+    image: "/hero/hero4.png",
+  }
+];
+
 export default function Home() {
   const [activeStory, setActiveStory] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [bestItems, setBestItems] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  // Auto-play hero products slideshow
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % HERO_PRODUCTS.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
   
   const user = useAuthStore((state) => state.user);
   const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
@@ -304,26 +336,41 @@ export default function Home() {
               </div>
             </motion.div>
             
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 60 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full flex justify-center relative z-20 mt-12 md:mt-24"
-            >
-              <motion.img 
-                animate={{
-                  y: [0, -15, 0]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1600&auto=format&fit=crop" 
-                alt="MacBook Pro" 
-                className="w-full max-w-4xl object-contain drop-shadow-2xl"
-              />
-            </motion.div>
+            <div className="relative w-full max-w-4xl mt-12 md:mt-24 flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={heroIndex}
+                  initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -30 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="w-full flex justify-center z-10"
+                >
+                  <motion.img
+                    animate={{
+                      y: [0, -15, 0]
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    src={HERO_PRODUCTS[heroIndex].image}
+                    alt={HERO_PRODUCTS[heroIndex].name}
+                    className="w-full max-h-[300px] md:max-h-[420px] object-contain drop-shadow-[0_30px_60px_rgba(212,175,55,0.2)]"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Side Next Button (Arrow only) */}
+              <button
+                onClick={() => setHeroIndex((prev) => (prev + 1) % HERO_PRODUCTS.length)}
+                className="absolute right-0 md:right-4 z-30 p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-all backdrop-blur-md"
+                aria-label="Next Product"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -387,7 +434,7 @@ export default function Home() {
               <h3 className="font-heading font-bold text-2xl md:text-3xl tracking-tight text-white">iPhone</h3>
               <p className="text-gray-300 font-medium text-sm md:text-base">Pro cameras. Pro display.<br/>Pro performance.</p>
             </div>
-            <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1200&auto=format&fit=crop" alt="iPhone" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
+            <img src="/hero/cat_iphone.png" alt="iPhone" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
           </Link>
 
@@ -397,24 +444,49 @@ export default function Home() {
               <h3 className="font-heading font-bold text-2xl md:text-3xl tracking-tight text-white">Mac</h3>
               <p className="text-gray-300 font-medium text-sm md:text-base">Supercharged for pros.<br/>Built for everyone.</p>
             </div>
-            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop" alt="Mac" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
+            <img src="/hero/cat_mac.png" alt="Mac" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
           </Link>
 
           {/* Quarter Cards */}
           {[
-            { title: "iPad", sub: "Touch, draw, and type.", img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=600&auto=format&fit=crop", type: "iPad" },
-            { title: "Apple Watch", sub: "Your fitness partner.", img: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=600&auto=format&fit=crop", type: "Apple Watch" },
-            { title: "AirPods", sub: "Magic sounds.", img: "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=600&auto=format&fit=crop", type: "AirPods & Earphones" },
-            { title: "Accessories", sub: "Everything you need.", img: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=600&auto=format&fit=crop", type: "Accessories" }
+            { title: "iPad", sub: "Touch, draw, and type.", img: "/hero/cat_ipad.png", type: "iPad" },
+            { title: "Apple Watch", sub: "Your fitness partner.", img: "/hero/cat_watch.png", type: "Apple Watch" },
+            { title: "AirPods", sub: "Magic sounds.", img: "/hero/cat_airpods.png", type: "AirPods & Earphones" },
+            { title: "Accessories", sub: "Everything you need.", img: "", type: "Accessories" }
           ].map((item) => (
             <Link key={item.title} href={`/products?type=${item.type}`} className="col-span-12 sm:col-span-6 md:col-span-3 group relative rounded-[1.5rem] overflow-hidden aspect-square md:aspect-[4/5] bg-[#121212] flex flex-col p-6 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
-              <div className="relative z-10 space-y-1 mt-auto">
-                <h3 className="font-heading font-bold text-lg tracking-tight text-white">{item.title}</h3>
-                <p className="text-gray-300 font-medium text-xs">{item.sub}</p>
+              <div className="relative z-20 space-y-1 mt-auto">
+                <h3 className={`font-heading font-bold text-lg tracking-tight ${item.title === "Accessories" ? "text-neutral-900" : "text-white"}`}>{item.title}</h3>
+                <p className={`font-medium text-xs ${item.title === "Accessories" ? "text-neutral-500" : "text-gray-300"}`}>{item.sub}</p>
               </div>
-              <img src={item.img} alt={item.title} className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.05] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              {item.title === "Accessories" ? (
+                <div className="absolute inset-0 w-full h-full bg-[#F5F5F7] flex items-center justify-center overflow-hidden p-4">
+                  {/* iPad case as background/left */}
+                  <img
+                    src="/hero/acc_ipad_case.png"
+                    alt="iPad Case"
+                    className="absolute w-[46%] object-contain left-[5%] top-[10%] rotate-[-15deg] group-hover:scale-[1.08] group-hover:rotate-[-8deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.1)] mix-blend-multiply"
+                  />
+                  {/* iPhone case as background/right */}
+                  <img
+                    src="/hero/acc_iphone_case.png"
+                    alt="iPhone Case"
+                    className="absolute w-[44%] object-contain right-[4%] top-[20%] rotate-[15deg] group-hover:scale-[1.08] group-hover:rotate-[8deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.1)] mix-blend-multiply"
+                  />
+                  {/* Pencil Pro in center/foreground */}
+                  <img
+                    src="/hero/acc_pencil.png"
+                    alt="Apple Pencil Pro"
+                    className="absolute w-[18%] object-contain z-10 bottom-[12%] left-[41%] rotate-[-30deg] group-hover:scale-[1.12] group-hover:rotate-[-15deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)] mix-blend-multiply"
+                  />
+                </div>
+              ) : (
+                <img src={item.img} alt={item.title} className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.05] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
+              )}
+              {item.title !== "Accessories" && (
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none z-10" />
+              )}
             </Link>
           ))}
         </div>
