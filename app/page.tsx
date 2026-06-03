@@ -12,6 +12,7 @@ import {
   Clock,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
   X,
   CheckCircle,
   ShieldCheck,
@@ -97,23 +98,48 @@ const FACEBOOK_REVIEWS = [
 const HERO_PRODUCTS = [
   {
     name: "Premium MacBook Colorway",
-    image: "/hero/hero5.png",
+    title: "Vibrant Colors.",
+    tagline: "Starlight, Midnight, Silver, & Space Gray",
+    description: "Four stunning finishes. Crafted from 100% recycled aluminum. Designed to fit your aesthetic perfectly, without any background distractions.",
+    image: "/hero/mac5-removebg-preview.png",
+    glowColor: "rgba(212, 175, 55, 0.15)",
+    buttonText: "Explore Colors",
   },
   {
     name: "MacBook Pro Sleek Profile",
-    image: "/hero/hero2.png",
+    title: "Sleek Profile.",
+    tagline: "Unbelievably Thin. Remarkably Powerful.",
+    description: "Built for mobility and performance. Features a robust aluminum enclosure with support for dual external displays and versatile ports.",
+    image: "/hero/mac2-removebg-preview.png",
+    glowColor: "rgba(100, 116, 139, 0.15)",
+    buttonText: "View Specs",
   },
   {
     name: "Apple Silicon M5 Chip",
-    image: "/hero/hero1.png",
+    title: "Next-Gen M5.",
+    tagline: "Supercharged for Artificial Intelligence.",
+    description: "The next major milestone in Apple Silicon. Unprecedented CPU, GPU, and Neural Engine processing power built directly into the core.",
+    image: "/hero/mac1-removebg-preview.png",
+    glowColor: "rgba(20, 184, 166, 0.18)",
+    buttonText: "Discover M5",
   },
   {
     name: "Liquid Retina Display",
-    image: "/hero/hero3.png",
+    title: "Brilliant Screen.",
+    tagline: "1 Billion Colors. Immersive Liquid Retina.",
+    description: "Pristine visual clarity with thin borders, high contrast, and up to 500 nits of brightness. Rendering every pixel with lifelike precision.",
+    image: "/hero/mac3-removebg-preview.png",
+    glowColor: "rgba(59, 130, 246, 0.15)",
+    buttonText: "See Display Tech",
   },
   {
     name: "Magic Keyboard Layout",
-    image: "/hero/hero4.png",
+    title: "Magic Keyboard.",
+    tagline: "Comfortable, Quiet, & Responsive.",
+    description: "Features a full-height function row, Touch ID for secure authentication, and a scissor mechanism for the ultimate typing experience.",
+    image: "/hero/mac4-removebg-preview.png",
+    glowColor: "rgba(168, 85, 247, 0.15)",
+    buttonText: "Test Keyboard",
   }
 ];
 
@@ -123,15 +149,17 @@ export default function Home() {
   const [bestItems, setBestItems] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [heroIndex, setHeroIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Auto-play hero products slideshow
+  // Auto-play hero products slideshow (pauses when hovered)
   useEffect(() => {
+    if (isHovered) return;
     const timer = setInterval(() => {
       setHeroIndex((prev) => (prev + 1) % HERO_PRODUCTS.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
-  
+  }, [isHovered]);
+
   const user = useAuthStore((state) => state.user);
   const setAuthModalOpen = useAuthStore((state) => state.setAuthModalOpen);
   const router = useRouter();
@@ -293,84 +321,147 @@ export default function Home() {
 
   return (
     <div className="pt-16 min-h-screen transition-colors duration-300">
-      
-      {/* 1. HERO SPOTLIGHT (Immersive Luxury Aesthetic) */}
-      <section className="py-20 md:py-32 px-6 relative z-10 max-w-[1400px] mx-auto">
-        <div className="bg-[#0A0B0C] text-white rounded-[2.5rem] p-10 md:p-24 relative overflow-hidden">
-          {/* Subdued Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1000px] aspect-square rounded-full bg-brand-gold/10 blur-[200px] pointer-events-none z-0" />
-          
-          <div className="flex flex-col items-center justify-center text-center relative z-20 space-y-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-6 max-w-2xl"
-            >
-              <h1 className="text-6xl md:text-[84px] font-heading font-extrabold tracking-[-0.04em] leading-[0.95]">
-                Own Excellence.
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300/90 font-medium tracking-tight">
-                Premium Apple devices.<br/>
-                Certified. Protected.
-              </p>
-              
-              <div className="pt-6">
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.3 }}
-                >
-                  <button 
-                    onClick={() => {
-                      if (user) {
-                        router.push("/products");
-                      } else {
-                        setAuthModalOpen(true);
-                      }
-                    }}
-                    className="flex items-center gap-2 mx-auto px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full font-medium transition-colors tracking-tight text-sm backdrop-blur-md"
-                  >
-                    Explore Collection <ArrowRight className="w-4 h-4" />
-                  </button>
-                </motion.div>
-              </div>
-            </motion.div>
-            
-            <div className="relative w-full max-w-4xl mt-12 md:mt-24 flex items-center justify-center">
+
+      {/* 1. HERO SPOTLIGHT (Immersive Luxury Aesthetic with Dynamic Slideshow) */}
+      <section
+        className="py-12 md:py-24 px-6 relative z-10 max-w-[1400px] mx-auto"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="bg-[#0A0B0C] text-white rounded-[2.5rem] p-8 md:p-16 lg:p-20 relative overflow-hidden transition-all duration-500 border border-white/5">
+          {/* Dynamic Background Glow changing color based on active slide */}
+          <motion.div
+            animate={{
+              background: `radial-gradient(circle, ${HERO_PRODUCTS[heroIndex].glowColor} 0%, rgba(10, 11, 12, 0) 70%)`
+            }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 pointer-events-none z-0"
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20">
+            {/* Left Info Column */}
+            <div className="lg:col-span-6 flex flex-col justify-center text-center lg:text-left space-y-6">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={heroIndex}
-                  initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -30 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="w-full flex justify-center z-10"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 30 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="space-y-4"
+                >
+                  <span className="inline-block text-[10px] uppercase font-bold tracking-widest px-3 py-1 bg-white/5 border border-white/10 rounded-full text-brand-gold">
+                    Highlight Spotlight
+                  </span>
+
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-[-0.04em] leading-[1.05] text-white">
+                    {HERO_PRODUCTS[heroIndex].title}
+                  </h1>
+
+                  <p className="text-lg md:text-xl text-gray-300 font-medium tracking-tight">
+                    {HERO_PRODUCTS[heroIndex].tagline}
+                  </p>
+
+                  <p className="text-sm md:text-base text-gray-400 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light">
+                    {HERO_PRODUCTS[heroIndex].description}
+                  </p>
+
+                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        if (user) {
+                          router.push("/products");
+                        } else {
+                          setAuthModalOpen(true);
+                        }
+                      }}
+                      className="px-6 py-3 bg-brand-gold hover:bg-yellow-600 text-white rounded-full font-medium transition-colors tracking-tight text-sm shadow-lg shadow-brand-gold/15"
+                    >
+                      {HERO_PRODUCTS[heroIndex].buttonText}
+                    </motion.button>
+
+                    <button
+                      onClick={() => {
+                        router.push("/products");
+                      }}
+                      className="flex items-center gap-2 px-5 py-3 text-white hover:text-brand-gold transition-colors text-sm font-medium"
+                    >
+                      Explore Collection <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right Image/Visual Column */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-center relative min-h-[300px] md:min-h-[400px]">
+              {/* Previous Button */}
+              <button
+                onClick={() => setHeroIndex((prev) => (prev - 1 + HERO_PRODUCTS.length) % HERO_PRODUCTS.length)}
+                className="absolute left-0 lg:-left-6 z-30 p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/50 hover:text-white transition-all backdrop-blur-md"
+                aria-label="Previous Product"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={heroIndex}
+                  initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, rotate: 2 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full flex justify-center z-10 px-8"
                 >
                   <motion.img
                     animate={{
-                      y: [0, -15, 0]
+                      y: [0, -12, 0]
                     }}
                     transition={{
-                      duration: 8,
+                      duration: 6,
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
                     src={HERO_PRODUCTS[heroIndex].image}
                     alt={HERO_PRODUCTS[heroIndex].name}
-                    className="w-full max-h-[300px] md:max-h-[420px] object-contain drop-shadow-[0_30px_60px_rgba(212,175,55,0.2)]"
+                    className="w-full max-h-[280px] md:max-h-[380px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                   />
                 </motion.div>
               </AnimatePresence>
 
-              {/* Side Next Button (Arrow only) */}
+              {/* Next Button */}
               <button
                 onClick={() => setHeroIndex((prev) => (prev + 1) % HERO_PRODUCTS.length)}
-                className="absolute right-0 md:right-4 z-30 p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-all backdrop-blur-md"
+                className="absolute right-0 lg:-right-6 z-30 p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/50 hover:text-white transition-all backdrop-blur-md"
                 aria-label="Next Product"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
+          </div>
+
+          {/* Bottom Dot Navigation */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30">
+            {HERO_PRODUCTS.map((product, idx) => (
+              <button
+                key={idx}
+                onClick={() => setHeroIndex(idx)}
+                className="group flex flex-col items-center focus:outline-none"
+                aria-label={`Go to slide ${idx + 1}`}
+              >
+                <div className="relative w-12 h-1.5 rounded-full bg-white/15 overflow-hidden transition-all duration-300 group-hover:bg-white/30">
+                  {idx === heroIndex && (
+                    <motion.div
+                      layoutId="activeSlideIndicator"
+                      className="absolute inset-0 bg-brand-gold rounded-full"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -378,7 +469,7 @@ export default function Home() {
       {/* 2. CONSOLIDATED VALUE PROPOSITION ROW */}
       <section className="py-12 md:py-20 px-6 relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
-          
+
           <div className="bg-[#121212] rounded-[2rem] p-10 md:p-12 flex flex-col items-center md:items-start gap-6 group shadow-lg hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
             <div className="text-white/40 group-hover:text-brand-gold transition-colors duration-500 bg-white/5 p-4 rounded-2xl">
               <Award className="w-10 h-10 stroke-[1.5]" />
@@ -423,7 +514,7 @@ export default function Home() {
         <div className="mb-16 space-y-4 text-center md:text-left">
           <h2 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight">Devices.</h2>
           <p className="text-lg md:text-xl text-gray-500 font-medium">
-            Discover high-end pre-owned<br/>and brand-new items.
+            Discover high-end pre-owned<br />and brand-new items.
           </p>
         </div>
 
@@ -432,7 +523,7 @@ export default function Home() {
           <Link href="/products?type=iPhone" className="col-span-12 md:col-span-7 group relative rounded-[2rem] overflow-hidden min-h-[400px] md:min-h-[500px] bg-[#121212] flex flex-col p-8 md:p-12 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
             <div className="relative z-10 space-y-2 mt-auto">
               <h3 className="font-heading font-bold text-2xl md:text-3xl tracking-tight text-white">iPhone</h3>
-              <p className="text-gray-300 font-medium text-sm md:text-base">Pro cameras. Pro display.<br/>Pro performance.</p>
+              <p className="text-gray-300 font-medium text-sm md:text-base">Pro cameras. Pro display.<br />Pro performance.</p>
             </div>
             <img src="/hero/cat_iphone.png" alt="iPhone" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
@@ -442,7 +533,7 @@ export default function Home() {
           <Link href="/products?type=Mac" className="col-span-12 md:col-span-5 group relative rounded-[2rem] overflow-hidden min-h-[400px] md:min-h-[500px] bg-[#121212] flex flex-col p-8 md:p-12 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
             <div className="relative z-10 space-y-2 mt-auto">
               <h3 className="font-heading font-bold text-2xl md:text-3xl tracking-tight text-white">Mac</h3>
-              <p className="text-gray-300 font-medium text-sm md:text-base">Supercharged for pros.<br/>Built for everyone.</p>
+              <p className="text-gray-300 font-medium text-sm md:text-base">Supercharged for pros.<br />Built for everyone.</p>
             </div>
             <img src="/hero/cat_mac.png" alt="Mac" className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
@@ -457,34 +548,34 @@ export default function Home() {
           ].map((item) => (
             <Link key={item.title} href={`/products?type=${item.type}`} className="col-span-12 sm:col-span-6 md:col-span-3 group relative rounded-[1.5rem] overflow-hidden aspect-square md:aspect-[4/5] bg-[#121212] flex flex-col p-6 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
               <div className="relative z-20 space-y-1 mt-auto">
-                <h3 className={`font-heading font-bold text-lg tracking-tight ${item.title === "Accessories" ? "text-neutral-900" : "text-white"}`}>{item.title}</h3>
-                <p className={`font-medium text-xs ${item.title === "Accessories" ? "text-neutral-500" : "text-gray-300"}`}>{item.sub}</p>
+                <h3 className="font-heading font-bold text-lg tracking-tight text-white">{item.title}</h3>
+                <p className="font-medium text-xs text-gray-300">{item.sub}</p>
               </div>
               {item.title === "Accessories" ? (
-                <div className="absolute inset-0 w-full h-full bg-[#F5F5F7] flex items-center justify-center overflow-hidden p-4">
+                <div className="absolute inset-0 w-full h-full bg-[#121212] flex items-center justify-center overflow-hidden p-4">
                   {/* iPad case as background/left */}
                   <img
                     src="/hero/acc_ipad_case.png"
                     alt="iPad Case"
-                    className="absolute w-[46%] object-contain left-[5%] top-[10%] rotate-[-15deg] group-hover:scale-[1.08] group-hover:rotate-[-8deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.1)] mix-blend-multiply"
+                    className="absolute w-[46%] object-contain left-[5%] top-[10%] rotate-[-15deg] group-hover:scale-[1.08] group-hover:rotate-[-8deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.3)]"
                   />
                   {/* iPhone case as background/right */}
                   <img
                     src="/hero/acc_iphone_case.png"
                     alt="iPhone Case"
-                    className="absolute w-[44%] object-contain right-[4%] top-[20%] rotate-[15deg] group-hover:scale-[1.08] group-hover:rotate-[8deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.1)] mix-blend-multiply"
+                    className="absolute w-[44%] object-contain right-[4%] top-[20%] rotate-[15deg] group-hover:scale-[1.08] group-hover:rotate-[8deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.3)]"
                   />
                   {/* Pencil Pro in center/foreground */}
                   <img
                     src="/hero/acc_pencil.png"
                     alt="Apple Pencil Pro"
-                    className="absolute w-[18%] object-contain z-10 bottom-[12%] left-[41%] rotate-[-30deg] group-hover:scale-[1.12] group-hover:rotate-[-15deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)] mix-blend-multiply"
+                    className="absolute w-[18%] object-contain z-10 bottom-[12%] left-[41%] rotate-[-30deg] group-hover:scale-[1.12] group-hover:rotate-[-15deg] transition-all duration-700 select-none pointer-events-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)]"
                   />
                 </div>
               ) : (
-                <img src={item.img} alt={item.title} className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.05] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90" />
+                <img src={item.img} alt={item.title} className={`absolute inset-0 w-full h-full object-center group-hover:scale-[1.05] transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-90 ${item.title === "Apple Watch" ? "object-contain p-6" : "object-cover"}`} />
               )}
-              {item.title !== "Accessories" && (
+              {item.title !== "Accessories" && item.title !== "Apple Watch" && (
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none z-10" />
               )}
             </Link>
@@ -508,7 +599,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div 
+          <div
             ref={sliderRef}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
@@ -523,18 +614,18 @@ export default function Home() {
               </div>
             ) : (
               bestItems.map((item, i) => (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.5, type: "spring" }}
-                  key={item.name} 
+                  key={item.name}
                   onClick={() => handleBestItemClick(item)}
                   className="w-64 bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between shrink-0 hover:shadow-lg transition-all group active:scale-[0.98] duration-300"
                 >
                   <div className="aspect-square w-full bg-neutral-100 dark:bg-neutral-800 rounded-xl overflow-hidden relative flex items-center justify-center p-4 select-none pointer-events-none">
-                    <img 
-                      src={item.image} 
-                      alt={item.name} 
+                    <img
+                      src={item.image}
+                      alt={item.name}
                       className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -573,15 +664,15 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {offers.map((offer) => (
-              <div 
-                key={offer.title} 
+              <div
+                key={offer.title}
                 className="bg-[#121212] rounded-[1.5rem] p-8 flex flex-col justify-between min-h-[220px] shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group"
               >
                 <div className="space-y-3">
                   <h3 className="font-heading font-bold text-xl text-white tracking-tight">{offer.title}</h3>
                   <p className="text-sm text-gray-400 leading-relaxed">{offer.desc}</p>
                 </div>
-                <button 
+                <button
                   onClick={() => {
                     const idx = financingSchemes.findIndex(s => s.title.includes(offer.title.split(" ")[0]));
                     if (idx !== -1) setActiveStory(idx);
@@ -604,10 +695,10 @@ export default function Home() {
           <p className="text-xs text-brand-black/75 dark:text-brand-textMuted">
             Get daily updates on arrivals, legitness check tutorials, and customer upgrade testimonials.
           </p>
-          <a 
-            href="https://www.tiktok.com/@marexxrepublic" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://www.tiktok.com/@marexxrepublic"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block px-6 py-2.5 bg-brand-black dark:bg-brand-gold text-white hover:bg-gray-800 dark:hover:bg-yellow-600 transition-colors rounded-full font-bold text-xs uppercase shadow-sm"
           >
             Follow @marexxrepublic
