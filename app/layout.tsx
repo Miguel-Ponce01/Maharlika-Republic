@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     description: "Genuine Apple gadgets with flexible financing in Davao City.",
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.png?v=3",
+    apple: "/favicon.png?v=3",
   },
 };
 
