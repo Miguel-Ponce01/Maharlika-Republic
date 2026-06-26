@@ -9,19 +9,19 @@ export default function Footer() {
     { name: "iPhone", href: "/products?type=iPhone" },
     { name: "iPad", href: "/products?type=iPad" },
     { name: "Mac", href: "/products?type=Mac" },
-    { name: "Apple Watch", href: "/products?type=Apple Watch" },
-    { name: "AirPods", href: "/products?type=AirPods & Earphones" },
-    { name: "Chargers & Cables", href: "/products?type=Chargers & Cables" },
+    { name: "Apple Watch", href: "/products?type=Apple%20Watch" },
+    { name: "AirPods", href: "/products?type=AirPods%20%26%20Earphones" },
+    { name: "Chargers & Cables", href: "/products?type=Chargers%20%26%20Cables" },
     { name: "Apple Accessories", href: "/products?type=Accessories" }
   ];
 
   const shopCategories = [
-    { name: "Audio", href: "/products?type=AirPods & Earphones" },
+    { name: "Audio", href: "/products?type=AirPods%20%26%20Earphones" },
     { name: "Bags & Sleeves", href: "/products?type=Accessories" },
     { name: "Cases & Protection", href: "/products?type=Accessories" },
     { name: "Input Devices", href: "/products?type=Accessories" },
     { name: "Watch Bands", href: "/products?type=Accessories" },
-    { name: "Location Tracker", href: "/products?type=Chargers & Cables" }
+    { name: "Location Tracker", href: "/products?type=Chargers%20%26%20Cables" }
   ];
 
   const support = [

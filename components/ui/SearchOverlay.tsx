@@ -2,27 +2,9 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ShoppingBag, ArrowRight } from "lucide-react";
+import { Search, X, ShoppingBag, ArrowRight, Loader2 } from "lucide-react";
 import { useUIStore } from "@/src/store/useUIStore";
 import Link from "next/link";
-
-// Inline product index — mirrors the catalog for fast client-side search
-const SEARCH_INDEX = [
-  { id: "iphone-16-pro-max", name: "iPhone 16 Pro Max", type: "iPhone", specs: "256GB, Desert Titanium", price: 84990 },
-  { id: "iphone-16", name: "iPhone 16", type: "iPhone", specs: "128GB, Ultramarine", price: 56990 },
-  { id: "iphone-15", name: "iPhone 15", type: "iPhone", specs: "128GB, Black", price: 46990 },
-  { id: "ipad-10th-gen", name: "iPad 10th Gen 10.9\" Wi-Fi", type: "iPad", specs: "64GB, Blue", price: 25500 },
-  { id: "ipad-air-m2", name: "iPad Air 11\" M2 Wi-Fi", type: "iPad", specs: "128GB, Space Grey", price: 42990 },
-  { id: "macbook-air-m3", name: "MacBook Air 13\" M3", type: "Mac", specs: "8GB RAM, 256GB SSD", price: 61500 },
-  { id: "macbook-pro-m3-max", name: "MacBook Pro 16\" M3 Max", type: "Mac", specs: "36GB RAM, 1TB SSD", price: 199990 },
-  { id: "apple-watch-s10", name: "Apple Watch Series 10 GPS", type: "Apple Watch", specs: "46mm, Jet Black", price: 26500 },
-  { id: "earpods-lightning", name: "EarPods with Lightning Connector", type: "AirPods & Earphones", specs: "White", price: 1250 },
-  { id: "apple-pencil-usb-c", name: "Apple Pencil (USB-C)", type: "Accessories", specs: "White", price: 5250 },
-  { id: "airpods-4", name: "AirPods 4", type: "AirPods & Earphones", specs: "White", price: 8490 },
-  { id: "magsafe-charger", name: "MagSafe Charger (1m)", type: "Chargers & Cables", specs: "Silver", price: 2490 },
-  { id: "20w-usb-c-adapter", name: "20W USB-C Power Adapter", type: "Chargers & Cables", specs: "White", price: 1190 },
-  { id: "silicone-case-16-pro", name: "Silicone Case with MagSafe for iPhone 16 Pro Max", type: "Accessories", specs: "Stone Grey", price: 3290 },
-];
 
 const formatPrice = (value: number) =>
   new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP", minimumFractionDigits: 0 }).format(value);
@@ -32,6 +14,8 @@ export default function SearchOverlay() {
   const setSearchOpen = useUIStore((state) => state.setSearchOpen);
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
+  const [productsIndex, setProductsIndex] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -48,33 +32,67 @@ export default function SearchOverlay() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [setSearchOpen]);
 
-  // Auto-focus input when opened
+  // Fetch products from database when search is opened
   useEffect(() => {
     if (isSearchOpen) {
       setTimeout(() => inputRef.current?.focus(), 100);
+
+      const fetchLiveCatalog = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/products");
+          const data = await res.json();
+          if (data.success && Array.isArray(data.products)) {
+            const indexed: any[] = [];
+            data.products.forEach((prod: any) => {
+              const categoryType = prod.systemMetadata?.type || prod.categoryType;
+              if (Array.isArray(prod.variants)) {
+                prod.variants.forEach((v: any) => {
+                  indexed.push({
+                    id: `${prod.id}-${v.id}`,
+                    name: prod.modelName,
+                    type: categoryType === "gadget" ? prod.brandName : categoryType,
+                    specs: [v.storageCapacity, v.colorSpec].filter(Boolean).join(", "),
+                    price: v.priceCents / 100,
+                    sku: v.skuString
+                  });
+                });
+              }
+            });
+            setProductsIndex(indexed);
+          }
+        } catch (err) {
+          console.error("Failed to load search catalog:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchLiveCatalog();
     } else {
       setQuery("");
     }
   }, [isSearchOpen]);
 
-  // Client-side filtering
+  // Client-side filtering over the dynamic productsIndex
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    return SEARCH_INDEX.filter(
+    return productsIndex.filter(
       (p) =>
         p.name.toLowerCase().includes(q) ||
         p.type.toLowerCase().includes(q) ||
-        p.specs.toLowerCase().includes(q)
+        p.specs.toLowerCase().includes(q) ||
+        (p.sku && p.sku.toLowerCase().includes(q))
     ).slice(0, 6);
-  }, [query]);
+  }, [query, productsIndex]);
 
   const popularCategories = [
     { name: "iPhone", href: "/products?type=iPhone" },
     { name: "iPad", href: "/products?type=iPad" },
     { name: "Mac", href: "/products?type=Mac" },
-    { name: "Apple Watch", href: "/products?type=Apple Watch" },
-    { name: "AirPods", href: "/products?type=AirPods & Earphones" },
+    { name: "Apple Watch", href: "/products?type=Apple%20Watch" },
+    { name: "AirPods", href: "/products?type=AirPods%20%26%20Earphones" },
     { name: "Accessories", href: "/products?type=Accessories" },
   ];
 
@@ -107,6 +125,7 @@ export default function SearchOverlay() {
                 placeholder="Search iPhone, MacBook, AirPods..."
                 className="flex-1 text-base bg-transparent border-none focus:outline-none focus:ring-0 text-brand-black dark:text-white placeholder-brand-textMuted"
               />
+              {loading && <Loader2 className="w-4 h-4 text-brand-gold animate-spin shrink-0" />}
               {query && (
                 <button onClick={() => setQuery("")} className="p-1 rounded-md hover:bg-brand-border/50 text-brand-textMuted transition-colors">
                   <X className="w-4 h-4" />
@@ -122,7 +141,7 @@ export default function SearchOverlay() {
 
             {/* Results Area */}
             <div className="max-h-[420px] overflow-y-auto">
-              {query && results.length === 0 && (
+              {query && results.length === 0 && !loading && (
                 <div className="py-12 text-center space-y-2">
                   <ShoppingBag className="w-8 h-8 text-brand-textMuted mx-auto" />
                   <p className="text-sm text-brand-textMuted">No products found for &ldquo;{query}&rdquo;</p>

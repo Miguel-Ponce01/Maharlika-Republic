@@ -246,9 +246,9 @@ export default function Home() {
   const shopApple = [
     { name: "iPhone", image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop", href: "/products?type=iPhone" },
     { name: "iPad", image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=400&auto=format&fit=crop", href: "/products?type=iPad" },
-    { name: "Apple Watch", image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=400&auto=format&fit=crop", href: "/products?type=Apple Watch" },
+    { name: "Apple Watch", image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=400&auto=format&fit=crop", href: "/products?type=Apple%20Watch" },
     { name: "Mac", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop", href: "/products?type=Mac" },
-    { name: "AirPods", image: "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=400&auto=format&fit=crop", href: "/products?type=AirPods & Earphones" },
+    { name: "AirPods", image: "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=400&auto=format&fit=crop", href: "/products?type=AirPods%20%26%20Earphones" },
     { name: "Accessories", image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=400&auto=format&fit=crop", href: "/products?type=Accessories" }
   ];
 
@@ -546,7 +546,7 @@ export default function Home() {
             { title: "AirPods", sub: "Magic sounds.", img: "/hero/cat_airpods.png", type: "AirPods & Earphones" },
             { title: "Accessories", sub: "Everything you need.", img: "", type: "Accessories" }
           ].map((item) => (
-            <Link key={item.title} href={`/products?type=${item.type}`} className="col-span-12 sm:col-span-6 md:col-span-3 group relative rounded-[1.5rem] overflow-hidden aspect-square md:aspect-[4/5] bg-[#121212] flex flex-col p-6 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
+            <Link key={item.title} href={`/products?type=${encodeURIComponent(item.type)}`} className="col-span-12 sm:col-span-6 md:col-span-3 group relative rounded-[1.5rem] overflow-hidden aspect-square md:aspect-[4/5] bg-[#121212] flex flex-col p-6 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
               <div className="relative z-20 space-y-1 mt-auto">
                 <h3 className="font-heading font-bold text-lg tracking-tight text-white">{item.title}</h3>
                 <p className="font-medium text-xs text-gray-300">{item.sub}</p>

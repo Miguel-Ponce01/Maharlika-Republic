@@ -1,11 +1,11 @@
 "use server";
 
 import { db } from "@/src/db";
-import { products, productVariants, orderItems } from "@/src/db/schema";
+import { products, productVariants, orderItems, serializedItems } from "@/src/db/schema";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 
 export async function addProduct(formData: FormData) {
   const supabase = await createClient();
@@ -50,22 +50,41 @@ export async function addProduct(formData: FormData) {
       finalImageUrl = publicUrlData.publicUrl;
     }
 
+    let productId: number;
+
     // Insert Product and Variant in a transaction
     await db.transaction(async (tx) => {
-      const [newProduct] = await tx
-        .insert(products)
-        .values({
-          brandName,
-          modelName,
-          categoryType,
-          baseDescription,
-        })
-        .returning();
+      // Check if product exists in transaction to avoid race conditions
+      const existing = await tx
+        .select()
+        .from(products)
+        .where(
+          and(
+            sql`lower(${products.brandName}) = ${brandName.toLowerCase().trim()}`,
+            sql`lower(${products.modelName}) = ${modelName.toLowerCase().trim()}`
+          )
+        )
+        .limit(1);
+
+      if (existing.length > 0) {
+        productId = existing[0].id;
+      } else {
+        const [newProduct] = await tx
+          .insert(products)
+          .values({
+            brandName,
+            modelName,
+            categoryType,
+            baseDescription,
+          })
+          .returning();
+        productId = newProduct.id;
+      }
 
       await tx
         .insert(productVariants)
         .values({
-          productId: newProduct.id,
+          productId,
           skuString,
           storageCapacity: storageCapacity || null,
           colorSpec: colorSpec || null,
@@ -101,6 +120,15 @@ export async function deleteVariant(variantId: number) {
 
     if (existingOrders) {
       return { error: "Cannot delete variant: it has been ordered by a customer." };
+    }
+
+    // Check if variant has physical serialized items
+    const existingSerials = await db.query.serializedItems.findFirst({
+      where: eq(serializedItems.variantId, variantId),
+    });
+
+    if (existingSerials) {
+      return { error: "Cannot delete variant: it has physical serialized items in stock." };
     }
 
     // Delete the variant. (Note: in a real app, you'd soft delete or check if it's in an order)

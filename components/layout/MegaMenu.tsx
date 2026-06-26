@@ -27,18 +27,18 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
     { name: "iPhone", href: "/products?type=iPhone", icon: Smartphone },
     { name: "iPad", href: "/products?type=iPad", icon: Tablet },
     { name: "Mac", href: "/products?type=Mac", icon: Laptop },
-    { name: "Apple Watch", href: "/products?type=Apple Watch", icon: Watch },
-    { name: "AirPods & Audio", href: "/products?type=AirPods & Earphones", icon: Headphones }
+    { name: "Apple Watch", href: "/products?type=Apple%20Watch", icon: Watch },
+    { name: "AirPods & Audio", href: "/products?type=AirPods%20%26%20Earphones", icon: Headphones }
   ];
 
   const categoryLinks = [
-    { name: "Audio", href: "/products?type=AirPods & Earphones" },
+    { name: "Audio", href: "/products?type=AirPods%20%26%20Earphones" },
     { name: "Bags & Sleeves", href: "/products?type=Accessories" },
     { name: "Cases & Protection", href: "/products?type=Accessories" },
     { name: "Input Devices", href: "/products?type=Accessories" },
-    { name: "Power & Cables", href: "/products?type=Chargers & Cables" },
+    { name: "Power & Cables", href: "/products?type=Chargers%20%26%20Cables" },
     { name: "Watch Bands", href: "/products?type=Accessories" },
-    { name: "Location Tracker", href: "/products?type=Chargers & Cables" },
+    { name: "Location Tracker", href: "/products?type=Chargers%20%26%20Cables" },
   ];
 
   const supportLinks = [

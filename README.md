@@ -1,49 +1,123 @@
-# Maharlika Republic Gadgets
+# Maharlika Republic Platform — User Manual & Developer Guide
 
-Davao City's premier destination for high-end Apple gadgets and accessories. This project is a premium, high-tech landing page designed with a focus on luxury aesthetics, advanced animations, and a seamless user experience.
+Welcome to the **Maharlika Republic Platform**, Davao City's premier hybrid digital storefront, showroom navigation, and inventory management system designed specifically for **Maharlika Marexx Republic Davao** (Maharlika Gadgets). 
 
-## 🚀 Tech Stack
-
-- **Frontend**: HTML5, Vanilla CSS3, JavaScript (ES6+)
-- **Animations**: [GSAP (GreenSock Animation Platform)](https://greensock.com/gsap/) with [ScrollTrigger](https://greensock.com/scrolltrigger/)
-- **Typography**: Inter (Body), Poppins (Headings)
-- **Design System**: Custom Neumorphic (Soft UI) + Glassmorphism
-
-## 🎨 Design System
-
-### Color Palette
-- **Primary Background**: `#F9F9F7` (Boutique White)
-- **Primary Accent**: `#B47C2E` (Elite Gold)
-- **Secondary Accent**: `#1A1C1E` (Onyx Black)
-- **Text Color**: `#1A1C1E` (Dark) / `#5A5D63` (Mid-Grey)
-
-- **Live Store Manager (Admin)**: A password-protected dashboard (`admin123`) to add, edit, or delete products and testimonials live.
-- **Smart Persistence**: Utilizes browser `localStorage` to save all store management changes locally.
-- **Real Customer Proof**: A dedicated section for "Social Proof" featuring unboxing photos, delivery screenshots, and verified feedback.
-- **Boutique Minimalism**: A high-contrast light mode design that mirrors the premium feel of an Apple flagship store.
-- **Space Grotesk Typography**: Modern, monospace-inspired headings for a high-tech, readable experience.
-- **Glassmorphic Navigation**: Blurred white navbar for a clean, sophisticated overlay effect.
-- **Integrated Cart System**: A sliding drawer system that dynamically updates based on the managed product list.
-
-## ✨ Key Features
-
-- **Elite Retail Motion**: Utilizes GSAP with a custom fail-safe reveal system. Elements smoothly drift into position as they enter the viewport, with a background monitor ensuring 100% visibility.
-- **Boutique Discovery System**: Image-based category tiles featuring high-contrast "Red Tag" labels and a specialized "Tough Decision" call-to-action tile.
-- **Dynamic Glass Navbar**: Automatically transitions from a dark glassmorphic state to a light mode with dark text upon scrolling.
-- **Interactive Davao Map**: A custom-themed Leaflet.js map visually locating the Maharlika Republic store in Davao City.
-- **Integrated Shopping Flow**: Features a functional Cart drawer and a full-screen Search overlay for rapid product discovery.
-- **Soft UI Foundation**: Deep neumorphic cards and buttons provide a tactile, high-end feel.
-- **Fully Responsive**: Optimized for seamless navigation across desktops, tablets, and mobile devices.
-
-## 🛠️ Getting Started
-
-1. **Prerequisites**: Ensure you have [Node.js](https://nodejs.org/) installed.
-2. **Run Locally**:
-   ```bash
-   node start-server.js
-   ```
-3. **Access**: Open your browser and navigate to `http://localhost:8080`.
+This platform bridges the gap between online convenience and physical showroom trust. It features a curated Apple device catalog, a multi-canvas indoor showroom locator, custom financing details highlights, and a secure backoffice admin dashboard.
 
 ---
-*Maharlika Republic (Marexx Republic) - Beyond Innovation.*
-*Created with care by Anthon Ponce.*
+
+## 🚀 Technical Stack & Architecture
+
+- **Framework**: Next.js 14 (App Router) with TypeScript
+- **Styling & UI**: Tailwind CSS & Framer Motion (for premium, soft UI neumorphic and glassmorphic designs)
+- **Database ORM**: Drizzle ORM (PostgreSQL)
+- **Backend Services**: Supabase (Auth, SSR integration, Storage bucket hosting)
+- **State Management**: Zustand (Cart state persistence, theme configurations, UI visibility controls)
+- **Maps**: MapLibre GL (for macro city locator and micro indoor showroom blueprint layouts)
+
+---
+
+## 📊 Database Schema Design (The "Nucleic" Model)
+
+The database follows a relational structure optimized for electronic device tracking and serialized inventory control.
+
+```
+       +-------------------+
+       |     products      |
+       +---------+---------+
+                 | (1:N)
+       +---------v---------+
+       |  product_variants |
+       +----+-----------+--+
+            | (1:N)     | (1:N)
++-----------v-------+   |
+|  serialized_items |   |
++-------------------+   |
+                        |
+       +----------------v--+         +-------------------+
+       |    order_items     <--------+      orders       |
+       +-------------------+  (N:1)  +-------------------+
+```
+
+### Core Tables:
+1. **`products`**: Parent blueprint containing model details (`brandName`, `modelName`, `categoryType`, `baseDescription`).
+2. **`product_variants`**: Variant specifications (`storageCapacity`, `colorSpec`, `stockOnHand`, `priceCents` stored in centavos, `imageUrl`).
+3. **`serialized_items`**: Tracked physical stock by `serialNumber` or `imeiString`, mapped to a `dispositionStatus` (`AVAILABLE`, `RESERVED`, `SOLD`).
+4. **`orders`**: Transaction records containing client information (`customerName`, `customerEmail`, `shippingAddress`), payment choices, statuses, and total amount.
+5. **`order_items`**: Purchase snapshot line items mapping specific orders to product variants and quantities.
+
+---
+
+## 🛠️ Developer Setup & Installation
+
+Follow these steps to set up the project locally:
+
+### 1. Prerequisites
+- Install **Node.js** (v18.x or v20.x recommended)
+- Set up a **PostgreSQL Database** (e.g., Supabase PostgreSQL or Neon)
+- Initialize a **Supabase Project** for Auth and Storage
+
+### 2. Clone & Install Dependencies
+```bash
+npm install
+```
+
+### 3. Environment Variables Configuration
+Create a `.env.local` file in the root directory (matching the layout of `.env.example`):
+```env
+# Database Credentials
+DATABASE_URL="postgresql://postgres:[password]@db.[project-id].supabase.co:5432/postgres"
+
+# Supabase Web Services Integration
+NEXT_PUBLIC_SUPABASE_URL="https://[project-id].supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key-here"
+```
+
+### 4. Database Setup & Seeding
+Push the database schemas using Drizzle Kit:
+```bash
+npm run db:push
+```
+
+Seed the initial product catalog data (iPhones, MacBooks, iPads, AirPods, and Accessories):
+```bash
+npm run seed
+```
+
+### 5. Start the Development Server
+```bash
+npm run dev
+```
+Open your browser and navigate to `http://localhost:3000`.
+
+---
+
+## 📖 Operational User Manual
+
+### 1. Customer-Facing Storefront
+- **Catalog Navigation**: Filter devices dynamically by brand (iPhone, Mac, iPad, Watch, etc.).
+- **Interactive Location Map**: Located at the bottom of the landing page. Toggle between the **Bajada building locator** (macro view) and the **indoor showroom floor layout** (micro view) to guide your physical visit.
+- **Cart & Checkout Workflow**:
+  1. Add products to the sliding cart drawer.
+  2. Proceed to the `/checkout` page and fill in contact/delivery details.
+  3. Select from flexible options (Cash on Delivery, GCash, Maya, or partner financing schemes like Skyro/Salmon).
+  4. Submit your order to generate the transaction reference.
+- **Messenger Dispatch**: Click the copy button on the invoice confirmation screen to copy a structured invoice payload. Paste this to the Maharlika Marexx Facebook representative for rapid approval.
+
+### 2. Admin Backoffice operations
+- **Dashboard Access**: Access the administrative controls at `/admin` (or `/login` as admin).
+- **Dashboard Analytics**: Check live data metrics (Total Revenue, Active Orders, Low Stock warnings).
+- **Inventory Control**:
+  - Add new products and configure variants (color, storage capacity, price, images).
+  - Track physical serialized codes to monitor individual items.
+  - Safely delete items—the system automatically blocks deleting items currently linked to orders.
+
+---
+
+## 🩺 System Verification & Integrity
+
+Run the system diagnostics utility to verify that directories, Next.js page routes, and core package dependencies are correctly aligned:
+```bash
+node src/diagnostics.js
+```
+This utility will return `0 errors` if the environment is healthy.
