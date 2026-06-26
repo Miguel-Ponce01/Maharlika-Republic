@@ -3,9 +3,10 @@ import { redirect } from "next/navigation";
 import { db } from "@/src/db";
 import { orders } from "@/src/db/schema";
 import { eq, desc } from "drizzle-orm";
-import { Package, LogOut } from "lucide-react";
+import { Package, LogOut, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { logout } from "../login/actions";
+import CancelOrderButton from "./CancelOrderButton";
 
 export default async function AccountPage() {
   const supabase = await createClient();
@@ -15,14 +16,22 @@ export default async function AccountPage() {
     redirect("/login");
   }
 
-  // Fetch orders for this specific user
-  const userOrders = await db.query.orders.findMany({
-    where: eq(orders.userId, user.id),
-    orderBy: [desc(orders.createdAt)],
-    with: {
-      items: true // assuming relation exists in schema, wait we need to add it!
-    }
-  });
+  // Fetch orders for this specific user — wrapped in try-catch for DB resilience
+  let userOrders: any[] = [];
+  let dbError = false;
+
+  try {
+    userOrders = await db.query.orders.findMany({
+      where: eq(orders.userId, user.id),
+      orderBy: [desc(orders.createdAt)],
+      with: {
+        items: true
+      }
+    });
+  } catch (err) {
+    console.error("[Account] Failed to fetch orders:", err);
+    dbError = true;
+  }
 
   const formatPrice = (cents: number) => {
     return new Intl.NumberFormat("en-PH", {
@@ -54,7 +63,18 @@ export default async function AccountPage() {
             Order History
           </h2>
 
-          {userOrders.length === 0 ? (
+          {dbError ? (
+            <div className="bg-brand-card border border-brand-border rounded-3xl p-10 text-center space-y-4">
+              <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto" />
+              <h3 className="text-lg font-bold text-brand-black">Unable to load orders</h3>
+              <p className="text-sm text-brand-textMuted max-w-sm mx-auto">
+                We&apos;re having trouble connecting to the database. This is usually temporary — please try again in a moment.
+              </p>
+              <Link href="/account" className="inline-block mt-4 px-6 py-3 bg-brand-gold hover:bg-yellow-600 text-white font-bold rounded-xl transition-colors">
+                Retry
+              </Link>
+            </div>
+          ) : userOrders.length === 0 ? (
             <div className="bg-brand-card border border-brand-border rounded-3xl p-10 text-center space-y-4">
               <Package className="w-12 h-12 text-brand-textMuted mx-auto opacity-50" />
               <h3 className="text-lg font-bold text-brand-black">No orders yet</h3>
@@ -84,14 +104,21 @@ export default async function AccountPage() {
                         Placed on {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'N/A'}
                       </p>
                     </div>
-                    <div className="text-left md:text-right">
-                      <p className="text-xs text-brand-textMuted">Total Amount</p>
-                      <p className="font-bold text-brand-gold text-lg">{formatPrice(order.totalAmountCents)}</p>
+                    <div className="text-left md:text-right flex flex-col md:items-end justify-between">
+                      <div>
+                        <p className="text-xs text-brand-textMuted">Total Amount</p>
+                        <p className="font-bold text-brand-gold text-lg">{formatPrice(order.totalAmountCents)}</p>
+                      </div>
+                      {(order.orderStatus === 'PROCESSING' || order.orderStatus === 'PENDING') && (
+                        <div className="mt-2 md:mt-3">
+                          <CancelOrderButton orderId={order.id} />
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    {order.items?.map((item) => (
+                    {order.items?.map((item: any) => (
                       <div key={item.id} className="flex justify-between items-center text-sm">
                         <div className="flex items-center gap-3">
                           <span className="text-brand-black font-medium">{item.productName}</span>

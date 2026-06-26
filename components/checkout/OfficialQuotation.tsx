@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  Printer, 
-  Clipboard, 
-  ExternalLink, 
-  ArrowLeft, 
+import {
+  Printer,
+  Clipboard,
+  ExternalLink,
+  ArrowLeft,
   CheckCircle,
   Building,
   Mail,
@@ -15,9 +15,12 @@ import {
   CreditCard,
   Percent,
   Users,
-  ShieldCheck
+  ShieldCheck,
+  Download
 } from "lucide-react";
 import Link from "next/link";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 interface OrderItem {
   id: string;
@@ -52,6 +55,45 @@ interface OfficialQuotationProps {
 
 export default function OfficialQuotation({ order, onBackToStore }: OfficialQuotationProps) {
   const [copiedText, setCopiedText] = useState(false);
+
+  const handleDownloadPdf = async () => {
+    const element = document.getElementById('printable-quotation-sheet');
+    if (!element) return;
+    const canvas = await html2canvas(element);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`Quotation_${order.orderId}.pdf`);
+  };
+
+  // New handler for "Download PDF" with required filename format
+  const handleDownloadPdfRef = async () => {
+    try {
+      console.log('Download PDF triggered');
+      const element = document.getElementById('printable-quotation-sheet');
+      if (!element) {
+        console.error('Printable quotation element not found');
+        return;
+      }
+      // Dynamically import html2canvas to avoid import issues
+      const html2canvas = (await import('html2canvas')).default;
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const filename = `Quotation-${order.orderId}.pdf`;
+      console.log('Saving PDF as', filename);
+      pdf.save(filename);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
 
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat("en-PH", {
@@ -119,7 +161,7 @@ Quotation generated online. Please confirm unit availability and dispatch schedu
     <div className="space-y-8 animate-fadeIn">
       {/* 1. Control Action Bar (Hidden on print) */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-brand-card p-4 rounded-2xl border border-brand-border/40 shadow-sm print:hidden">
-        <button 
+        <button
           onClick={onBackToStore}
           className="inline-flex items-center gap-2 text-xs font-semibold text-brand-textMuted hover:text-brand-black transition-colors"
         >
@@ -135,13 +177,21 @@ Quotation generated online. Please confirm unit availability and dispatch schedu
             <Clipboard className="w-3.5 h-3.5 text-brand-gold" />
             {copiedText ? "Copied Details!" : "Copy Order Details"}
           </button>
-          
+
           <button
             onClick={handlePrint}
             className="flex-1 sm:flex-initial px-4 py-2.5 bg-brand-white dark:bg-black border border-brand-border text-xs font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors text-brand-black"
           >
             <Printer className="w-3.5 h-3.5 text-brand-gold" />
-            Print Quotation / Save PDF
+            Print Quotation
+          </button>
+
+          <button
+            onClick={handleDownloadPdfRef}
+            className="flex-1 sm:flex-initial px-4 py-2.5 bg-brand-white dark:bg-black border border-brand-border text-xs font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors text-brand-black"
+          >
+            <Download className="w-3.5 h-3.5 text-brand-gold" />
+            Download PDF
           </button>
 
           <a
@@ -171,7 +221,7 @@ Quotation generated online. Please confirm unit availability and dispatch schedu
 
       {/* 2. Official Printable Quotation Card */}
       <div id="printable-quotation-sheet" className="bg-brand-card print:bg-white text-brand-black print:text-black border border-brand-border print:border-none rounded-3xl p-6 sm:p-12 shadow-md print:shadow-none max-w-4xl mx-auto relative overflow-hidden">
-        
+
         {/* Subtle Watermark for Authenticity (Hidden on print) */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] dark:opacity-[0.01] pointer-events-none select-none print:hidden">
           <h1 className="text-[120px] font-heading font-extrabold rotate-45 tracking-widest leading-none">MAHARLIKA</h1>
@@ -245,8 +295,8 @@ Quotation generated online. Please confirm unit availability and dispatch schedu
                 {order.deliveryMethod === "pickup" ? "Showroom Pick-up (Bajada Showroom)" : "Local Doorstep Cash on Delivery (COD)"}
               </p>
               <p className="text-[11px] text-brand-textMuted print:text-neutral-500 leading-relaxed">
-                {order.deliveryMethod === "pickup" 
-                  ? "Maharlika Showroom, 2nd Flr, Marexx Bldg, Bajada, Davao City" 
+                {order.deliveryMethod === "pickup"
+                  ? "Maharlika Showroom, 2nd Flr, Marexx Bldg, Bajada, Davao City"
                   : `${order.addressStreet}, ${order.addressCity}, ${order.addressRegion}`}
               </p>
               <p className="text-[11px] text-brand-textMuted print:text-neutral-500">
@@ -290,7 +340,7 @@ Quotation generated online. Please confirm unit availability and dispatch schedu
 
         {/* Totals & Calculations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-brand-border/60 pt-8 items-start">
-          
+
           {/* Terms, Conditions, and Reminders */}
           <div className="space-y-4">
             <div className="bg-brand-white/40 dark:bg-white/5 print:bg-neutral-50 p-4 rounded-xl border border-brand-border/40 text-[10px] text-brand-textMuted print:text-neutral-600 leading-relaxed space-y-2">
@@ -316,7 +366,7 @@ Quotation generated online. Please confirm unit availability and dispatch schedu
               <span>Fulfillment & Delivery Fee</span>
               <span className="font-semibold text-brand-black print:text-black">{formatPrice(order.shippingFee)}</span>
             </div>
-            
+
             <div className="border-t border-brand-border/60 pt-3 flex justify-between items-baseline">
               <span className="text-xs font-bold text-brand-black print:text-black uppercase">GRAND TOTAL DUE</span>
               <span className="text-lg font-heading font-extrabold text-brand-gold">{formatPrice(order.total)}</span>
