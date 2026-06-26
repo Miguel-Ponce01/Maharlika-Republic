@@ -46,7 +46,7 @@ export const updateSession = async (request: NextRequest) => {
   }
 
   // Redirect logged-in users away from the login page
-  if (request.nextUrl.pathname.startsWith('/admin/login') && user) {
+  if (request.nextUrl.pathname.startsWith('/admin/login') && isAdmin) {
     const url = request.nextUrl.clone();
     url.pathname = '/admin';
     return NextResponse.redirect(url);
