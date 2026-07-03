@@ -730,44 +730,6 @@ export default function Home() {
       {/* 7. INTERACTIVE MAHARLIKA HUB */}
       <MaharlikaHub />
 
-
-
-      {/* 9. OFFERS SECTION */}
-      <section id="offers" className="py-24 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto space-y-16">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight">Flexible Ways to Pay.</h2>
-            <p className="text-lg md:text-xl text-gray-500 font-medium">
-              Acquire your dream device on your terms.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {offers.map((offer) => (
-              <div
-                key={offer.title}
-                className="bg-[#121212] rounded-[1.5rem] p-8 flex flex-col justify-between min-h-[220px] shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group"
-              >
-                <div className="space-y-3">
-                  <h3 className="font-heading font-bold text-xl text-white tracking-tight">{offer.title}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{offer.desc}</p>
-                </div>
-                <button
-                  onClick={() => {
-                    const idx = financingSchemes.findIndex(s => s.title.includes(offer.title.split(" ")[0]));
-                    if (idx !== -1) setActiveStory(idx);
-                    else alert(`Inquire for ${offer.title} via Messenger at Facebook.com/marexxrepublicdavao`);
-                  }}
-                  className="text-left text-brand-gold font-medium text-sm mt-8 inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-300"
-                >
-                  {offer.action} <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 10. TIKTOK BANNER */}
       <section className="py-12 bg-[#BFCBC4] dark:bg-[#1C1F22] text-brand-black dark:text-white text-center px-6 border-y border-brand-border/40">
         <div className="max-w-xl mx-auto space-y-4">
