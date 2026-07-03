@@ -167,6 +167,9 @@ export async function updateVariant(formData: FormData) {
     const pricePhp = parseFloat(formData.get("price") as string);
     const imageFile = formData.get("imageFile") as File | null;
 
+    const showOnLandingPage = formData.get("showOnLandingPage") === "true";
+    const isBestFromBox = formData.get("isBestFromBox") === "true";
+
     const priceCents = Math.round(pricePhp * 100);
 
     let newImageUrl: string | undefined = undefined;
@@ -194,6 +197,20 @@ export async function updateVariant(formData: FormData) {
 
     // Update Product and Variant in a transaction
     await db.transaction(async (tx) => {
+      // Get existing product to preserve systemMetadata
+      const existingProduct = await tx
+        .select()
+        .from(products)
+        .where(eq(products.id, productId))
+        .limit(1);
+      
+      const currentMetadata = (existingProduct[0]?.systemMetadata as Record<string, any>) || {};
+      const updatedMetadata = {
+        ...currentMetadata,
+        showOnLandingPage,
+        isBestFromBox,
+      };
+
       // Update parent product
       await tx
         .update(products)
@@ -202,6 +219,7 @@ export async function updateVariant(formData: FormData) {
           modelName,
           categoryType,
           baseDescription,
+          systemMetadata: updatedMetadata,
         })
         .where(eq(products.id, productId));
 
@@ -233,4 +251,44 @@ export async function updateVariant(formData: FormData) {
   revalidatePath("/products");
   revalidatePath("/");
   redirect("/admin/inventory");
+}
+
+export async function updateProductLandingPageSettings(productId: number, showOnLandingPage: boolean, isBestFromBox: boolean) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const ADMIN_EMAILS = ["anthonpnc@gmail.com"];
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) return { error: "Unauthorized" };
+
+  try {
+    const existing = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, productId))
+      .limit(1);
+
+    if (existing.length === 0) {
+      return { error: "Product not found" };
+    }
+
+    const currentMetadata = (existing[0].systemMetadata as Record<string, any>) || {};
+    const updatedMetadata = {
+      ...currentMetadata,
+      showOnLandingPage,
+      isBestFromBox,
+    };
+
+    await db
+      .update(products)
+      .set({ systemMetadata: updatedMetadata })
+      .where(eq(products.id, productId));
+
+    revalidatePath("/");
+    revalidatePath("/products");
+    revalidatePath("/admin/landing-page");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to update landing page settings:", error);
+    return { error: error.message || "Failed to update landing page settings" };
+  }
 }

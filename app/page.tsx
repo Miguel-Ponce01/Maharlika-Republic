@@ -147,6 +147,7 @@ export default function Home() {
   const [activeStory, setActiveStory] = useState<number | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [bestItems, setBestItems] = useState<ProductItem[]>([]);
+  const [featuredItems, setFeaturedItems] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [heroIndex, setHeroIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -196,12 +197,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    async function fetchBestItems() {
+    async function fetchLandingPageProducts() {
       try {
         const res = await fetch('/api/products');
         const data = await res.json();
         if (data.success && data.products) {
-          const mapped = data.products.slice(0, 5).map((p: any) => {
+          const mapProduct = (p: any) => {
             const variant = p.variants?.[0] || {};
             const specsStr = [variant.storageCapacity, variant.colorSpec].filter(Boolean).join(", ");
             return {
@@ -217,16 +218,26 @@ export default function Home() {
               variantId: variant.id || 0,
               maxStock: variant.stockOnHand || 0,
             };
-          });
-          setBestItems(mapped);
+          };
+
+          // Filter for Best From The Box
+          let bestProducts = data.products.filter((p: any) => p.systemMetadata?.isBestFromBox === true);
+          if (bestProducts.length === 0) {
+            bestProducts = data.products.slice(0, 5);
+          }
+          setBestItems(bestProducts.map(mapProduct));
+
+          // Filter for Featured Grid
+          const featuredProducts = data.products.filter((p: any) => p.systemMetadata?.showOnLandingPage === true);
+          setFeaturedItems(featuredProducts.map(mapProduct));
         }
       } catch (err) {
-        console.error("Failed to load products", err);
+        console.error("Failed to load products for landing page", err);
       } finally {
         setLoading(false);
       }
     }
-    fetchBestItems();
+    fetchLandingPageProducts();
   }, []);
 
   const handleBestItemClick = (item: ProductItem) => {
@@ -583,7 +594,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 4. FEATURED SPOTLIGHT COLLECTION */}
+      {featuredItems.length > 0 && (
+        <section className="py-24 px-6 max-w-7xl mx-auto border-t border-brand-border/40">
+          <div className="mb-16 space-y-4 text-center">
+            <span className="text-[10px] bg-brand-gold/15 text-brand-gold font-bold px-3 py-1 rounded-full uppercase tracking-widest inline-block">
+              Exclusive Picks
+            </span>
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight uppercase">
+              Featured Collection
+            </h2>
+            <p className="text-sm md:text-base text-gray-500 font-medium max-w-lg mx-auto leading-relaxed">
+              Carefully curated flagships and premium configurations recommended by our diagnostics team.
+            </p>
+          </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredItems.map((item, idx) => (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                key={item.id}
+                onClick={() => setSelectedProduct(item)}
+                className="group relative bg-[#121212] rounded-[2rem] overflow-hidden min-h-[380px] flex flex-col justify-between p-8 border border-white/5 shadow-sm hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] hover:-translate-y-2 transition-all duration-[600ms] cursor-pointer"
+              >
+                {/* Image display */}
+                <div className="w-full flex justify-center py-6 h-48 relative z-10">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-700 drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
+                  />
+                </div>
+
+                {/* Details overlay / bottom info */}
+                <div className="relative z-20 space-y-3 mt-auto">
+                  <div className="flex justify-between items-start gap-2">
+                    <div>
+                      <span className="text-[10px] text-brand-gold uppercase font-bold tracking-wider">
+                        {item.brand} • {item.type}
+                      </span>
+                      <h3 className="font-heading font-bold text-xl text-white tracking-tight group-hover:text-brand-gold transition-colors mt-0.5">
+                        {item.name}
+                      </h3>
+                      <p className="text-xs text-gray-400 font-light mt-0.5">{item.specs}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-heading font-extrabold text-brand-gold text-lg">
+                        {formatPrice(item.price)}
+                      </p>
+                      {item.monthlyInstallment > 0 && (
+                        <p className="text-[10px] text-gray-400 font-medium mt-0.5">
+                          As low as {formatPrice(item.monthlyInstallment)}/mo
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-bold text-white uppercase tracking-wider group-hover:text-brand-gold transition-colors">
+                    <span>Quick Details</span>
+                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" />
+                  </div>
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10 pointer-events-none" />
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 5. BEST FROM THE BOX SLIDER */}
       <section className="py-20 px-6">

@@ -20,6 +20,7 @@ interface EditVariantFormProps {
       modelName: string;
       categoryType: string;
       baseDescription: string;
+      systemMetadata?: any;
     };
   };
 }
@@ -33,6 +34,10 @@ export default function EditVariantForm({ initialVariant }: EditVariantFormProps
   const [selectedStorage, setSelectedStorage] = useState(initialVariant.storageCapacity || "");
   const [selectedColor, setSelectedColor] = useState(initialVariant.colorSpec || "");
   const [stockQuantity, setStockQuantity] = useState(initialVariant.stockOnHand);
+
+  const metadata = (initialVariant.product.systemMetadata as Record<string, any>) || {};
+  const [showOnLandingPage, setShowOnLandingPage] = useState<boolean>(!!metadata.showOnLandingPage);
+  const [isBestFromBox, setIsBestFromBox] = useState<boolean>(!!metadata.isBestFromBox);
 
   const storageOptions = ["64GB", "128GB", "256GB", "512GB", "1TB", "2TB"];
   
@@ -73,6 +78,8 @@ export default function EditVariantForm({ initialVariant }: EditVariantFormProps
     formData.set("storageCapacity", selectedStorage);
     formData.set("colorSpec", selectedColor);
     formData.set("stockOnHand", stockQuantity.toString());
+    formData.set("showOnLandingPage", showOnLandingPage.toString());
+    formData.set("isBestFromBox", isBestFromBox.toString());
     
     const result = await updateVariant(formData);
 
@@ -245,6 +252,38 @@ export default function EditVariantForm({ initialVariant }: EditVariantFormProps
                 </div>
               </div>
             </div>
+
+            <div className="bg-brand-white border border-brand-border rounded-2xl p-6 md:p-8 shadow-sm">
+              <h2 className="text-lg font-bold text-brand-black mb-6 border-b border-brand-border pb-4">3. Landing Page & Featured Settings</h2>
+              <div className="space-y-6">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={showOnLandingPage}
+                    onChange={(e) => setShowOnLandingPage(e.target.checked)}
+                    className="w-5 h-5 rounded border-brand-border text-brand-gold focus:ring-brand-gold mt-0.5 accent-brand-gold cursor-pointer"
+                  />
+                  <div>
+                    <span className="text-sm font-bold text-brand-black group-hover:text-brand-gold transition-colors">Show in Featured Collection</span>
+                    <p className="text-xs text-brand-textMuted mt-0.5">Display this product in the curated featured collection grid on the landing page.</p>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 cursor-pointer group pt-4 border-t border-brand-border/40">
+                  <input
+                    type="checkbox"
+                    checked={isBestFromBox}
+                    onChange={(e) => setIsBestFromBox(e.target.checked)}
+                    className="w-5 h-5 rounded border-brand-border text-brand-gold focus:ring-brand-gold mt-0.5 accent-brand-gold cursor-pointer"
+                  />
+                  <div>
+                    <span className="text-sm font-bold text-brand-black group-hover:text-brand-gold transition-colors">Feature in "Best from the Box"</span>
+                    <p className="text-xs text-brand-textMuted mt-0.5">Show this product in the sliding "Best from the Box" slider on the landing page.</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
           </div>
 
           {/* Right Column: Image Preview & Actions */}

@@ -14,10 +14,6 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     }
   }, [theme, mounted]);
 
-  return (
-    <div className={mounted ? "opacity-100 transition-opacity duration-300" : "opacity-0"}>
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }
 
