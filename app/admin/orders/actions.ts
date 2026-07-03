@@ -26,7 +26,7 @@ export async function updateOrderStatus(orderId: number, newStatus: string) {
       .set({ orderStatus: newStatus })
       .where(eq(orders.id, orderId));
 
-    revalidatePath("/admin/orders");
+    revalidatePath("/admin/orders/history");
     revalidatePath("/admin");
     return { success: true };
   } catch (error) {

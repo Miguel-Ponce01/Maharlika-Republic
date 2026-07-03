@@ -211,7 +211,7 @@ export default async function AdminDashboard() {
 
         {/* Quick Tools Box */}
         <div className="flex flex-wrap gap-3">
-          <Link href="/admin/orders" className="px-4 py-2 bg-brand-gold hover:bg-yellow-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm shadow-brand-gold/10 flex items-center gap-2">
+          <Link href="/admin/orders/history" className="px-4 py-2 bg-brand-gold hover:bg-yellow-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm shadow-brand-gold/10 flex items-center gap-2">
             View All Orders
           </Link>
           <Link href="/admin/landing-page" className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-brand-black font-bold text-xs uppercase tracking-wider rounded-xl transition-colors flex items-center gap-2">
@@ -434,7 +434,7 @@ export default async function AdminDashboard() {
               <h3 className="font-heading font-extrabold text-lg text-brand-black">Recent Orders</h3>
               <p className="text-xs text-brand-textMuted mt-0.5">Latest customer upgrade submissions</p>
             </div>
-            <Link href="/admin/orders" className="text-xs font-bold text-brand-gold hover:underline flex items-center gap-1">
+            <Link href="/admin/orders/history" className="text-xs font-bold text-brand-gold hover:underline flex items-center gap-1">
               View All <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>

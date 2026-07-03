@@ -1,9 +1,11 @@
 import { db } from "@/src/db";
 import { orders } from "@/src/db/schema";
 import { desc } from "drizzle-orm";
-import StatusDropdown from "./StatusDropdown";
+import StatusDropdown from "../StatusDropdown";
 
-export default async function AdminOrders() {
+export const dynamic = "force-dynamic";
+
+export default async function AdminOrdersHistory() {
   const allOrders = await db.query.orders.findMany({
     orderBy: [desc(orders.createdAt)],
   });
@@ -18,7 +20,7 @@ export default async function AdminOrders() {
   return (
     <div className="p-6 md:p-10 space-y-8 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl md:text-3xl font-heading font-bold text-brand-black">Orders</h1>
+        <h1 className="text-2xl md:text-3xl font-heading font-bold text-brand-black">Order History</h1>
         <p className="text-brand-textMuted text-sm mt-1">Manage and view all customer orders.</p>
       </div>
 

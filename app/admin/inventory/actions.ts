@@ -292,3 +292,41 @@ export async function updateProductLandingPageSettings(productId: number, showOn
     return { error: error.message || "Failed to update landing page settings" };
   }
 }
+
+export async function quickUpdateVariant(
+  variantId: number,
+  skuString: string,
+  storageCapacity: string,
+  colorSpec: string,
+  stockOnHand: number,
+  pricePhp: number
+) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const ADMIN_EMAILS = ["anthonpnc@gmail.com"];
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) return { error: "Unauthorized" };
+
+  try {
+    const priceCents = Math.round(pricePhp * 100);
+
+    await db
+      .update(productVariants)
+      .set({
+        skuString,
+        storageCapacity: storageCapacity || null,
+        colorSpec: colorSpec || null,
+        stockOnHand,
+        priceCents,
+      })
+      .where(eq(productVariants.id, variantId));
+
+    revalidatePath("/admin/inventory");
+    revalidatePath("/products");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to quick-update variant:", error);
+    return { error: error.message || "Failed to update variant" };
+  }
+}

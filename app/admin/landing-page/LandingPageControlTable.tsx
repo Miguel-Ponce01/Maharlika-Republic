@@ -27,8 +27,17 @@ export default function LandingPageControlTable({ initialProducts }: LandingPage
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
+  const [pendingToggle, setPendingToggle] = useState<{ productId: number; field: "showOnLandingPage" | "isBestFromBox"; currentValue: boolean } | null>(null);
 
-  const handleToggle = async (productId: number, field: "showOnLandingPage" | "isBestFromBox", currentValue: boolean) => {
+  const triggerToggle = (productId: number, field: "showOnLandingPage" | "isBestFromBox", currentValue: boolean) => {
+    setPendingToggle({ productId, field, currentValue });
+  };
+
+  const confirmToggle = async () => {
+    if (!pendingToggle) return;
+    const { productId, field, currentValue } = pendingToggle;
+    setPendingToggle(null);
+    
     setUpdatingId(productId);
     setMessage(null);
 
@@ -128,7 +137,7 @@ export default function LandingPageControlTable({ initialProducts }: LandingPage
 
                       <td className="px-6 py-4 text-center">
                         <button
-                          onClick={() => handleToggle(product.id, "showOnLandingPage", isFeatured)}
+                          onClick={() => triggerToggle(product.id, "showOnLandingPage", isFeatured)}
                           disabled={updatingId === product.id}
                           className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
                             isFeatured 
@@ -143,7 +152,7 @@ export default function LandingPageControlTable({ initialProducts }: LandingPage
 
                       <td className="px-6 py-4 text-center">
                         <button
-                          onClick={() => handleToggle(product.id, "isBestFromBox", isBest)}
+                          onClick={() => triggerToggle(product.id, "isBestFromBox", isBest)}
                           disabled={updatingId === product.id}
                           className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
                             isBest 
@@ -176,6 +185,35 @@ export default function LandingPageControlTable({ initialProducts }: LandingPage
           </table>
         </div>
       </div>
+
+      {/* Confirmation Dialog Modal */}
+      {pendingToggle && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-brand-white border border-brand-border rounded-[2rem] p-8 max-w-md w-full mx-4 shadow-2xl space-y-6">
+            <div className="space-y-2">
+              <h4 className="font-heading font-black text-xl text-brand-black tracking-tight">Are you sure with these changes?</h4>
+              <p className="text-sm text-brand-textMuted leading-relaxed">
+                Confirming this action will update the visibility of <strong className="text-brand-black">"{products.find(p => p.id === pendingToggle.productId)?.modelName}"</strong> on the storefront landing page.
+              </p>
+            </div>
+            
+            <div className="flex gap-4 pt-2">
+              <button
+                onClick={confirmToggle}
+                className="flex-1 py-3 bg-brand-gold hover:bg-yellow-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md shadow-brand-gold/15"
+              >
+                Agree
+              </button>
+              <button
+                onClick={() => setPendingToggle(null)}
+                className="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-brand-black font-bold text-xs uppercase tracking-wider rounded-xl transition-colors"
+              >
+                Disagree
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
