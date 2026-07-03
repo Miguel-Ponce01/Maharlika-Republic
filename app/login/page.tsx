@@ -43,14 +43,14 @@ export default function LoginPage() {
 
           <div className="space-y-4">
             <div className="space-y-2 relative">
-              <label className="text-xs font-bold text-brand-textMuted uppercase tracking-wider block ml-1">Email</label>
+              <label className="text-xs font-bold text-brand-textMuted uppercase tracking-wider block ml-1">Email or Username</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-textMuted" />
                 <input 
-                  type="email" 
+                  type="text" 
                   name="email" 
                   required
-                  placeholder="juan@dela-cruz.com" 
+                  placeholder="e.g. juan@delacruz.com or marexx" 
                   className="w-full bg-brand-white/50 border border-brand-border rounded-xl pl-12 pr-4 py-3 text-sm text-brand-black focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all"
                 />
               </div>
